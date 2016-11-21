@@ -1,0 +1,14 @@
+
+; display
+
+to update-display
+  
+  color-patches
+  
+end
+
+
+to color-patches
+  let mi min [population] of patches let ma max [population] of patches
+  ask patches [set pcolor scale-color red population mi ma]
+end

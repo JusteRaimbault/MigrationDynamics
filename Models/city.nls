@@ -1,0 +1,25 @@
+
+;
+;
+
+
+to update-city-populations
+  
+  ; gibrat update of the meso population ;
+  ; then growth on patches according to distance to city-center and density saturation
+  
+end
+
+
+
+to new-city
+  ;setxy random-xcor random-ycor  
+  move-to one-of (patches with [abs pxcor < max-pxcor - 25 and abs pycor < max-pycor - 25]) with-max [min (map [distance ?] to-list cities)]
+  set shape "house" set color green
+  
+  ; area
+  set area-patches patches with-min [distance myself]
+  
+  
+  
+end

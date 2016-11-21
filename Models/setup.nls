@@ -1,0 +1,81 @@
+
+;;
+; setup
+
+to setup
+  
+  ca
+  
+  setup-globals
+  
+  setup-world
+  
+  setup-migrants
+  
+  update-display
+  
+end
+
+to setup-globals
+  set patch-real-size 2
+end
+
+
+to setup-world
+  if setup-type = "synthetic" [
+    setup-synthetic
+  ]
+  if setup-type = "gis" [
+     
+  ]
+  
+  ; need to compute utilities to locate first migrants
+  update-utilities
+  
+end
+
+
+to setup-synthetic
+  ;
+  create-cities #-cities [new-city]
+  
+  ; populations
+  let i 1
+  ask cities [set city-population max-pop / (i ^ rank-size-exp) set i i + 1]
+  ; total pop is P = max_density * 2pi * r_0 -> r_0 = pop / (max_density * 2pi)
+  foreach to-list cities [let current-pop [city-population] of ? let current-patch [patch-here] of ? apply-monocentric-kernel "poisson" (current-pop / (2 * pi * max-density)) max-density "population" current-patch]
+  
+end
+
+
+
+to setup-migrants
+  
+  create-migrants (floor total-population * migration-growth-share / 100) [
+    new-migrant
+  ]
+  
+end
+
+
+
+
+to-report euclidian-distance-matrix
+  ; euclidian distance matrix
+  let #-patches count patches
+  let res matrix:make-constant #-patches #-patches 0
+  let p1 0 let p2 0
+  repeat #-patches [
+     let x1 ((floor (p1 / world-width)) + min-pxcor) * patch-real-size let y1 ((p1 - world-width * floor (p1 / world-width)) + min-pycor) * patch-real-size
+     set p2 0
+     repeat #-patches [
+        let x2 ((floor (p2 / world-width)) + min-pxcor) * patch-real-size let y2 ((p2 - world-width * floor (p2 / world-width)) + min-pycor) * patch-real-size
+        matrix:set res p1 p2 sqrt ((x1 - x2) ^ 2 + (y1 - y2) ^ 2) 
+        set p2 p2 + 1
+     ]
+     set p1 p1 + 1
+  ]
+end
+
+
+

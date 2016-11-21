@@ -1,0 +1,25 @@
+
+;;
+; main
+
+
+to go
+  
+  ; population update
+  update-city-populations
+  
+  ; utilities update
+  update-utilities
+  
+  ; new migrants
+  new-migrants-arrival
+  
+  ; migration
+  migration
+  
+  ; display/reporters
+  update-display
+  
+end
+
+

@@ -1,0 +1,7 @@
+
+;;
+; indicators
+
+to-report total-population
+  report sum [population] of patches
+end
