@@ -1,0 +1,137 @@
+\input{header.tex}
+
+
+\title{Migrant Workers Residential Dynamics within a Mega-city Region: Challenging Preconceived Ideas with an Agent-based Model\bigskip\\
+\textit{Working Paper}
+}
+\author{\noun{Cinzia Losavio} and \noun{Juste Raimbault}\\
+UMR CNRS 8504 Géographie-cités
+}
+\date{}
+
+
+\maketitle
+
+\justify
+
+
+\begin{abstract}
+
+\end{abstract}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+
+
+
+\paragraph{Modeling Rural-urban migrations in China}
+
+Existing works in rural-urban migration modeling in China are mainly econometric studies, relying on census or on survey data. \cite{zhang2013measuring} estimate discrete choice models to study the tradeoff between migration distance and earning difference. \cite{fan2005modeling} shows that gravity-based models can explain well inter-provincial migratory patterns, implying an underlying strong dominant aggregation processes. The positive association between wage gap and migration rates was obtained from time-series analysis in~\cite{zhang2003rural}.
+
+\paragraph{Towards an agent-based modeling approach}
+
+To the best of our knowledge, there was no attempt in the literature before to focus on China's migration issues from an agent-based perspective. The case of Mexico was tackled by~\cite{de2007netlogo}, but in the particular case of a border-town, and underlying processes are furthermore fundamentally different. \textit{TODO : find more literature}
+
+Following a logic of \emph{Pattern-oriented modeling}~\cite{grimm2005pattern}, combined with recent advances in multi-modeling~\cite{cottineau2016back}, one can use agent-based models as powerful to test qualitative hypothesis, with a reasonable need for empirical data through toy-models or hybrid models.
+
+
+
+%%%%%%%%%%%%%%%%%%%%
+\section{Model}
+
+\subsection{Rationale}
+
+We choose to focus on particular processes and stylized facts to include in the agent-based models, in order to test some hypothesis formulated after qualitative research done in~\cite{losavio2016analyser}. More precisely, a recent shift in socio-economic structure of migrating population was observed, including a rise of middle-income migrants and a relativisation of the role of \emph{Hukou} in migration dynamics. The core of the model is thus centered on the exploration of the impact of a varying population economic structure for migrants on system dynamics, and the influence of government migration policies.
+
+\paragraph{Scale} As shown by~\cite{chan2012migration}, recent migration dynamics feature a high asymmetry from central region to coastal economically dynamic province. At a macroscopic scale, explanatory variables are relatively well understood and gravity-based geographical models have a reasonable explanatory power~\cite{fan2005modeling}. However, at a regional scale, migration dynamics are also highly present and present more complex patterns. The scale of the model is therefore a regional scale, in the spirit of a \emph{Mega-city Region} \cite{hall2006polycentric}, in which urban dynamics are highly complex. A relevant case study to apply the model will be the Pearl River Delta Region in Guangdong.
+
+\paragraph{Ontology} At a mesoscopic scale, i.e. for cities within the MCR, growth can be reasonably assumed independent from migrants movements : they follow larger economic urban processes. Conditionally to such population and economic context, migration dynamics occur at the microscopic scale. We postulate a simple utility-maximization process.
+
+\subsection{Model Description}
+
+\paragraph{Setup}
+
+The world consists in a lattice of $1 \leq i \leq N$ cells, characterized by their population $P_i(t)$ and an economic structure $E_i^{(c)}(t)$ which consists in abstract variables representing potential number of jobs stratified by socio-economic classes $c$. The associated effective number of workers is denoted by $W_i^{(c)}(t)$. For the sake of simplicity, we assume a discrete number of classes. At initial time, the variables are initialized either following a synthetic data generation process (see below), or from real geographical data (abstracted and simplified to fit our context). Cells are grouped into $1\leq k\leq K$ administrative cities that corresponding to the various centers of the MCR, on which aggregated population $\tilde{P}_k(t)$ and corresponding economic variables can be computed.
+
+\paragraph{Agents}
+
+An agent is a household of migrants, whose residence and job are located in cells (that can be different). Socio-economic structure of the population is captured by the distribution of wealth $g(w)$, which are then stratified into categories. At a given time, the utility difference between not moving and moving to cell $j$ from cell $i$, for a category $c$ is given by
+
+\[
+\Delta U_{i,j}^{(c)}(t) = \frac{Z_j^{(c)}- Z_i^{(c)}}{Z_0} + \frac{C_i^{(c)}- C_j^{(c)}}{C_0} - u_i^{(c)} - h_j^{(c)}
+\]
+
+where $Z_i^{(c)}$ is generalized accessibility given by $Z_i^{(c)} = P_i \cdot \sum_k \left[E_k^{(c)}-W_k^{(c)}\right]\cdot \exp{\left(\frac{-d_{ij}}{d_0}\right)}$, with $d_{ij}$ effective travel distance (in public transportation ; \textit{point to be clarified : for higher classes, car may be an option}) and $d_0$ commuting characteristic distance ; $C_i^{(c)}$ is the cost of life which is a function of cell and city variables, that will be taken as $C_i^{(c)} \propto P_i^{\alpha_0}\cdot  \tilde{P}_i^{\alpha_1}\cdot$ ; $u_i^{(c)}$ a baseline aversion to move and $h_j^{(c)}$ an exogenous variable corresponding to regulation policies ; $Z_0$ and $C_0$ dimensioning parameters.
+
+\paragraph{Temporal Evolution}
+
+At each time step, the system evolves sequentially according to the following rules :
+
+\begin{itemize}
+\item Cities mesoscopic variables $\tilde{P}_k(t)$ and $\tilde{E}_k^{c}(t)$ are deterministically updated, following the very simple assumption of the expectancy of a Gibrat's law, and a scaling law to determine economic variables from population.
+\item Patches variables are updated conditionally to the new aggregated values. \textit{Using a simple urban growth model of aggregation, deterministic for population and a bit more random for jobs ; still to be clarified}.
+\item A number of new migrants, proportional to Gibrat growth rate, enter the region and settle randomly, by first choosing a random available job location in their category, and then a residence nearby with a probability function of population density and exponentially decreasing with distance to job, as $\exp{\left(\frac{-d_{ij}}{d_0}\right)}$. This procedure is also used for initial setup.
+\item Migration occur following a discrete choice dynamics : the probability to move to cell $j$ is given by
+
+\[
+\Pb{i\rightarrow j | c} = \frac{\exp{\left(\beta\cdot U_j^{(c)}\right)}}{\sum_k \exp{\left(\beta\cdot U_k^{(c)}\right)}+\exp{\left(U_{stay,i}^{(c)}\right)}}
+\]
+
+what simplifies into a reduced form, with $\beta' = \frac{\beta}{Z_0}$, $\gamma = \frac{Z_0}{C_0}$ and $\tilde{u},\tilde{h}$ accordingly rescaled variables, using the above utility expression :
+
+\[
+\Pb{i\rightarrow j | c} = \frac{\exp{\left(\beta'\cdot \left[\Delta Z_{i,j}^{(c)} - \Delta C_{i,j}^{(c)} - \tilde{u}_i^{(c)} - \tilde{h}_j^{(c)} \right] \right)}}{1 + \sum_k {\exp{\left(\beta'\cdot \left[\Delta Z_{i,k}^{(c)} - \Delta C_{i,k}^{(c)} - \tilde{h}_k^{(c)} \right] \right)} - N\cdot \tilde{u}_i^{(c)}}}
+\]
+
+Residential movement is drawn randomly according to these probabilities, and jobs are chosen around new residence following an exponentially decreasing probability.
+
+\end{itemize}
+
+
+\paragraph{Indicators}
+
+\textit{TBW}
+
+\paragraph{Synthetic Data Generation}
+
+\textit{TBW}
+
+
+
+%%%%%%%%%%%%%%%%%%%%
+\section{Results}
+
+\paragraph{Model Validation}
+
+\begin{itemize}
+\item Internal validation : statistical consistence ; system trajectories ; path-dependency.
+\item External validation : stylized facts from synthetic data exploration ?
+\end{itemize}
+
+
+\paragraph{Application}
+
+\textit{Stylize Pearl River Delta configuration}
+
+\paragraph{Experience Plan} \textit{concrete qualitative questions that can be asked to the model, e.g. :
+\begin{itemize}
+\item what is the impact of varying wealth distribution shape and width on system dynamics ?
+\item what is the impact of various spatial distribution of $h_j^{(c)}$, i.e. different government policies ?
+\item \ldots
+\end{itemize}
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%
+%% Biblio
+%%%%%%%%%%%%%%%%%%%%
+
+\bibliographystyle{apalike}
+\bibliography{/Users/Juste/Documents/ComplexSystems/Mingong/Biblio/mingong}
+
+
+\end{document}
