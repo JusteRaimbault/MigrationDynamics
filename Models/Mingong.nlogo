@@ -111,7 +111,7 @@ SLIDER
 #-cities
 0
 10
-1
+3
 1
 1
 NIL
@@ -126,7 +126,7 @@ max-pop
 max-pop
 0
 2e7
-10000000
+2390000
 10000
 1
 NIL
@@ -156,18 +156,18 @@ max-density
 max-density
 0
 5e6
-100000
+110000
 10000
 1
 NIL
 HORIZONTAL
 
 MONITOR
-1244
-14
-1371
-59
-total pop
+1219
+11
+1346
+56
+total city pop
 sum [city-population] of cities
 1
 1
@@ -191,11 +191,11 @@ NIL
 1
 
 MONITOR
-1243
-67
-1430
-112
-NIL
+1218
+61
+1344
+106
+total patch pop
 sum [population] of patches
 1
 1
@@ -224,12 +224,23 @@ SLIDER
 migration-growth-share
 migration-growth-share
 0
-100
-2
-1
+0.01
+0.0010
+0.001
 1
 NIL
 HORIZONTAL
+
+MONITOR
+1217
+110
+1283
+155
+migrants
+count migrants
+17
+1
+11
 
 @#$#@#$#@
 ## WHAT IS IT?

@@ -1,7 +1,7 @@
 \input{header.tex}
 
 
-\title{Agent-based Modeling of Migrant Workers Residential Dynamics within a Mega-city Region: the Case of Zhuijiang Delta, China
+\title{Agent-based Modeling of Migrant Workers Residential Dynamics within a Mega-city Region: the Case of Pearl River Delta, China
 %Challenging Preconceived Ideas with an Agent-based Model
 \bigskip\\
 \textit{Working Paper}
@@ -18,7 +18,12 @@ UMR CNRS 8504 Géographie-cités
 
 
 \begin{abstract}
-Rural-urban migrant workers have played in the last decades an increasing role for China's economy, raising the attention on associated socio-economical issues. The importance of their economic diversity is however poorly known, as the strategy of the State towards these new classes. We propose to investigate both by means of agent-based modeling, at the scale of Pearl River Delta Mega-city Region. Our model couples patch-level population and economic structure, which evolution is determined in a top-down fashion from meso-dynamics following simple growth rules, with microscopic residential discrete choices dynamics of migrant workers. This two level structure is essential to control on city system structure. The model is explored on synthetic data and internally validated for statistical consistence and path-dependancy of temporal trajectories. The application to Zhuijiang Delta region allows first to test the sensitivity of outcomes to population economic structure, for which spread wealth distributions yield more complex trajectories, and secondly to compare the impact of different State policies on migration control.
+Over the last three decades, rural-urban migrant-workers have been a driving force for China's economy, raising attention on associated socio-economical issues. However, the importance of their economic diversity and social mobility has been poorly considered in the analysis of urban development strategy.
+We use an agent-based model to simulate residential dynamics of migrants in Pearl River Delta (PRD) mega city region, taking into account the full range of migrants’ socio-economical status and their evolution. Mega-city regions have become a new scale of Chinese State regulation, and PRD represent the most prosperous and dynamic one in term of migration waves, standing as an ideal unit of analysis.
+Our model unveils emergent patterns of dynamics, from micro behavior rules of discrete mobility choices. These choices are conditional to urban and economic environment, which evolution is controlled by meso-scale independent dynamics.
+The two scales are coupled through the dependance of discrete choice utilities to generalized accessibility that combines patch-level urban and economic context with a feedback of the dynamics themselves.
+We perform simulations to validate the model on synthetic data, by assessing statistical consistence and establishing phase diagrams across the parameter space.
+The application to the case study allows first to test how variation in socio-economic status yield more complex trajectories, and secondly to identify how the Party-State persist in controlling internal migration flows in a more sophisticated and strategically redefined way.
 
 \bigskip
 
@@ -32,16 +37,24 @@ Rural-urban migrant workers have played in the last decades an increasing role f
 \section{Introduction}
 
 
+\paragraph{Modeling Rural-urban migrations}
+
+\cite{todaro1969model} classical equilibrium model
+
 
 \paragraph{Modeling Rural-urban migrations in China}
 
 Existing works in rural-urban migration modeling in China are mainly econometric studies, relying on census or on survey data. \cite{zhang2013measuring} estimate discrete choice models to study the tradeoff between migration distance and earning difference. \cite{fan2005modeling} shows that gravity-based models can explain well inter-provincial migratory patterns, implying an underlying strong dominant aggregation processes. The positive association between wage gap and migration rates was obtained from time-series analysis in~\cite{zhang2003rural}.
 
+Intra-urban residential dynamics : empirical study in \cite{wu2006migrant} 
+
 \paragraph{Towards an agent-based modeling approach}
 
-To the best of our knowledge, there was no attempt in the literature before to focus on China's migration issues from an agent-based perspective. The case of Mexico was tackled by~\cite{de2007netlogo}, but in the particular case of a border-town, and underlying processes are furthermore fundamentally different. \textit{TODO : find more literature}
+To the best of our knowledge, there was no attempt in the literature before to focus on China's migration issues from an agent-based perspective. The case of Mexico was tackled by~\cite{de2007netlogo}, but in the particular case of a border-town, and underlying processes are furthermore fundamentally different.
 
-Following a logic of \emph{Pattern-oriented modeling}~\cite{grimm2005pattern}, combined with recent advances in multi-modeling~\cite{cottineau2016back}, one can use agent-based models as powerful to test qualitative hypothesis, with a reasonable need for empirical data through toy-models or hybrid models.
+\cite{xie2007simulating} : agent-based model to simulate the emergence of Urban Villages. \cite{silveira2006agent} : Ising model of rural-urban migration. \cite{fernandez2005characterizing} : study of population characteristics to establish the relevance of a future ABM.
+
+Following a logic of \emph{Pattern-oriented modeling}~\cite{grimm2005pattern}, combined with recent advances in multi-modeling~\cite{cottineau2016back}, one can use agent-based models as powerful tools to test qualitative hypothesis, with a reasonable need for empirical data through toy-models or hybrid models.
 
 
 
@@ -52,7 +65,7 @@ Following a logic of \emph{Pattern-oriented modeling}~\cite{grimm2005pattern}, c
 
 We choose to focus on particular processes and stylized facts to include in the agent-based models, in order to test some hypothesis formulated after qualitative research done in~\cite{losavio2016analyser}. More precisely, a recent shift in socio-economic structure of migrating population was observed, including a rise of middle-income migrants and a relativisation of the role of \emph{Hukou} in migration dynamics. The core of the model is thus centered on the exploration of the impact of a varying population economic structure for migrants on system dynamics, and the influence of government migration policies.
 
-\paragraph{Scale} As shown by~\cite{chan2012migration}, recent migration dynamics feature a high asymmetry from central region to coastal economically dynamic province. At a macroscopic scale, explanatory variables are relatively well understood and gravity-based geographical models have a reasonable explanatory power~\cite{fan2005modeling}. However, at a regional scale, migration dynamics are also highly present and present more complex patterns. The scale of the model is therefore a regional scale, in the spirit of a \emph{Mega-city Region} \cite{hall2006polycentric}, in which urban dynamics are highly complex. A relevant case study to apply the model will be the Pearl River Delta Region in Guangdong.
+\paragraph{Scale} As shown by~\cite{chan2012migration}, migration dynamics feature since last three decades a high asymmetry from central regions to coastal economically dynamic province. At a macroscopic scale, explanatory variables are relatively well understood and gravity-based geographical models have a reasonable explanatory power~\cite{fan2005modeling}. However, at a regional scale, migration dynamics are also highly present and present more complex patterns. The scale of the model is therefore a regional scale, in the spirit of a \emph{Mega-city Region} \cite{hall2006polycentric}, in which urban dynamics are highly complex. A relevant case study to apply the model will be the Pearl River Delta Region in Guangdong.
 
 \paragraph{Ontology} At a mesoscopic scale, i.e. for cities within the MCR, growth can be reasonably assumed independent from migrants movements : they follow larger economic urban processes. Conditionally to such population and economic context, migration dynamics occur at the microscopic scale. We postulate a simple utility-maximization process.
 
@@ -60,7 +73,7 @@ We choose to focus on particular processes and stylized facts to include in the 
 
 \paragraph{Setup}
 
-The world consists in a lattice of $1 \leq i \leq N$ cells, characterized by their population $P_i(t)$ and an economic structure $E_i^{(c)}(t)$ which consists in abstract variables representing potential number of jobs stratified by socio-economic classes $c$. The associated effective number of workers is denoted by $W_i^{(c)}(t)$. For the sake of simplicity, we assume a discrete number of classes. At initial time, the variables are initialized either following a synthetic data generation process (see below), or from real geographical data (abstracted and simplified to fit our context). Cells are grouped into $1\leq k\leq K$ administrative cities that corresponding to the various centers of the MCR, on which aggregated population $\tilde{P}_k(t)$ and corresponding economic variables can be computed.
+The world consists in a lattice of $1 \leq i \leq N$ cells, characterized by their population $P_i(t)$ and an economic structure $E_i^{(c)}(t)$ which consists in abstract variables representing potential number of jobs stratified by socio-economic classes $c$. The associated effective number of workers is denoted by $W_i^{(c)}(t)$. For the sake of simplicity, we assume a discrete number of classes. At initial time, the variables are initialized either following a synthetic data generation process (see below), or from real geographical data (abstracted and simplified to fit our context). Cells are grouped into $1\leq k\leq K$ administrative cities that corresponding to the various centers of the MCR, on which aggregated population $\tilde{P}_k(t)$ and corresponding economic variables ($\tilde{E}_k^{c}(t)$) can be computed.
 
 \paragraph{Agents}
 
@@ -79,7 +92,7 @@ At each time step, the system evolves sequentially according to the following ru
 \begin{itemize}
 \item Cities mesoscopic variables $\tilde{P}_k(t)$ and $\tilde{E}_k^{c}(t)$ are deterministically updated, following the very simple assumption of the expectancy of a Gibrat's law, and a scaling law to determine economic variables from population.
 \item Patches variables are updated conditionally to the new aggregated values. \textit{Using a simple urban growth model of aggregation, deterministic for population and a bit more random for jobs ; still to be clarified}.
-\item A number of new migrants, proportional to Gibrat growth rate, enter the region and settle randomly, by first choosing a random available job location in their category, and then a residence nearby with a probability function of population density and exponentially decreasing with distance to job, as $\exp{\left(\frac{-d_{ij}}{d_0}\right)}$. This procedure is also used for initial setup.
+\item A number of new migrants, proportional to Gibrat growth rate, enter the region. They lean on social network (guanxi) to first settle in the city and agglomerate following a preferential attachment by place of origin.
 \item Migration occur following a discrete choice dynamics : the probability to move to cell $j$ is given by
 
 \[
@@ -128,6 +141,7 @@ Residential movement is drawn randomly according to these probabilities, and job
 \begin{itemize}
 \item what is the impact of varying wealth distribution shape and width on system dynamics ?
 \item what is the impact of various spatial distribution of $h_j^{(c)}$, i.e. different government policies ?
+\item 
 \item \ldots
 \end{itemize}
 }
