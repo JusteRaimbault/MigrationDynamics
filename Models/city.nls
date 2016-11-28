@@ -3,23 +3,58 @@
 ;
 
 
+to grow-cities
+
+  update-city-populations
+  
+  update-city-economics
+  
+  apply-city-growth-patches
+
+end
+
+
+;; 
+;  meso update
 to update-city-populations
   
   ; gibrat update of the meso population ;
   ; then growth on patches according to distance to city-center and density saturation
   
+  ask cities [
+    let new-population gibrat-rate * city-population
+    set delta-population new-population - city-population
+    set city-population new-population
+  ]
+  
+end
+
+
+;;
+; population -> economics
+to update-city-economics
+  
+end
+
+
+;;
+;
+to apply-city-growth-patches
+  
+  ;; population
+  
+  ask cities [
+    
+  ]
+  
 end
 
 
 
-to new-city
+to new-city-synthetic
   ;setxy random-xcor random-ycor  
-  move-to one-of (patches with [abs pxcor < max-pxcor - 25 and abs pycor < max-pycor - 25]) with-max [min (map [distance ?] to-list cities)]
-  set shape "house" set color green
+  move-to one-of (patches with [abs pxcor < max-pxcor - 15 and abs pycor < max-pycor - 15]) ;with-max [min (map [distance ?] to-list cities)]
+  set shape "house" set color green set size 2
   
-  ; area
-  set area-patches patches with-min [distance myself]
-  
-  
-  
+ 
 end

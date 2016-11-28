@@ -9,7 +9,13 @@ end
 
 
 
+;;
+; 
 to new-migrants-arrival
+  
+  create-migrants (floor total-population * migration-growth-share / 100) [
+    new-migrant
+  ]
   
 end
 
@@ -20,7 +26,80 @@ end
 
 
 
-
+;;
+; migrant constructor
 to new-migrant
   
+  set shape "person" set size 1
+  
+  ; social network
+  set social-category migrant-social-category
+  
+  ; positioning : social network
+  let initial-residence-position migrant-initial-residence
+  setxy first initial-residence-position last initial-residence-position
+  
+  ; wealth and economic category
+  set wealth migrant-initial-wealth
+  set economic-category migrant-economic-category
+  
+  
+  set color (social-category * 140 / #-social-categories) + 10
+  
+end
+
+
+;;
+; initial distribution of wealth
+to-report migrant-initial-wealth
+  if wealth-distribution = "log-normal" [
+    report max (list uniform-wealth-min (exp (random-normal lognormal-wealth-logmean lognormal-wealth-logsigma)))
+  ]
+  if wealth-distribution = "uniform" [
+    report uniform-wealth-min + (random-float (uniform-wealth-max - uniform-wealth-min))
+  ]
+  report 0
+end
+
+
+
+;;
+;  social category
+to-report migrant-social-category
+  if social-categories = "discrete" [
+    let cat random #-social-categories
+    if not table:has-key? migrant-count cat [table:put migrant-count cat 0] table:put migrant-count cat ((table:get migrant-count cat) + 1)
+    report cat
+  ]
+  
+  ; TODO : continuous social proximity
+  
+  ; TODO : real-like social network
+  
+  report 0
+end
+
+
+
+;;
+;  Computes economic category from wealth
+to-report migrant-economic-category
+  let res 0
+  let cat 0 foreach economic-categories-breaks [if wealth < ? [set res cat] set cat cat + 1]
+  report res
+end
+
+
+
+to-report migrant-initial-residence
+  let p one-of patches
+  ifelse table:get migrant-count social-category < migrant-initial-position-aggregation-threshold [
+    let ma max [population] of patches
+    set p one-of patches with [population > ma / 10]
+    
+  ][
+    ; let do it brutally (needs spatial smoothing)
+    
+  ]
+  report (list ([pxcor] of p - 0.5 + random-float 1) ([pycor] of p - 0.5 + random-float 1))
 end

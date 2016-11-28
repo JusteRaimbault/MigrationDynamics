@@ -1,5 +1,5 @@
 
-extensions [matrix]
+extensions [matrix table]
 
 __includes [
   
@@ -24,24 +24,65 @@ __includes [
 
 globals [
   
+  ;;;;;;;;;;
+  ;; World
+  
   ; patch with in km
   patch-real-size
-   
    
   ; distance matrix between patches
   distance-matrix
   
+  ;;
+  ; max population on a patch
+  max-population
   
-     
+  
+  ;;;;;;;;;
+  ;; Economic
+  
+  ; wage breaks between economic categories
+  economic-categories-breaks
+  
+  
+  ;;;
+  ;  migrants properties parameters
+  
+  migrant-count
+  
+  ; wealth distribution
+  lognormal-wealth-logmean
+  lognormal-wealth-logsigma
+  uniform-wealth-min
+  uniform-wealth-max
+  
+  ; social categories
+  #-social-categories
+  
+  ; migrant initial position
+  migrant-initial-position-aggregation-threshold
+  
 ]
 
 
 
 
 patches-own [
+  ; city to which patch belongs
+  owning-city
+  
   ; total population on the patch
   population
   
+  ; economic
+  ;  - potential-jobs per economic sector : list, for which item i corresponds to sector i
+  potential-jobs
+  
+  ; number of effectively available jobs (from which accessibility is computed)
+  available-jobs
+  
+  ; list of migrants working (list of lists by economic category)
+  workers
   
   ; accessibilities by csp
   accessibilities
@@ -54,8 +95,15 @@ patches-own [
 breed [cities city]
 
 cities-own [
+  ; aggregated city population
   city-population
-  area-patches 
+  
+  ; patches of the city
+  area-patches
+  
+  ; population growth
+  delta-population
+  
 ]
 
 
@@ -63,12 +111,29 @@ breed [migrants migrant]
 
 migrants-own [
   
+  ; wealth : quantitative income-like variable
+  wealth
+  
+  ; social category
+  ;   - for now, social network is simply binary (e_ij = 1_{c_i = c_j} ) ; could implement more complicated social network ?
+  social-category
+ 
+  ; economic category
+  economic-category
+ 
+  
 ]
+
+
+
+
+
+
 @#$#@#$#@
 GRAPHICS-WINDOW
-258
+393
 10
-874
+1009
 647
 50
 50
@@ -111,7 +176,7 @@ SLIDER
 #-cities
 0
 10
-3
+7
 1
 1
 NIL
@@ -126,7 +191,7 @@ max-pop
 max-pop
 0
 2e7
-2390000
+5130000
 10000
 1
 NIL
@@ -141,7 +206,7 @@ rank-size-exp
 rank-size-exp
 0
 1.5
-1.2
+0.85
 0.05
 1
 NIL
@@ -150,13 +215,13 @@ HORIZONTAL
 SLIDER
 128
 97
-232
+305
 130
-max-density
-max-density
+center-density
+center-density
 0
 5e6
-110000
+50000
 10000
 1
 NIL
@@ -174,10 +239,10 @@ sum [city-population] of cities
 11
 
 BUTTON
-28
-201
-94
-234
+25
+226
+91
+259
 NIL
 setup
 NIL
@@ -202,10 +267,10 @@ sum [population] of patches
 11
 
 SLIDER
-0
-277
-108
-310
+3
+306
+111
+339
 gibrat-rate
 gibrat-rate
 0
@@ -217,15 +282,15 @@ NIL
 HORIZONTAL
 
 SLIDER
--1
-312
-159
-345
+112
+306
+309
+339
 migration-growth-share
 migration-growth-share
 0
 0.01
-0.0010
+0.0020
 0.001
 1
 NIL
@@ -241,6 +306,60 @@ count migrants
 17
 1
 11
+
+CHOOSER
+6
+677
+144
+722
+display-type
+display-type
+"population" "economic" "accessibility"
+0
+
+BUTTON
+150
+684
+224
+717
+update
+update-display
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+CHOOSER
+5
+144
+126
+189
+wealth-distribution
+wealth-distribution
+"log-normal" "uniform"
+0
+
+CHOOSER
+128
+144
+234
+189
+social-categories
+social-categories
+"discrete"
+0
+
+OUTPUT
+1051
+593
+1400
+721
+10
 
 @#$#@#$#@
 ## WHAT IS IT?

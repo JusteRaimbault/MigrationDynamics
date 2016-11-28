@@ -3,19 +3,21 @@
 ; main
 
 
+;;
+;  execution order : consistence with setup
 to go
   
-  ; population update
-  update-city-populations
+  ; migration
+  migration
   
-  ; utilities update
-  update-utilities
+  ; meso city growth
+  grow-cities
   
   ; new migrants
   new-migrants-arrival
   
-  ; migration
-  migration
+  ; utilities update
+  update-utilities
   
   ; display/reporters
   update-display

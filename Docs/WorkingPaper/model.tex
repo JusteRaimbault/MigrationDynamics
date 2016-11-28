@@ -54,6 +54,8 @@ To the best of our knowledge, there was no attempt in the literature before to f
 
 \cite{xie2007simulating} : agent-based model to simulate the emergence of Urban Villages. \cite{silveira2006agent} : Ising model of rural-urban migration. \cite{fernandez2005characterizing} : study of population characteristics to establish the relevance of a future ABM.
 
+The idea of applying complexity paradigms to rural-urban migration is far from new, as~\cite{mabogunje1970systems} already theorized it in the frame of General System Theory, that for some is viewed as a precursor of complexity theories.
+
 Following a logic of \emph{Pattern-oriented modeling}~\cite{grimm2005pattern}, combined with recent advances in multi-modeling~\cite{cottineau2016back}, one can use agent-based models as powerful tools to test qualitative hypothesis, with a reasonable need for empirical data through toy-models or hybrid models.
 
 
@@ -89,10 +91,15 @@ where $Z_i^{(c)}$ is generalized accessibility given by $Z_i^{(c)} = P_i \cdot \
 
 At each time step, the system evolves sequentially according to the following rules :
 
-\begin{itemize}
-\item Cities mesoscopic variables $\tilde{P}_k(t)$ and $\tilde{E}_k^{c}(t)$ are deterministically updated, following the very simple assumption of the expectancy of a Gibrat's law, and a scaling law to determine economic variables from population.
-\item Patches variables are updated conditionally to the new aggregated values. \textit{Using a simple urban growth model of aggregation, deterministic for population and a bit more random for jobs ; still to be clarified}.
-\item A number of new migrants, proportional to Gibrat growth rate, enter the region. They lean on social network (guanxi) to first settle in the city and agglomerate following a preferential attachment by place of origin.
+\begin{enumerate}
+\item Cities mesoscopic variables $\tilde{P}_k(t)$ and $\tilde{E}_k^{c}(t)$ are deterministically updated. Population follows the very simple assumption of the expectancy of a Gibrat's law, i.e. $\tilde{P}_k(t)= g_k \cdot \tilde{P}_k(t-1)$. Economy follows a scaling law of population: $\tilde{E}_k^{(c)}(t) = E_k^{(c,0)}\cdot \left(\frac{\tilde{P}_k(t)}{P_0}\right)^{\gamma_k^{(c)}}$.
+
+\item Patches variables are updated conditionally to the new aggregated values. For population, we adapt the aggregation-diffusion process detailed in~\cite{raimbault2016calibration}: a density ceil is introduced and diffusion is replaced by spatial noise\footnote{formally, let $\Delta \tilde{P}_k(t) = \tilde{P}_k(t) - \tilde{P}_k(t-1)$}.
+
+%\textit{Using a simple urban growth model of aggregation, deterministic for population and a bit more random for jobs ; still to be clarified}.
+
+\item A number of new migrants, proportional to Gibrat growth rate, enter the region. They lean on social network %(关系，guanxi) 
+to first settle in the city and agglomerate following a preferential attachment by place of origin.
 \item Migration occur following a discrete choice dynamics : the probability to move to cell $j$ is given by
 
 \[
@@ -107,12 +114,18 @@ what simplifies into a reduced form, with $\beta' = \frac{\beta}{Z_0}$, $\gamma 
 
 Residential movement is drawn randomly according to these probabilities, and jobs are chosen around new residence following an exponentially decreasing probability.
 
-\end{itemize}
+\item Migrants update their wealth and eventually economic category
+
+\end{enumerate}
 
 
 \paragraph{Indicators}
 
-\textit{TBW}
+\begin{itemize}
+\item Total migrants wealth gain
+\item Total migrants social mobility
+\end{itemize}
+
 
 \paragraph{Synthetic Data Generation}
 
@@ -141,7 +154,7 @@ Residential movement is drawn randomly according to these probabilities, and job
 \begin{itemize}
 \item what is the impact of varying wealth distribution shape and width on system dynamics ?
 \item what is the impact of various spatial distribution of $h_j^{(c)}$, i.e. different government policies ?
-\item 
+\item Comparison with and without Hong-Kong and Macao
 \item \ldots
 \end{itemize}
 }

@@ -9,6 +9,43 @@ end
 
 
 to color-patches
-  let mi min [population] of patches let ma max [population] of patches
-  ask patches [set pcolor scale-color red population mi ma]
+  if display-type = "population" [
+    let mi min [population] of patches let ma max [population] of patches
+    ask patches [set pcolor scale-color red population mi ma]
+  ]
+  
+  if display-type = "economic" [
+    
+  ]
+  
+  if display-type = "accessibility" [
+    
+  ]
+  
 end
+
+
+
+
+
+;;
+; draw boundaries between cities
+to draw-boundaries
+  ask patches with [count neighbors4 with [[owning-city] of myself != owning-city] > 0] [
+    let p self
+    sprout 1 [
+      set color pink set shape "circle" ;set size patch-size / 2
+      foreach to-list [neighbors4 with [[owning-city] of p != owning-city]] of myself [
+          let xp [pxcor] of p let yp [pycor] of p let xn [pxcor] of ? let yn [pycor] of ?
+          ifelse xp = xn [
+            setxy xp - 0.499 (yp + yn) / 2 pen-down setxy xp + 0.499 (yp + yn) / 2 pen-up
+          ][
+            setxy (xp + xn) / 2  yp - 0.499 pen-down setxy (xp + xn) / 2  yp + 0.499 pen-up
+          ]
+      ]
+      die 
+    ]
+  ]
+  
+end
+
