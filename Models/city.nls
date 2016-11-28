@@ -44,8 +44,17 @@ to apply-city-growth-patches
   ;; population
   
   ask cities [
+    let potential-growth-patches area-patches with [population < max-population]
+    let step-pop-incr delta-population / patch-growth-steps
+    
+    repeat patch-growth-steps [
+      let stot sum [population ^ patch-growth-alpha] of potential-growth-patches let s 0 let r random-float 1 let incr? false
+      foreach to-list potential-growth-patches [set s s + ((population ^ patch-growth-alpha) / stot) if r < s and not incr? [ask ? [ask one-of (patches in-radius patch-growth-noise-radius) [set population population + step-pop-incr]]set incr? true]]
+    ]
     
   ]
+  
+  ;; economics : idem ?
   
 end
 

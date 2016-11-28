@@ -18,6 +18,9 @@ __includes [
   ; utils
   "utils/SpatialKernels.nls"
   "utils/List.nls"
+ 
+  ; test
+  "test/city-growth.nls"
   
 ]
 
@@ -37,6 +40,10 @@ globals [
   ; max population on a patch
   max-population
   
+  ; number of steps for patch population growth
+  patch-growth-steps
+  patch-growth-alpha
+  patch-growth-noise-radius
   
   ;;;;;;;;;
   ;; Economic
@@ -360,6 +367,34 @@ OUTPUT
 1400
 721
 10
+
+BUTTON
+1018
+552
+1119
+585
+test city growth
+go-city-growth
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+MONITOR
+1348
+10
+1405
+55
+delta
+sum [population] of patches - sum [city-population] of cities
+17
+1
+11
 
 @#$#@#$#@
 ## WHAT IS IT?

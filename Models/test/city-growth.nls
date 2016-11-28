@@ -1,0 +1,9 @@
+
+;; test city growth
+
+
+to go-city-growth
+  grow-cities
+  update-display
+  tick
+end

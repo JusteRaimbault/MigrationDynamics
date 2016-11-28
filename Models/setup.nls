@@ -18,6 +18,8 @@ to setup
   
   update-display
   
+  reset-ticks
+  
 end
 
 
@@ -32,6 +34,9 @@ to setup-globals
   
   set patch-real-size 2
 
+  set patch-growth-steps 100
+  set patch-growth-alpha 1.6
+  set patch-growth-noise-radius 3
 
   ;;;
   ;; Migrants
