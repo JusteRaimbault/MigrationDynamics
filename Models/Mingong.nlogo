@@ -60,11 +60,23 @@ globals [
   ; distance matrix between patches
   distance-matrix
   
+  ; list of utility matrices
+  utilities
+  
+  ; matrix of government utility control
+  policy-matrix
+  
+  ;; patches list/mat
+  
   patch-list
   
   patches-population
   
-  patches-effective-jobs
+  patches-available-jobs
+  
+  patches-accessibilities
+  
+  patches-life-cost
   
   ;;
   ; synthetic economic configuration
@@ -113,6 +125,8 @@ globals [
 
 
 patches-own [
+  
+  
   ; city to which patch belongs
   owning-city
   
@@ -135,6 +149,8 @@ patches-own [
   ; tmp var to use kernel without list issues
   tmp-eco
   
+  ; index in runtime matrices/lists
+  number
   
 ]
 
@@ -190,17 +206,15 @@ migrants-own [
 
 
 
-
-
 @#$#@#$#@
 GRAPHICS-WINDOW
 393
 10
-1009
-647
-50
-50
-6.0
+952
+590
+30
+30
+9.0
 1
 10
 1
@@ -210,10 +224,10 @@ GRAPHICS-WINDOW
 0
 0
 1
--50
-50
--50
-50
+-30
+30
+-30
+30
 0
 0
 1
@@ -353,7 +367,7 @@ migration-growth-share
 migration-growth-share
 0
 0.01
-0.0020
+0.0010
 0.001
 1
 NIL
@@ -425,10 +439,10 @@ OUTPUT
 10
 
 BUTTON
-1017
-509
-1118
-542
+1004
+474
+1105
+507
 test city growth
 go-city-growth
 NIL
@@ -477,6 +491,134 @@ sum [sum potential-jobs] of patches
 17
 1
 11
+
+SLIDER
+3
+398
+145
+431
+decay-accessibility
+decay-accessibility
+0
+50
+6
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+148
+398
+308
+431
+cost-access-ratio
+cost-access-ratio
+0
+1e7
+6014000
+1e3
+1
+NIL
+HORIZONTAL
+
+SLIDER
+3
+434
+146
+467
+move-aversion
+move-aversion
+0
+5e7
+10550000
+1e4
+1
+NIL
+HORIZONTAL
+
+BUTTON
+1006
+509
+1082
+542
+show utils
+let cat 0 repeat #-economic-categories [\n output-print (word \"max u for cat \" cat \" : \" max map max matrix:to-row-list item cat utilities )\n set cat cat + 1\n]
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+1083
+509
+1169
+542
+show access
+let cat 0 repeat #-economic-categories [\n output-print (word \"max access for cat \" cat \" : \" max item cat patches-accessibilities)\n set cat cat + 1\n]
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+SLIDER
+149
+434
+307
+467
+beta-discrete-choice
+beta-discrete-choice
+0
+1e-5
+1.0E-6
+1e-7
+1
+NIL
+HORIZONTAL
+
+BUTTON
+1170
+509
+1269
+542
+min stay proba
+let cat 0 repeat #-economic-categories [\n  output-print (word \"min stay proba for cat \" cat \" : \" min [1 - sum patch-probabilities cat] of patches)\n  set cat cat + 1\n]
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+1107
+473
+1211
+506
+update utils
+update-utilities
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
 
 @#$#@#$#@
 ## WHAT IS IT?

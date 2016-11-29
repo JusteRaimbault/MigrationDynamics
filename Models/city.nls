@@ -105,7 +105,7 @@ end
 
 to new-city-synthetic
   ;setxy random-xcor random-ycor  
-  move-to one-of (patches with [abs pxcor < max-pxcor - 15 and abs pycor < max-pycor - 15]) ;with-max [min (map [distance ?] to-list cities)]
+  move-to one-of (patches with [abs pxcor < max-pxcor * 0.9 and abs pycor < max-pycor * 0.9]) ;with-max [min (map [distance ?] to-list cities)]
   set shape "house" set color green set size 2
   
  

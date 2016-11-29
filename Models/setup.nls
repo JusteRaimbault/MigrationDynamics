@@ -32,7 +32,7 @@ to setup-globals
   ;;;;
   ;; World
   
-  set patch-real-size 2
+  set patch-real-size 1
 
   set patch-growth-steps 100
   set patch-growth-alpha 0.8
@@ -85,6 +85,8 @@ to setup-world
   ;update-utilities
   
   setup-patch-list-and-euclidian-distance-matrix
+  
+  setup-policy
   
 end
 
@@ -183,7 +185,10 @@ to setup-synthetic-economy
       set cat cat + 1
     ]
   ]
- 
+  
+  ; all jobs available at the beginning
+  ask patches [set available-jobs potential-jobs]
+  
  
   ; compute aggregated variables at city level
   ask cities [
@@ -215,13 +220,16 @@ end
 to setup-patch-list-and-euclidian-distance-matrix
   set patch-list []
   let pxcor-list [] let pycor-list []
+  let i 0
   ask patches[
+    set number i
     set patch-list lput self patch-list
     set pxcor-list lput pxcor pxcor-list
-    set pycor-list lput pycor pycor-list 
+    set pycor-list lput pycor pycor-list
+    set i i + 1
   ]
   
-  set distance-matrix matrix:map [(sqrt ?) * patch-real-size] (matrix:plus matrix:map [? ^ 2] (matrix:minus (matrix:from-row-list (rep pxcor-list (count patches))) (matrix:from-column-list (rep pxcor-list (count patches)))) matrix:map [? ^ 2] (matrix:minus (matrix:from-row-list (rep pycor-list (count patches))) (matrix:from-column-list (rep pycor-list (count patches)))))
+  set distance-matrix matrix:map [exp (- ((sqrt ?) * patch-real-size) / decay-accessibility)] (matrix:plus matrix:map [? ^ 2] (matrix:minus (matrix:from-row-list (rep pxcor-list (count patches))) (matrix:from-column-list (rep pxcor-list (count patches)))) matrix:map [? ^ 2] (matrix:minus (matrix:from-row-list (rep pycor-list (count patches))) (matrix:from-column-list (rep pycor-list (count patches)))))
   
   ; WRONG WAY : very slow with many patches
 ;  set patch-list []
@@ -243,6 +251,20 @@ to setup-patch-list-and-euclidian-distance-matrix
 ;  
 ;  set distance-matrix res
 end
+
+
+;;
+;
+to setup-policy
+  
+ ; for now : no policy
+ set policy-matrix matrix:make-constant count patches count patches 0
+  
+end
+
+
+
+
 
 
 

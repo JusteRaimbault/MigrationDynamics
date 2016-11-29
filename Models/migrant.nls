@@ -97,14 +97,17 @@ end
 
 
 to-report migrant-initial-residence
-  let p one-of patches
+  let p one-of patches let ma max [population] of patches
   ifelse table:get migrant-count social-category < migrant-initial-position-aggregation-threshold [
-    let ma max [population] of patches
     set p one-of patches with [population > ma / 10]
-    
   ][
     ; let do it brutally (needs spatial smoothing)
-    
+    let s social-category
+    set p one-of (patches with [population > ma / 10]) with-max [count (migrants in-radius 3) with [social-category = s]]
   ]
   report (list ([pxcor] of p - 0.5 + random-float 1) ([pycor] of p - 0.5 + random-float 1))
 end
+
+
+
+
