@@ -11,7 +11,9 @@ __includes [
   "migrant.nls"
   "city.nls"
   "utilities.nls"
+  "migration.nls"
   "indicators.nls"
+  
   
   ;display
   "display.nls"
@@ -52,6 +54,12 @@ globals [
   #-economic-categories
   
   max-potential-jobs
+  
+  job-searching-radius
+  
+  ;;;;;;;
+  ;; Migration
+  #-migrations
   
   
   ;;;
@@ -136,6 +144,7 @@ patches-own [
   ; economic
   ;  - potential-jobs per economic sector : list, for which item i corresponds to sector i
   potential-jobs
+  prev-potential-jobs
   
   ; number of effectively available jobs (from which accessibility is computed)
   available-jobs
@@ -200,6 +209,11 @@ migrants-own [
   ; economic category
   economic-category
  
+  job-patch
+ 
+  drawing
+  moving?
+  destination
   
 ]
 
@@ -367,8 +381,8 @@ migration-growth-share
 migration-growth-share
 0
 0.01
-0.0010
-0.001
+5.0E-4
+0.0001
 1
 NIL
 HORIZONTAL
@@ -484,9 +498,9 @@ HORIZONTAL
 MONITOR
 1196
 59
-1253
+1260
 104
-jobs
+pot jobs
 sum [sum potential-jobs] of patches
 17
 1
@@ -531,7 +545,7 @@ move-aversion
 move-aversion
 0
 5e7
-10550000
+4300000
 1e4
 1
 NIL
@@ -619,6 +633,81 @@ NIL
 NIL
 NIL
 1
+
+BUTTON
+111
+283
+174
+316
+NIL
+go
+T
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+MONITOR
+1265
+106
+1334
+151
+migrations
+#-migrations
+17
+1
+11
+
+MONITOR
+1265
+58
+1322
+103
+av jobs
+sum [sum available-jobs] of patches
+17
+1
+11
+
+PLOT
+972
+20
+1180
+158
+wealth
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plot mean [wealth] of migrants"
+
+PLOT
+973
+161
+1180
+281
+migrations
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plot #-migrations"
 
 @#$#@#$#@
 ## WHAT IS IT?

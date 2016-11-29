@@ -24,6 +24,8 @@ to go
   ; display/reporters
   update-display
   
+  tick
+  
 end
 
 

@@ -88,7 +88,11 @@ end
 ;;
 ; probas to move from this patch
 to-report patch-probabilities [cat]
-  let patch-utils map [exp (beta-discrete-choice * ?)] matrix:get-row (item cat utilities) number
-  let stot sum patch-utils
-  report map [? / (1 + stot)] patch-utils
+  
+  ; TODO patch with no housing : add 0 probability
+  
+  let patch-utils matrix:get-row (item cat utilities) number
+  let patch-nn-probas map [exp (beta-discrete-choice * ?)] patch-utils
+  let stot sum patch-nn-probas
+  report map [? / (1 + stot)] patch-nn-probas
 end

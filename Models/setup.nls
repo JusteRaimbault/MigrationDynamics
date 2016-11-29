@@ -66,6 +66,8 @@ to setup-globals
   set economic-center-job-number-ratio 0.01
   set economic-center-job-number economic-center-job-number-ratio * initial-jobs
   
+  set job-searching-radius 15
+  
 end
 
 

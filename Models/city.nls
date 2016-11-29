@@ -56,8 +56,10 @@ end
 ;
 to apply-city-growth-patches
   
-  ;; population
   
+  ask patches [set prev-potential-jobs potential-jobs]
+  
+  ;; population
   ask cities [
     let potential-growth-patches area-patches with [population < max-population]
     let step-pop-incr delta-population / patch-growth-steps
@@ -95,6 +97,11 @@ to apply-city-growth-patches
     ]
     
     
+  ]
+  
+  ;; add the newly created jobs to available
+  ask patches [
+   let cat 0 repeat #-economic-categories [set available-jobs replace-item cat available-jobs (item cat available-jobs + item cat potential-jobs - item cat prev-potential-jobs) set cat cat + 1] 
   ]
   
   

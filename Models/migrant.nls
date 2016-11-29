@@ -12,20 +12,13 @@ to new-migrants-arrival
   
   output-print "... new migrants"
   
+  ; TODO initial number different from migration rate to see effective evolution of wealth ?
+  ; TODO control migration on available jobs to avoid death ? -> add effective jobs around in utility ? .. already in accessibility, an other way. ..
+  
+  
   create-migrants (floor total-population * migration-growth-share / 100) [
     new-migrant
   ]
-  
-end
-
-
-;;
-;
-to migration
-  
-  output-print "... migration"
-  
-  
   
 end
 
@@ -50,6 +43,9 @@ to new-migrant
   
   
   set color (social-category * 140 / #-social-categories) + 10
+  
+  set job-patch nobody
+  find-job
   
 end
 
@@ -107,6 +103,39 @@ to-report migrant-initial-residence
   ]
   report (list ([pxcor] of p - 0.5 + random-float 1) ([pycor] of p - 0.5 + random-float 1))
 end
+
+
+;;
+; migration movement
+to move
+  move-to item destination patch-list setxy xcor - 0.5 + random-float 1 ycor - 0.5 + random-float 1
+  find-job
+  update-wealth
+end
+
+
+to find-job
+  ; removes old job
+  if job-patch != nobody [ask job-patch [set available-jobs replace-item ([economic-category] of myself) available-jobs (item ([economic-category] of myself) available-jobs + 1)]]
+  
+  ; find new job
+  set job-patch one-of (patches in-radius job-searching-radius) with [item [economic-category] of myself available-jobs >= 1]
+  ifelse job-patch = nobody [die][ ; TODO precise the rationale here -- we have no cost of transportation in the utility ; may be useful to add it ?
+    ask job-patch [set available-jobs replace-item ([economic-category] of myself) available-jobs (item ([economic-category] of myself) available-jobs - 1)]
+  ]
+end
+
+to update-wealth
+  
+  ; update wealth -> what eq ?
+  ;  life cost is consistent
+  set wealth wealth * (1 + [life-cost] of patch-here) ; add a constant dimensionnal parameter
+  
+  set economic-category migrant-economic-category
+  
+end
+
+
 
 
 
