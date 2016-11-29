@@ -3,15 +3,14 @@
 ; migrant
 
 
-to update-utilities
-  
-end
 
 
 
 ;;
 ; 
 to new-migrants-arrival
+  
+  output-print "... new migrants"
   
   create-migrants (floor total-population * migration-growth-share / 100) [
     new-migrant
@@ -20,7 +19,13 @@ to new-migrants-arrival
 end
 
 
+;;
+;
 to migration
+  
+  output-print "... migration"
+  
+  
   
 end
 
@@ -30,7 +35,7 @@ end
 ; migrant constructor
 to new-migrant
   
-  set shape "person" set size 1
+  set shape "person" set size 1.5
   
   ; social network
   set social-category migrant-social-category

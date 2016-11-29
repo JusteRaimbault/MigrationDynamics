@@ -35,8 +35,8 @@ to setup-globals
   set patch-real-size 2
 
   set patch-growth-steps 100
-  set patch-growth-alpha 1.6
-  set patch-growth-noise-radius 3
+  set patch-growth-alpha 0.8
+  set patch-growth-noise-radius 5
 
   ;;;
   ;; Migrants
@@ -59,11 +59,11 @@ to setup-globals
   
   ;; synthetic
   set synth-eco-max-center-number 3
-  set synth-eco-max-pop-threshold 0.01
-  set synth-eco-max-loc-noise 3
+  set synth-eco-max-pop-threshold 0.1
+  set synth-eco-max-loc-noise 4
   
   
-  set economic-center-job-number-ratio 0.05
+  set economic-center-job-number-ratio 0.01
   set economic-center-job-number economic-center-job-number-ratio * initial-jobs
   
 end
@@ -81,8 +81,10 @@ to setup-world
      
   ]
   
-  ; need to compute utilities to locate first migrants
-  update-utilities
+  ; need to compute utilities to locate first migrants ? NO, done on social network only
+  ;update-utilities
+  
+  setup-patch-list-and-euclidian-distance-matrix
   
 end
 
@@ -119,6 +121,9 @@ to setup-synthetic-population
   set economic-p0 max [city-population] of cities
   
 end
+
+
+
 
 ;;
 ;  Synthetic setup of an economic configuration
@@ -158,7 +163,7 @@ to setup-synthetic-economy
       ; category-specific parameters
       set current-centers floor (1 + cat * (synth-eco-max-center-number - 1)/ (#-economic-categories - 1)) ;show current-centers
       set current-pop-threshold (1 + cat * (synth-eco-max-pop-threshold - 1)/ (#-economic-categories - 1)) ;show current-pop-threshold
-      set current-noise cat * synth-eco-max-loc-noise / (#-economic-categories - 1) ;show current-noise
+      set current-noise 2 + cat * synth-eco-max-loc-noise / (#-economic-categories - 1) ;show current-noise
      
       let center-job-share current-jobs / current-centers
       
@@ -179,6 +184,14 @@ to setup-synthetic-economy
     ]
   ]
  
+ 
+  ; compute aggregated variables at city level
+  ask cities [
+    set city-potential-jobs []
+    let cat 0 repeat #-economic-categories [set city-potential-jobs lput (sum [item cat potential-jobs] of area-patches) city-potential-jobs set cat cat + 1]
+  ]
+  
+  let cat 0 set max-potential-jobs [] repeat #-economic-categories [set max-potential-jobs lput (max [item cat potential-jobs] of patches) max-potential-jobs set cat cat + 1]
   
 end
 
@@ -199,21 +212,36 @@ end
 
 
 
-to-report euclidian-distance-matrix
-  ; euclidian distance matrix
-  let #-patches count patches
-  let res matrix:make-constant #-patches #-patches 0
-  let p1 0 let p2 0
-  repeat #-patches [
-     let x1 ((floor (p1 / world-width)) + min-pxcor) * patch-real-size let y1 ((p1 - world-width * floor (p1 / world-width)) + min-pycor) * patch-real-size
-     set p2 0
-     repeat #-patches [
-        let x2 ((floor (p2 / world-width)) + min-pxcor) * patch-real-size let y2 ((p2 - world-width * floor (p2 / world-width)) + min-pycor) * patch-real-size
-        matrix:set res p1 p2 sqrt ((x1 - x2) ^ 2 + (y1 - y2) ^ 2) 
-        set p2 p2 + 1
-     ]
-     set p1 p1 + 1
+to setup-patch-list-and-euclidian-distance-matrix
+  set patch-list []
+  let pxcor-list [] let pycor-list []
+  ask patches[
+    set patch-list lput self patch-list
+    set pxcor-list lput pxcor pxcor-list
+    set pycor-list lput pycor pycor-list 
   ]
+  
+  set distance-matrix matrix:map [(sqrt ?) * patch-real-size] (matrix:plus matrix:map [? ^ 2] (matrix:minus (matrix:from-row-list (rep pxcor-list (count patches))) (matrix:from-column-list (rep pxcor-list (count patches)))) matrix:map [? ^ 2] (matrix:minus (matrix:from-row-list (rep pycor-list (count patches))) (matrix:from-column-list (rep pycor-list (count patches)))))
+  
+  ; WRONG WAY : very slow with many patches
+;  set patch-list []
+;  ; euclidian distance matrix
+;  let #-patches count patches
+;  let res matrix:make-constant #-patches #-patches 0
+;  let p1 0 let p2 0
+;  repeat #-patches [
+;     let x1 ((floor (p1 / world-width)) + min-pxcor) let y1 ((p1 - world-width * floor (p1 / world-width)) + min-pycor)
+;     set patch-list lput patch x1 y1 patch-list
+;     set p2 0
+;     repeat #-patches [
+;        let x2 ((floor (p2 / world-width)) + min-pxcor) let y2 ((p2 - world-width * floor (p2 / world-width)) + min-pycor)
+;        matrix:set res p1 p2 (sqrt ((x1 - x2) ^ 2 + (y1 - y2) ^ 2)) * patch-real-size
+;        set p2 p2 + 1
+;     ]
+;     set p1 p1 + 1
+;  ]
+;  
+;  set distance-matrix res
 end
 
 

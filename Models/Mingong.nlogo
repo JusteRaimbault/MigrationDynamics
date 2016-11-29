@@ -10,6 +10,7 @@ __includes [
   "main.nls"
   "migrant.nls"
   "city.nls"
+  "utilities.nls"
   "indicators.nls"
   
   ;display
@@ -32,9 +33,6 @@ globals [
   
   ; patch with in km
   patch-real-size
-   
-  ; distance matrix between patches
-  distance-matrix
   
   ;;
   ; max population on a patch
@@ -53,6 +51,20 @@ globals [
   
   #-economic-categories
   
+  max-potential-jobs
+  
+  
+  ;;;
+  ;; Runtime performance variables
+  
+  ; distance matrix between patches
+  distance-matrix
+  
+  patch-list
+  
+  patches-population
+  
+  patches-effective-jobs
   
   ;;
   ; synthetic economic configuration
@@ -140,6 +152,11 @@ cities-own [
   ; population growth
   delta-population
   
+  ; potential jobs
+  city-potential-jobs
+  
+  delta-economic
+  
 ]
 
 
@@ -222,7 +239,7 @@ SLIDER
 #-cities
 0
 10
-7
+3
 1
 1
 NIL
@@ -274,13 +291,13 @@ NIL
 HORIZONTAL
 
 MONITOR
-1219
-11
-1346
-56
-total city pop
+1273
+13
+1352
+58
+city pop
 sum [city-population] of cities
-1
+0
 1
 11
 
@@ -302,13 +319,13 @@ NIL
 1
 
 MONITOR
-1218
-61
-1344
-106
-total patch pop
+1195
+13
+1271
+58
+patch pop
 sum [population] of patches
-1
+0
 1
 11
 
@@ -343,10 +360,10 @@ NIL
 HORIZONTAL
 
 MONITOR
-1217
-110
-1283
-155
+1197
+106
+1263
+151
 migrants
 count migrants
 17
@@ -355,9 +372,9 @@ count migrants
 
 CHOOSER
 6
-677
+630
 144
-722
+675
 display-type
 display-type
 "population" "potential-jobs" "accessibility"
@@ -365,9 +382,9 @@ display-type
 
 BUTTON
 150
-684
+637
 224
-717
+670
 update
 update-display
 NIL
@@ -401,17 +418,17 @@ social-categories
 0
 
 OUTPUT
-1051
-593
-1400
-721
+1050
+550
+1399
+678
 10
 
 BUTTON
-1018
-552
-1119
-585
+1017
+509
+1118
+542
 test city growth
 go-city-growth
 NIL
@@ -425,10 +442,10 @@ NIL
 1
 
 MONITOR
-1348
-10
-1405
-55
+1355
+13
+1412
+58
 delta
 sum [population] of patches - sum [city-population] of cities
 17
@@ -444,11 +461,22 @@ initial-jobs
 initial-jobs
 0
 10000
-1080
+1000
 10
 1
 NIL
 HORIZONTAL
+
+MONITOR
+1196
+59
+1253
+104
+jobs
+sum [sum potential-jobs] of patches
+17
+1
+11
 
 @#$#@#$#@
 ## WHAT IS IT?

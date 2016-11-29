@@ -1,0 +1,32 @@
+
+;;
+; utilities
+
+
+;;
+;  update utilities
+to update-utilities
+  
+  output-print "... update utilities"
+  
+  update-patches-summary-vars
+  
+  update-accessibilities
+  
+  
+  
+end
+
+
+
+to update-patches-summary-vars
+  
+end
+
+
+
+;;
+;  patch accessibilities
+to update-accessibilities
+  
+end
