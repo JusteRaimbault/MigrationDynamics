@@ -51,6 +51,32 @@ globals [
   ; wage breaks between economic categories
   economic-categories-breaks
   
+  #-economic-categories
+  
+  
+  ;;
+  ; synthetic economic configuration
+  
+  ; number of subcenters for last category (first has 1)
+  synth-eco-max-center-number
+  synth-eco-max-pop-threshold
+  synth-eco-max-loc-noise
+  
+  ;; synthetic number of jobs (in total of categories), for biggest city at t = 0
+  ;  taking P_0 = P(t=0,i=0), we have E(t=0,i=0) = E_0 = initial-jobs
+  ;  + differentiated per category : jobs category (c) = % share of migrants in the category
+  ;  -> E(t=0,i=0)^(c) = p_c * E_0
+  ;initial-jobs
+  economic-p0
+  
+  ; scaling exponent
+  economic-scaling-exponents
+  
+  ; sector shares (setup done BEFORE migrants -> cannot base on population structure to get shares)
+  economic-sectors-shares
+  
+  economic-center-job-number-ratio
+  economic-center-job-number
   
   ;;;
   ;  migrants properties parameters
@@ -94,6 +120,9 @@ patches-own [
   ; accessibilities by csp
   accessibilities
   
+  ; tmp var to use kernel without list issues
+  tmp-eco
+  
   
 ]
 
@@ -110,6 +139,16 @@ cities-own [
   
   ; population growth
   delta-population
+  
+]
+
+
+
+breed [economic-centers economic-center]
+
+economic-centers-own [
+  ; display convenience breed  
+  category
   
 ]
 
@@ -222,7 +261,7 @@ HORIZONTAL
 SLIDER
 128
 97
-305
+267
 130
 center-density
 center-density
@@ -247,9 +286,9 @@ sum [city-population] of cities
 
 BUTTON
 25
-226
+282
 91
-259
+315
 NIL
 setup
 NIL
@@ -275,9 +314,9 @@ sum [population] of patches
 
 SLIDER
 3
-306
+362
 111
-339
+395
 gibrat-rate
 gibrat-rate
 0
@@ -290,9 +329,9 @@ HORIZONTAL
 
 SLIDER
 112
-306
+362
 309
-339
+395
 migration-growth-share
 migration-growth-share
 0
@@ -321,7 +360,7 @@ CHOOSER
 722
 display-type
 display-type
-"population" "economic" "accessibility"
+"population" "potential-jobs" "accessibility"
 0
 
 BUTTON
@@ -342,20 +381,20 @@ NIL
 1
 
 CHOOSER
-5
-144
-126
-189
+6
+198
+127
+243
 wealth-distribution
 wealth-distribution
 "log-normal" "uniform"
 0
 
 CHOOSER
-128
-144
-234
-189
+129
+198
+235
+243
 social-categories
 social-categories
 "discrete"
@@ -395,6 +434,21 @@ sum [population] of patches - sum [city-population] of cities
 17
 1
 11
+
+SLIDER
+5
+131
+120
+164
+initial-jobs
+initial-jobs
+0
+10000
+1080
+10
+1
+NIL
+HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?
@@ -500,6 +554,16 @@ false
 Circle -7500403 true true 0 0 300
 Circle -16777216 true false 30 30 240
 
+computer workstation
+false
+0
+Rectangle -7500403 true true 60 45 240 180
+Polygon -7500403 true true 90 180 105 195 135 195 135 210 165 210 165 195 195 195 210 180
+Rectangle -16777216 true false 75 60 225 165
+Rectangle -7500403 true true 45 210 255 255
+Rectangle -10899396 true false 249 223 237 217
+Line -16777216 false 60 225 120 225
+
 cow
 false
 0
@@ -540,6 +604,26 @@ Circle -7500403 true true 8 8 285
 Circle -16777216 true false 60 75 60
 Circle -16777216 true false 180 75 60
 Polygon -16777216 true false 150 168 90 184 62 210 47 232 67 244 90 220 109 205 150 198 192 205 210 220 227 242 251 229 236 206 212 183
+
+factory
+false
+0
+Rectangle -7500403 true true 76 194 285 270
+Rectangle -7500403 true true 36 95 59 231
+Rectangle -16777216 true false 90 210 270 240
+Line -7500403 true 90 195 90 255
+Line -7500403 true 120 195 120 255
+Line -7500403 true 150 195 150 240
+Line -7500403 true 180 195 180 255
+Line -7500403 true 210 210 210 240
+Line -7500403 true 240 210 240 240
+Line -7500403 true 90 225 270 225
+Circle -1 true false 37 73 32
+Circle -1 true false 55 38 54
+Circle -1 true false 96 21 42
+Circle -1 true false 105 40 32
+Circle -1 true false 129 19 42
+Rectangle -7500403 true true 14 228 78 270
 
 fish
 false

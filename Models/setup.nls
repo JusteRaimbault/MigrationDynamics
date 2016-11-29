@@ -57,8 +57,15 @@ to setup-globals
   ;;;;
   ;; economics
   
+  ;; synthetic
+  set synth-eco-max-center-number 3
+  set synth-eco-max-pop-threshold 0.01
+  set synth-eco-max-loc-noise 3
   
-
+  
+  set economic-center-job-number-ratio 0.05
+  set economic-center-job-number economic-center-job-number-ratio * initial-jobs
+  
 end
 
 
@@ -109,6 +116,8 @@ to setup-synthetic-population
   ;
   set max-population max [population] of patches
   
+  set economic-p0 max [city-population] of cities
+  
 end
 
 ;;
@@ -120,16 +129,56 @@ end
 to setup-synthetic-economy
   
   output-print "...... synthetic economy"
-  
-  ; economic configuration
-  
-  
-  
-  
+   
   ; economic categories
   ;  27006 : 75% of log-normal (10,0.3) distribution
   set economic-categories-breaks [28000]
 
+  set #-economic-categories (length economic-categories-breaks + 1)
+  
+  ; simple for now : one innovative sector and one industry
+  set economic-scaling-exponents [1.2 0.9]
+  set economic-sectors-shares [0.25 0.75]
+  
+  ; economic configuration
+  ;  to simplify : category == sector
+  
+  ; initial potential jobs to 0
+  ask patches [
+    set potential-jobs rep 0 #-economic-categories
+  ]
+  
+  foreach to-list cities [
+    let cat 0 let current-centers 1 let current-pop-threshold 0 let current-noise 0
+    let city-center-population [population] of [patch-here] of ?
+    
+    repeat #-economic-categories [
+      let current-jobs (item cat economic-sectors-shares) * initial-jobs * (([city-population] of ? / economic-p0) ^ (item cat economic-scaling-exponents))
+      
+      ; category-specific parameters
+      set current-centers floor (1 + cat * (synth-eco-max-center-number - 1)/ (#-economic-categories - 1)) ;show current-centers
+      set current-pop-threshold (1 + cat * (synth-eco-max-pop-threshold - 1)/ (#-economic-categories - 1)) ;show current-pop-threshold
+      set current-noise cat * synth-eco-max-loc-noise / (#-economic-categories - 1) ;show current-noise
+     
+      let center-job-share current-jobs / current-centers
+      
+      repeat current-centers [
+         ; find the position of center
+         let tmp-center one-of (([area-patches] of ?) with [population < city-center-population * current-pop-threshold]) with-min [distance ?]
+         let center nobody ask tmp-center [set center one-of (([area-patches] of ?) in-radius current-noise)] ; respect administrativ boundaries here
+         ask center [sprout-economic-centers 1 [set category cat ifelse category = 0 [set shape "computer workstation"][set shape "factory"] set size 3 set color ((cat * 140 / #-economic-categories) + 35)]]
+         
+         ; apply kernel
+         apply-monocentric-kernel "poisson" (sqrt (center-job-share / (2 * pi * economic-center-job-number))) economic-center-job-number "tmp-eco" center
+      ]
+      
+      ; transfer from tmp var to jobs
+      ask patches [set potential-jobs (replace-item cat potential-jobs (item cat potential-jobs + tmp-eco)) set tmp-eco 0]
+    
+      set cat cat + 1
+    ]
+  ]
+ 
   
 end
 
