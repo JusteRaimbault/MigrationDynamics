@@ -268,5 +268,36 @@ end
 
 
 
+to setup-headless-globals
+  set setup-type "synthetic" ; or "gis"
+  
+  set #-cities 3
+  set max-pop 5e6
+  set rank-size-exp 0.85
+  set center-density 50000
+  set initial-jobs 10000  ; 1000
+  
+  set social-categories "discrete"
+  set wealth-distribution "log-normal"
+  
+  set gibrat-rate 1.005
+  set migration-growth-share 1e-4
+  
+  set decay-accessibility 6
+  
+  set cost-access-ratio 6e6
+  set move-aversion 4e6
+  set beta-discrete-choice 1e-6
+  
+  set display-type ""
+  
+  
+  
+end
+
+
+
+
+
 
 
