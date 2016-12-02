@@ -1,0 +1,33 @@
+import java.text.SimpleDateFormat
+import java.util.Date
+
+import Model._
+
+//costAccessRatio,wealthSigma,accDecay,moveAversion
+val exploration = ExplorationTask(
+  /*(((costAccessRatio in (1e6 to 1e7 by 1e6)) x
+  (wealthSigma in (0.1 to 1.0 by 0.1)) x
+  (accDecay in (2.0 to 20.0 by 2.0)) x
+  (moveAversion in (1e6 to 1e7 by 1e6))
+  ) withIndex id )*/
+  (LHS(
+    1,
+    costAccessRatio in Range(1e6,1e7),
+    wealthSigma in Range(0.1,1.0),
+    accDecay in Range(1.0,20.0),
+    moveAversion in Range(1e6,1e7)
+  ) withIndex id )
+  x (replication in UniformDistribution[Int]() take 10)
+)
+
+val purpose = "test"
+//val purpose = "grid_uniform"
+
+val eval = exploration -< model
+
+val indics_hook = AppendToCSVFileHook(workDirectory / "exploration" / ((new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss")).format(new Date()))+"_"+purpose+".csv")
+
+//val local = LocalEnvironment(40)
+val local = LocalEnvironment(10)
+
+exploration -< (model on local hook indics_hook)

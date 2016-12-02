@@ -11,6 +11,7 @@ to migration
   
   output-print "... migration"
   
+  set total-migrations total-migrations + #-migrations
   set #-migrations 0
   
   ask patches with [count migrants-here > 0] [
@@ -18,7 +19,8 @@ to migration
        
        let potential-movers migrants-here with [economic-category = cat]
        
-       let probas patch-probabilities cat
+       let probas-all patch-probabilities cat
+       let probas item 0 probas-all let utils item 1 probas-all
        let proba-stay 1 - sum probas
        ;let drawing [] foreach potential-movers [set drawing lput (list random-float 1 ?) drawing]
        ask potential-movers [set drawing random-float 1 set moving? false]
@@ -26,11 +28,11 @@ to migration
        set potential-movers potential-movers with [drawing > proba-stay]
        let s proba-stay let i 0
        foreach probas [
-         set s s + ? ask potential-movers with [drawing < s and not moving?] [set moving? true set destination i]
+         set s s + ? ask potential-movers with [drawing < s and not moving?] [set moving? true set destination i set delta-u item i utils]
          set i i + 1
        ]
        
-       ask potential-movers with [moving?] [move set #-migrations #-migrations + 1]
+       ask potential-movers with [moving?] [move]
        
        set cat cat + 1 
      ]

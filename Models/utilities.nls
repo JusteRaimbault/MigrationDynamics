@@ -94,5 +94,5 @@ to-report patch-probabilities [cat]
   let patch-utils matrix:get-row (item cat utilities) number
   let patch-nn-probas map [exp (beta-discrete-choice * ?)] patch-utils
   let stot sum patch-nn-probas
-  report map [? / (1 + stot)] patch-nn-probas
+  report (list map [? / (1 + stot)] patch-nn-probas patch-utils)
 end

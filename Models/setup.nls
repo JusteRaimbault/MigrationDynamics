@@ -45,7 +45,7 @@ to setup-globals
 
   ; migrant wealth
   set lognormal-wealth-logmean 10
-  set lognormal-wealth-logsigma 0.3
+  ;set lognormal-wealth-logsigma 0.3
   set uniform-wealth-min 5000
   set uniform-wealth-max 50000
 
@@ -66,7 +66,10 @@ to setup-globals
   set economic-center-job-number-ratio 0.01
   set economic-center-job-number economic-center-job-number-ratio * initial-jobs
   
-  set job-searching-radius 15
+  set job-searching-radius 25
+  
+  set total-migrations-cat (list 0 0)
+  set total-delta-u-cat (list 0 0)
   
 end
 
@@ -271,11 +274,11 @@ end
 to setup-headless-globals
   set setup-type "synthetic" ; or "gis"
   
-  set #-cities 3
+  set #-cities 4
   set max-pop 5e6
   set rank-size-exp 0.85
   set center-density 50000
-  set initial-jobs 10000  ; 1000
+  set initial-jobs 20000  ; 1000
   
   set social-categories "discrete"
   set wealth-distribution "log-normal"
@@ -283,14 +286,15 @@ to setup-headless-globals
   set gibrat-rate 1.005
   set migration-growth-share 1e-4
   
-  set decay-accessibility 6
+  ;set decay-accessibility 6
   
   ;set cost-access-ratio 6e6
-  set move-aversion 4e6
+  ;set move-aversion 4e6
   set beta-discrete-choice 1e-6
   
   set display-type ""
   
+  set total-time-steps 20
   
   
 end

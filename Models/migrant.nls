@@ -108,6 +108,11 @@ end
 ;;
 ; migration movement
 to move
+  set #-migrations #-migrations + 1
+  set individual-migrations individual-migrations + 1
+  set total-migrations-cat replace-item economic-category total-migrations-cat (item economic-category total-migrations-cat + 1)
+  set total-delta-u-cat replace-item economic-category total-delta-u-cat (item economic-category total-delta-u-cat + delta-u)
+  
   move-to item destination patch-list setxy xcor - 0.5 + random-float 1 ycor - 0.5 + random-float 1
   find-job
   update-wealth
@@ -129,9 +134,16 @@ end
 
 to update-wealth
   
+  
+  
   ; update wealth -> what eq ?
   ;  life cost is consistent
+  
+  set total-wealth-gain total-wealth-gain + (wealth * [life-cost] of patch-here)
+  
   set wealth wealth * (1 + [life-cost] of patch-here) ; add a constant dimensionnal parameter
+  
+  
   
   set economic-category migrant-economic-category
   

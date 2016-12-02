@@ -64,7 +64,9 @@ globals [
   ;;;;;;;
   ;; Migration
   #-migrations
-  
+  total-migrations
+  total-migrations-cat
+  total-delta-u-cat
   
   ;;;
   ;; Runtime performance variables
@@ -89,6 +91,9 @@ globals [
   patches-accessibilities
   
   patches-life-cost
+  
+  
+  total-time-steps
   
   ;;
   ; synthetic economic configuration
@@ -131,6 +136,12 @@ globals [
   ; migrant initial position
   migrant-initial-position-aggregation-threshold
   
+  
+  
+  ;;
+  ; indicators
+  
+  total-wealth-gain
   
   
   ;;;;;;;;;;
@@ -247,9 +258,11 @@ migrants-own [
   drawing
   moving?
   destination
+  delta-u
+  
+  individual-migrations
   
 ]
-
 
 @#$#@#$#@
 GRAPHICS-WINDOW
