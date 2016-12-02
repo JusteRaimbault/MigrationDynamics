@@ -46,7 +46,11 @@ end
 ; geographical inequality between economic classes
 
 to-report job-distance [cat]
-  report mean [distance job-patch] of migrants with [economic-category = cat] 
+  let catmigrants migrants with [economic-category = cat]
+  if count catmigrants > 0 [
+    report mean [distance job-patch] of catmigrants
+  ]
+  report 0
 end
 
 to-report job-distance-0

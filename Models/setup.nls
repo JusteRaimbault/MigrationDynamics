@@ -296,7 +296,7 @@ to setup-headless-globals
   
   set display-type ""
   
-  set total-time-steps 20
+  set total-time-steps 3 ; 20
   
   
 end
