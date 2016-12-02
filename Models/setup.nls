@@ -66,10 +66,12 @@ to setup-globals
   set economic-center-job-number-ratio 0.01
   set economic-center-job-number economic-center-job-number-ratio * initial-jobs
   
-  set job-searching-radius 25
+  set job-searching-radius 50
   
   set total-migrations-cat (list 0 0)
   set total-delta-u-cat (list 0 0)
+  
+  set utility-norm (list 0 0)
   
 end
 
@@ -290,7 +292,7 @@ to setup-headless-globals
   
   ;set cost-access-ratio 6e6
   ;set move-aversion 4e6
-  set beta-discrete-choice 1e-6
+  set beta-discrete-choice 1 ;1e-6  - 1 with normalisation
   
   set display-type ""
   

@@ -92,6 +92,7 @@ globals [
   
   patches-life-cost
   
+  utility-norm
   
   total-time-steps
   
@@ -118,6 +119,8 @@ globals [
   
   economic-center-job-number-ratio
   economic-center-job-number
+  
+  
   
   ;;;
   ;  migrants properties parameters

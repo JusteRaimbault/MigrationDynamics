@@ -79,6 +79,7 @@ to update-utilities-mat
     
     let cat-utility-mat (matrix:plus deltaC deltaZ policy-matrix (- move-aversion))
     set utilities lput cat-utility-mat utilities
+    if item cat utility-norm = 0 [set utility-norm replace-item cat utility-norm max map max matrix:to-column-list cat-utility-mat]
     set cat cat + 1
   ]
 end
@@ -91,7 +92,7 @@ to-report patch-probabilities [cat]
   
   ; TODO patch with no housing : add 0 probability
   
-  let patch-utils matrix:get-row (item cat utilities) number
+  let patch-utils map [? / (item cat utility-norm)] matrix:get-row (item cat utilities) number
   let patch-nn-probas map [exp (beta-discrete-choice * ?)] patch-utils
   let stot sum patch-nn-probas
   report (list map [? / (1 + stot)] patch-nn-probas patch-utils)
