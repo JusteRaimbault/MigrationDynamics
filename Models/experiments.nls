@@ -1,0 +1,21 @@
+
+;;
+; experiments
+
+
+;;
+;  parameters to be explored
+to setup-experiment [costacc-ratio ]
+  
+  set cost-access-ratio costacc-ratio  ; 6e6
+  
+  
+  set headless? true
+  setup
+  
+end
+
+
+to go-experiment
+  
+end

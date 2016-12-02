@@ -4,7 +4,7 @@
 
 to setup
   
-  ca
+  if headless? != 0 [ca]
   
   output-print "Setup"
   
@@ -285,7 +285,7 @@ to setup-headless-globals
   
   set decay-accessibility 6
   
-  set cost-access-ratio 6e6
+  ;set cost-access-ratio 6e6
   set move-aversion 4e6
   set beta-discrete-choice 1e-6
   

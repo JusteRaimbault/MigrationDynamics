@@ -127,6 +127,13 @@ globals [
   ; migrant initial position
   migrant-initial-position-aggregation-threshold
   
+  
+  
+  
+  ;;; headless
+  headless?
+
+  
 ]
 
 
@@ -162,6 +169,7 @@ patches-own [
   number
   
 ]
+
 
 
 
@@ -217,8 +225,6 @@ migrants-own [
   
 ]
 
-
-
 @#$#@#$#@
 GRAPHICS-WINDOW
 393
@@ -266,7 +272,7 @@ SLIDER
 #-cities
 0
 10
-3
+5
 1
 1
 NIL
@@ -405,7 +411,7 @@ CHOOSER
 display-type
 display-type
 "population" "potential-jobs" "accessibility"
-0
+2
 
 BUTTON
 150

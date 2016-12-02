@@ -18,6 +18,10 @@ __includes [
   ;display
   "display.nls"
   
+  
+  ; experiments
+  "experiments.nls"
+  
   ; utils
   "utils/SpatialKernels.nls"
   "utils/List.nls"
@@ -131,6 +135,8 @@ globals [
   
   ;;;;;;;;;;
   ;; HEADLESS
+  
+  headless?
   
   setup-type
   

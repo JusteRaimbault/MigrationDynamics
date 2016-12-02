@@ -1,0 +1,220 @@
+
+\documentclass[english,11pt]{beamer}
+
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\E}{\mathbb{E}}
+\DeclareMathOperator{\Proba}{\mathbb{P}}
+
+\newcommand{\Covb}[2]{\ensuremath{\Cov\!\left[#1,#2\right]}}
+\newcommand{\Eb}[1]{\ensuremath{\E\!\left[#1\right]}}
+\newcommand{\Pb}[1]{\ensuremath{\Proba\!\left[#1\right]}}
+\newcommand{\Varb}[1]{\ensuremath{\Var\!\left[#1\right]}}
+
+% norm
+\newcommand{\norm}[1]{\| #1 \|}
+
+\newcommand{\indep}{\rotatebox[origin=c]{90}{$\models$}}
+
+
+
+
+
+\usepackage{mathptmx,amsmath,amssymb,graphicx,bibentry,bbm,babel,ragged2e}
+
+\makeatletter
+
+\newcommand{\noun}[1]{\textsc{#1}}
+\newcommand{\jitem}[1]{\item \begin{justify} #1 \end{justify} \vfill{}}
+\newcommand{\sframe}[2]{\frame{\frametitle{#1} #2}}
+
+\newenvironment{centercolumns}{\begin{columns}[c]}{\end{columns}}
+%\newenvironment{jitem}{\begin{justify}\begin{itemize}}{\end{itemize}\end{justify}}
+
+
+
+
+
+
+
+
+
+%\usetheme{Warsaw}
+%\setbeamertemplate{footline}[text line]{}
+%\setbeamercolor{structure}{fg=purple!50!blue, bg=purple!50!blue}
+%\setbeamersize{text margin left=15pt,text margin right=15pt}
+
+
+
+
+\usetheme{Boadilla}
+
+
+% redefine palette
+\definecolor{cybblue}{HTML}{1C6F91}
+
+
+\setbeamercolor{structure}{fg=cybblue}
+
+\setbeamercovered{transparent}
+
+
+\addtobeamertemplate{title page}{%\hspace{-0.4cm}
+\vspace{-0.8cm}
+\hspace{-0.5cm}
+%\includegraphics[height=1.2cm,width=1.2\textwidth]{template/bandeau3}\\
+}{%
+%\begin{textblock*}{150mm}(-1cm,-1.5cm)
+%\end{textblock*}
+}
+
+
+\setbeamertemplate{footline}{
+\hspace{0.2cm}
+\includegraphics[height=0.75cm]{template/medium}
+\hfill
+\includegraphics[height=0.75cm]{template/eu}
+\hspace{0.15cm}
+\vspace{0.15cm}
+}
+
+
+
+
+
+\@ifundefined{showcaptionsetup}{}{%
+ \PassOptionsToPackage{caption=false}{subfig}}
+\usepackage{subfig}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+
+\usepackage[usenames,dvipsnames]{pstricks}
+\usepackage{epsfig}
+
+
+
+\makeatother
+
+\begin{document}
+
+
+\title{Agent-based Modeling of Migrant Workers Residential Dynamics within a Mega-city Region: the Case of Pearl River Delta, China}
+
+\author{C.~Losavio$^{1}$ and J.~Raimbault$^{1,2}$\\
+\texttt{}
+\texttt{juste.raimbault@polytechnique.edu}
+}
+
+
+\institute{$^{1}$UMR CNRS 8504 G{\'e}ographie-cit{\'e}s\\
+$^{2}$UMR-T IFSTTAR 9403 LVMT\\
+}
+
+
+\date{Medium Project Seminar\\\smallskip
+4th December 2016
+}
+
+
+{
+
+
+\setbeamertemplate{footline}{
+\hspace{0.2cm}
+\includegraphics[height=1cm]{template/medium}
+\hfill
+\large This Project is funded by the European Union
+\includegraphics[height=1cm]{template/eu}
+\hspace{0.2cm}
+\vspace{0.2cm}
+}
+
+
+\frame{\maketitle}
+
+}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%
+%% ABSTRACT
+
+%Over the last three decades, rural-urban migrant-workers have been a driving force for China's economy, raising attention on associated socio-economical issues. However, the importance of their economic diversity and social mobility has been poorly considered in the analysis of urban development strategy. We use an agent-based model to simulate residential dynamics of migrants in Pearl River Delta (PRD) mega city region, taking into account the full range of migrants’ socio-economical status and their evolution. Mega-city regions have become a new scale of Chinese State regulation, and PRD represent the most prosperous and dynamic one in term of migration waves, standing as an ideal unit of analysis. Our model unveils emergent patterns of dynamics, from micro behavior rules of discrete mobility choices. These choices are conditional to urban and economic environment, which evolution is controlled by meso-scale independent dynamics. The two scales are coupled through the dependance of discrete choice utilities to generalized accessibility that combines patch-level urban and economic context with a feedback of the dynamics themselves. We perform simulations to validate the model on synthetic data, by assessing statistical consistence and establishing phase diagrams across the parameter space. The application to the case study allows first to test how variation in socio-economic status yield more complex trajectories, and secondly to identify how the Party-State persist in controlling internal migration flows in a more sophisticated and strategically redefined way.
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\sframe{Conclusion}{
+
+
+\bigskip
+\bigskip
+\bigskip
+
+
+\footnotesize{ - All code and data available at \texttt{https://github.com/JusteRaimbault/MigrationDynamics} in general ; 
+
+}
+
+}
+
+
+
+
+\sframe{Reserve slides}{
+
+\centering
+
+\Large
+
+\textbf{Reserve Slides}
+
+}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[allowframebreaks]
+\frametitle{References}
+\bibliographystyle{apalike}
+\bibliography{/Users/Juste/Documents/ComplexSystems/MigrationDynamics/Biblio/mingong}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+\end{document}
+
+
+
