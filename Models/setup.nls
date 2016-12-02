@@ -146,9 +146,9 @@ to setup-synthetic-economy
    
   ; economic categories
   ;  27006 : 75% of log-normal (10,0.3) distribution
-  set economic-categories-breaks [28000]
+  set economic-categories-breaks [28000 1e9]
 
-  set #-economic-categories (length economic-categories-breaks + 1)
+  set #-economic-categories length economic-categories-breaks
   
   ; simple for now : one innovative sector and one industry
   set economic-scaling-exponents [1.2 0.9]
