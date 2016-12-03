@@ -5,24 +5,25 @@ import Model._
 
 //costAccessRatio,wealthSigma,accDecay,moveAversion
 val exploration = ExplorationTask(
-  /*(((costAccessRatio in (1e6 to 1e7 by 1e6)) x
-  (wealthSigma in (0.1 to 1.0 by 0.1)) x
-  (accDecay in (2.0 to 20.0 by 2.0)) x
-  (moveAversion in (1e6 to 1e7 by 1e6))
-  ) withIndex id )*/
-  (LHS(
+  (((costAccessRatio in (1e6 to 1e7 by 3e6)) x
+  (wealthSigma in (0.1 to 1.0 by 0.3)) x
+  (accDecay in (2.0 to 10.0 by 4.0)) x
+  (moveAversion in (1e6 to 1e7 by 5e6))
+  ) withIndex id )
+  /*(LHS(
     30,
     costAccessRatio in Range(1e6,1e7),
     wealthSigma in Range(0.0,1.0),
     accDecay in Range(1.0,20.0),
     moveAversion in Range(1e6,1e7)
-  ) withIndex id )
-  x (replication in UniformDistribution[Int]() take 40)
+  ) withIndex id )*/
+  x (replication in UniformDistribution[Int]() take 8)
 )
 
 //val purpose = "test"
 //val purpose = "grid_uniform"
-val purpose = "lhs"
+//val purpose = "lhs"
+val purpose = "grid"
 
 val eval = exploration -< model
 
