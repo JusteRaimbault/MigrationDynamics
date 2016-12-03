@@ -5,26 +5,43 @@ library(ggplot2)
 setwd(paste0(Sys.getenv('CS_HOME'),'/MigrationDynamics/Models/exploration'))
 
 res <- as.tbl(read.csv('2016_12_03_02_34_10_lhs.csv'))
-res$id = as.character(res$id)
+res$id = as.character(cumsum(c(1,diff(res$accDecay)>0)))
+
 
 indics = c("wealthGain","indivMigrations")
+
+
+
 
 # histograms
 
 for(indic in indics){
-  g = ggplot(res[res$id=""|res$id="",])
-  
+  g = ggplot(res)
+  g+geom_density(aes_string(x=indic,group="id",colour="id"))
 }
+
+
+g = ggplot(res[res$id=="1"|res$id=="20"|res$id=="28",])
+g+geom_density(aes(x=wealthGain,fill=id),alpha=0.3)
+g+geom_density(aes(x=indivMigrations,fill=id),alpha=0.3)
 
 
 # summarise
 
-sres = res %>% group_by(distribSd,gravityDecay,overlapThreshold,transportationCost)%>% summarise(
-  finalTime = mean(finalTime),nwClustCoef=mean(nwClustCoef),nwComponents=mean(nwComponents),
-  nwInDegree=mean(nwInDegree),nwMeanFlow=mean(nwMeanFlow),nwOutDegree=mean(nwOutDegree),
-  totalCost=mean(as.numeric(totalCost)),totalWaste=mean(totalWaste)#,
+sres = res %>% group_by(id)%>% summarise(
+  deltaU0 = mean(deltaU0),deltaU1=mean(deltaU1),indivMigrations=mean(indivMigrations),
+  jobDistance0=mean(jobDistance0),jobDistance1=mean(jobDistance1),migration0=mean(migration0),
+  migration1=mean(migration1),wealth=mean(wealth),wealthGain=mean(wealthGain)
   #transportationCost=mean(transportationCost),gravityDecay=mean(gravityDecay),
   #distribSd=mean(distribSd),overlapThreshold=mean(overlapThreshold)
 )
+
+
+indic="wealthGain"
+g = ggplot(sres,aes_string(x="accDecay",y="costAccessRatio",fill=indic))
+g+geom_raster(hjust=0,vjust=0)+facet_grid(wealthSigma~moveAversion,scales = "free")+scale_fill_gradient(low='yellow',high='red')
+
+
+
 
 
