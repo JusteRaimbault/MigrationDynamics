@@ -66,7 +66,7 @@ to setup-globals
   set economic-center-job-number-ratio 0.01
   set economic-center-job-number economic-center-job-number-ratio * initial-jobs
   
-  set job-searching-radius 50
+  set job-searching-radius 100
   
   set total-migrations-cat (list 0 0)
   set total-delta-u-cat (list 0 0)
@@ -280,7 +280,7 @@ to setup-headless-globals
   set max-pop 5e6
   set rank-size-exp 0.85
   set center-density 50000
-  set initial-jobs 20000  ; 1000
+  set initial-jobs 100000  ; 1000
   
   set social-categories "discrete"
   set wealth-distribution "log-normal"
@@ -296,7 +296,7 @@ to setup-headless-globals
   
   set display-type ""
   
-  set total-time-steps 3 ; 20
+  set total-time-steps 10 ; 20
   
   
 end
