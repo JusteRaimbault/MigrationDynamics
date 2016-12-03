@@ -266,7 +266,6 @@ migrants-own [
   individual-migrations
   
 ]
-
 @#$#@#$#@
 GRAPHICS-WINDOW
 393

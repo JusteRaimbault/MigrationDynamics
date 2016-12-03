@@ -179,6 +179,7 @@ to setup-synthetic-economy
       repeat current-centers [
          ; find the position of center
          let tmp-center one-of (([area-patches] of ?) with [population < city-center-population * current-pop-threshold]) with-min [distance ?]
+         if tmp-center = nobody [set tmp-center one-of patches]
          let center nobody ask tmp-center [set center one-of (([area-patches] of ?) in-radius current-noise)] ; respect administrativ boundaries here
          ask center [sprout-economic-centers 1 [set category cat ifelse category = 0 [set shape "computer workstation"][set shape "factory"] set size 3 set color ((cat * 140 / #-economic-categories) + 35)]]
          
