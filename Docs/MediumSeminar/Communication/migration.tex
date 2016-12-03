@@ -153,21 +153,68 @@ $^{2}$UMR-T IFSTTAR 9403 LVMT\\
 \section{Introduction}
 %%%%%%%%%%%%%%%%%%%
 
+\sframe{Qualitative introduction}{
+
+Cinzia : $\simeq$ 3 slides
+
+}
 
 
 
 
 
+%%%%%%%%%%%%%%%%%%%
+\section{Model}
+%%%%%%%%%%%%%%%%%%%
+
+\sframe{What is hybrid abm-pom}{
+
+}
+
+\sframe{Model Structure}{
+
+}
+
+
+\sframe{Model Evolution}{
+
+}
 
 
 
 
+%%%%%%%%%%%%%%%%%%%
+\section{Results}
+%%%%%%%%%%%%%%%%%%%
 
 
 
+\sframe{Model Implementation}{
+
+Netlogo / HPC openmole
+
+image screenshot
+
+synthetic data only for now
+
+}
 
 
+\sframe{First Results : Statistical Convergence}{
 
+}
+
+
+\sframe{First Results : Phase Diagrams}{
+
+}
+
+
+\sframe{Perspectives}{
+
+next steps : real land use data ; exploration of policies etc. 
+
+}
 
 
 \sframe{Conclusion}{
@@ -178,7 +225,7 @@ $^{2}$UMR-T IFSTTAR 9403 LVMT\\
 \bigskip
 
 
-\footnotesize{ - All code and data available at \texttt{https://github.com/JusteRaimbault/MigrationDynamics} in general ; 
+\footnotesize{ - All code and data available at \texttt{https://github.com/JusteRaimbault/MigrationDynamics}
 
 }
 
@@ -194,6 +241,30 @@ $^{2}$UMR-T IFSTTAR 9403 LVMT\\
 \Large
 
 \textbf{Reserve Slides}
+
+}
+
+
+
+\sframe{Discrete Choice Utilities}{
+
+\[
+\Delta U_{i,j}^{(c)}(t) = \frac{Z_j^{(c)}- Z_i^{(c)}}{Z_0} + \frac{C_i^{(c)}- C_j^{(c)}}{C_0} - u_i^{(c)} - h_j^{(c)}
+\]
+
+
+where $Z_i^{(c)}$ is generalized accessibility given by $Z_i^{(c)} = P_i \cdot \sum_k \left[E_k^{(c)}-W_k^{(c)}\right]\cdot \exp{\left(\frac{-d_{ij}}{d_0}\right)}$, with $d_{ij}$ effective travel distance (in public transportation ; \textit{point to be clarified : for higher classes, car may be an option}) and $d_0$ commuting characteristic distance ; $C_i^{(c)}$ is the cost of life which is a function of cell and city variables, that will be taken as $C_i^{(c)} \propto P_i^{\alpha_0}\cdot  \tilde{P}_i^{\alpha_1}\cdot$ ; $u_i^{(c)}$ a baseline aversion to move and $h_j^{(c)}$ an exogenous variable corresponding to regulation policies ; $Z_0$ and $C_0$ dimensioning parameters.
+
+
+}
+
+
+\sframe{Discrete Choice Probabilities}{
+
+\[
+\Pb{i\rightarrow j | c} = \frac{\exp{\left(\beta'\cdot \left[\Delta Z_{i,j}^{(c)} - \Delta C_{i,j}^{(c)} - \tilde{u}_i^{(c)} - \tilde{h}_j^{(c)} \right] \right)}}{1 + \sum_k {\exp{\left(\beta'\cdot \left[\Delta Z_{i,k}^{(c)} - \Delta C_{i,k}^{(c)} - \tilde{h}_k^{(c)} \right] \right)} - N\cdot \tilde{u}_i^{(c)}}}
+\]
+
 
 }
 

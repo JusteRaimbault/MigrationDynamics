@@ -60,7 +60,14 @@ globals [
   ;;;;;;;
   ;; Migration
   #-migrations
+  total-wealth-gain
   
+  total-migrations-cat
+  total-delta-u-cat
+  utility-norm
+  total-time-steps
+  individual-migrations
+  total-migrations
   
   ;;;
   ;; Runtime performance variables
@@ -223,8 +230,9 @@ migrants-own [
   moving?
   destination
   
+  delta-u
+  
 ]
-
 @#$#@#$#@
 GRAPHICS-WINDOW
 393
@@ -411,7 +419,7 @@ CHOOSER
 display-type
 display-type
 "population" "potential-jobs" "accessibility"
-2
+0
 
 BUTTON
 150
