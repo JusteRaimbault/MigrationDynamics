@@ -1,0 +1,99 @@
+
+;;
+; utilities
+
+
+;;
+;  update utilities
+to update-utilities
+  
+  output-print "... update utilities"
+  
+  update-patches-summary-vars
+  
+  update-accessibilities
+  
+  update-utilities-mat
+  
+  ; no need to compute ALL probabilities -> only for patches with migrants > 0
+  ;update-probabilities
+  
+end
+
+
+
+;;
+;  
+to update-patches-summary-vars
+  set patches-population []
+  set patches-available-jobs rep [] #-economic-categories
+  set patches-life-cost []
+  
+  foreach patch-list [
+    set patches-population lput [population] of ? patches-population
+    set patches-life-cost lput ([life-cost] of ?) patches-life-cost
+    let cat 0 repeat #-economic-categories [set patches-available-jobs replace-item cat patches-available-jobs (lput (item cat [available-jobs] of ?) (item cat patches-available-jobs)) set cat cat + 1]
+  ]
+  
+end
+
+
+
+
+;;
+; patch procedure that gives life-cost - can be tuned
+to-report life-cost
+  report population / max-population * [city-population] of owning-city / economic-p0
+end
+
+
+;;
+;  patch accessibilities
+to update-accessibilities
+  
+  output-print "...... accessibilities"
+  
+  set patches-accessibilities []
+  
+  let cat 0 repeat #-economic-categories [
+    set patches-accessibilities lput item 0 matrix:to-column-list (matrix:times-element-wise (matrix:times distance-matrix matrix:from-column-list (list item cat patches-available-jobs)) (matrix:from-column-list (list patches-population))) patches-accessibilities   
+    set cat cat + 1
+  ]
+  
+  ; update patch var - useful for display, not for perf
+  ;  - ignored for now ?
+  
+end
+
+
+
+;;
+;  utility matrix ∆U_{ij}
+to update-utilities-mat
+  set utilities []
+  
+  let deltaC matrix:times cost-access-ratio (matrix:minus (matrix:from-column-list rep patches-life-cost (count patches)) (matrix:from-row-list rep patches-life-cost (count patches)))
+  
+  let cat 0 repeat #-economic-categories [
+    let deltaZ (matrix:minus (matrix:from-row-list rep (item cat patches-accessibilities) (count patches)) (matrix:from-column-list rep (item cat patches-accessibilities) (count patches)))
+    
+    let cat-utility-mat (matrix:plus deltaC deltaZ policy-matrix (- move-aversion))
+    set utilities lput cat-utility-mat utilities
+    if item cat utility-norm = 0 [set utility-norm replace-item cat utility-norm max map max matrix:to-column-list cat-utility-mat]
+    set cat cat + 1
+  ]
+end
+
+
+
+;;
+; probas to move from this patch
+to-report patch-probabilities [cat]
+  
+  ; TODO patch with no housing : add 0 probability
+  
+  let patch-utils map [? / (item cat utility-norm)] matrix:get-row (item cat utilities) number
+  let patch-nn-probas map [exp (beta-discrete-choice * ?)] patch-utils
+  let stot sum patch-nn-probas
+  report (list map [? / (1 + stot)] patch-nn-probas patch-utils)
+end

@@ -1,0 +1,18 @@
+
+;; test city growth
+
+
+to setup-city-only
+  ca
+  setup-globals
+  setup-world
+  update-display
+end
+
+
+
+to go-city-growth
+  grow-cities
+  update-display
+  tick
+end

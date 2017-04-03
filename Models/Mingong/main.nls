@@ -1,0 +1,31 @@
+
+;;
+; main
+
+
+;;
+;  execution order : consistence with setup
+to go
+  
+  output-print (word "go step " (ticks + 1))
+  
+  ; migration
+  migration
+  
+  ; meso city growth
+  grow-cities
+  
+  ; new migrants
+  new-migrants-arrival
+  
+  ; utilities update
+  update-utilities
+  
+  ; display/reporters
+  update-display
+  
+  tick
+  
+end
+
+

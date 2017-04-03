@@ -1,0 +1,390 @@
+
+;;
+; setup
+
+to setup
+  
+  if headless? = 0 [ca]
+  
+  output-print "Setup"
+  
+  setup-globals
+  
+  setup-world
+  
+  setup-migrants
+  
+  update-utilities
+  
+  update-display
+  
+  reset-ticks
+  
+end
+
+
+;;
+; setup globals
+to setup-globals
+  
+  output-print "... setup globals"
+  
+  ;;;;
+  ;; World
+  
+  set patch-real-size 1
+
+  set patch-growth-steps 100
+  set patch-growth-alpha 0.8
+  set patch-growth-noise-radius 5
+
+  ;;;;
+  ;; GIS
+  
+  set gis-extent-file "setup/gis/frame.shp"
+  set gis-population-raster-file "setup/gis/pop2010_wgs84_georef.asc"
+  set gis-sea-file "setup/gis/sea.shp"
+  set gis-cities-file "setup/gis/cities.shp"
+  
+  ;;;
+  ;; Migrants
+
+  set migrant-count table:make 
+
+  ; migrant wealth
+  set lognormal-wealth-logmean 10
+  ;set lognormal-wealth-logsigma 0.3
+  set uniform-wealth-min 5000
+  set uniform-wealth-max 50000
+
+  ; migrant social categories
+  set #-social-categories 5
+
+  set migrant-initial-position-aggregation-threshold 10
+
+  ;;;;
+  ;; economics
+  
+  ;; synthetic
+  set synth-eco-max-center-number 3
+  set synth-eco-max-pop-threshold 0.1
+  set synth-eco-max-loc-noise 4
+  
+  
+  set economic-center-job-number-ratio 0.01
+  set economic-center-job-number economic-center-job-number-ratio * initial-jobs
+  
+  set job-searching-radius 100
+  
+  set total-migrations-cat (list 0 0)
+  set total-delta-u-cat (list 0 0)
+  
+  set utility-norm (list 0 0)
+  
+end
+
+
+to setup-world
+  
+  output-print "... setup world"
+  
+  ;;
+  ; population
+  
+  if setup-type = "synthetic" [
+    setup-synthetic-population
+  ]
+  if setup-type = "gis" [
+     ; world-enveloppe
+    gis:set-world-envelope gis:envelope-of gis:load-dataset gis-extent-file
+    
+    ; sea patches
+    foreach gis:feature-list-of gis:load-dataset gis-sea-file [
+      ask patches with [gis:contains? ? self] [set sea? true]
+    ]
+    
+    setup-gis-population
+    
+  ]
+  
+  setup-population-common
+  
+  
+  ;;
+  ;  economy
+  
+  if setup-type = "synthetic" [
+    setup-synthetic-economy 
+  ]
+  
+  
+  
+end
+
+
+;;
+;  setup world pop common to synthetic and gis
+to setup-population-common
+  
+  ; area
+  ask patches [set owning-city one-of cities with-min [distance myself]]
+  ask cities [set area-patches patches with [owning-city = myself]]
+  
+  ; draw boundaries
+  draw-boundaries
+  
+  ;;
+  ;
+  set max-population max [population] of patches
+  
+  set economic-p0 max [city-population] of cities
+  
+    
+  ; need to compute utilities to locate first migrants ? NO, done on social network only
+  ;update-utilities
+  
+  setup-patch-list-and-euclidian-distance-matrix
+  
+  setup-policy
+  
+end
+
+
+;;
+; setup a synthetic system of cities
+to setup-synthetic-population
+  
+  output-print "...... synthetic population"
+  
+  ;
+  create-cities #-cities [new-city-synthetic]
+  
+  ; populations
+  let i 1
+  ask cities [set city-population max-pop / (i ^ rank-size-exp) set i i + 1]
+  ; total pop is P = max_density * 2pi * r_0^2 -> r_0 = sqtr(pop / (max_density * 2pi))
+  foreach to-list cities [
+    let current-pop [city-population] of ?
+    let current-patch [patch-here] of ?
+    apply-monocentric-kernel "poisson" (sqrt (current-pop / (2 * pi * center-density))) center-density "population" current-patch
+  ]
+  
+end
+
+
+;;
+; cities from gis file
+to setup-gis-cities
+  let cities-dataset gis:load-dataset gis-cities-file
+  let properties gis:property-names cities-dataset
+  foreach gis:feature-list-of cities-dataset [
+     let current-pop 0 if member? "POPULATION" properties [set current-pop gis:property-value ? "POPULATION"]
+     let current-employment 0 if member? "EMPLOYMENT" properties [set current-employment gis:property-value ? "EMPLOYMENT"]
+     let current-name "" if member? "NAME" properties [set current-name gis:property-value ? "NAME"]
+     foreach gis:vertex-lists-of ? [
+        foreach ? [
+          let current-location gis:location-of ?
+          create-cities 1 [set city-population current-pop set city-potential-jobs current-employment set name current-name new-city]
+       ] 
+    ]
+  ]
+    
+end
+
+
+;;
+; setup gis from raster file
+to setup-gis-population
+  let gis-population-raster gis:load-dataset gis-population-raster-file
+  gis:apply-raster gis-population-raster population
+  ; replace Nans
+  ask patches [
+    if not (population < 0 or population > 0)[set population 0]
+  ]
+end
+
+
+
+
+
+;;
+;  Synthetic setup of an economic configuration
+;
+;    stylized configuration : N sectors ; N : single center, CBD ; 1 : industry, many centers, smaller radius
+; 
+;  
+to setup-synthetic-economy
+  
+  output-print "...... synthetic economy"
+   
+  ; economic categories
+  ;  27006 : 75% of log-normal (10,0.3) distribution
+  set economic-categories-breaks [28000 1e9]
+
+  set #-economic-categories length economic-categories-breaks
+  
+  ; simple for now : one innovative sector and one industry
+  set economic-scaling-exponents [1.2 0.9]
+  set economic-sectors-shares [0.25 0.75]
+  
+  ; economic configuration
+  ;  to simplify : category == sector
+  
+  ; initial potential jobs to 0
+  ask patches [
+    set potential-jobs rep 0 #-economic-categories
+  ]
+  
+  foreach to-list cities [
+    let cat 0 let current-centers 1 let current-pop-threshold 0 let current-noise 0
+    let city-center-population [population] of [patch-here] of ?
+    
+    repeat #-economic-categories [
+      let current-jobs (item cat economic-sectors-shares) * initial-jobs * (([city-population] of ? / economic-p0) ^ (item cat economic-scaling-exponents))
+      
+      ; category-specific parameters
+      set current-centers floor (1 + cat * (synth-eco-max-center-number - 1)/ (#-economic-categories - 1)) ;show current-centers
+      set current-pop-threshold (1 + cat * (synth-eco-max-pop-threshold - 1)/ (#-economic-categories - 1)) ;show current-pop-threshold
+      set current-noise 2 + cat * synth-eco-max-loc-noise / (#-economic-categories - 1) ;show current-noise
+     
+      let center-job-share current-jobs / current-centers
+      
+      repeat current-centers [
+         ; find the position of center
+         let tmp-center one-of (([area-patches] of ?) with [population < city-center-population * current-pop-threshold]) with-min [distance ?]
+         if tmp-center = nobody [set tmp-center one-of patches]
+         let center nobody ask tmp-center [set center one-of (([area-patches] of ?) in-radius current-noise)] ; respect administrativ boundaries here
+         if center = nobody [set center one-of patches]
+         ask center [sprout-economic-centers 1 [set category cat ifelse category = 0 [set shape "computer workstation"][set shape "factory"] set size 3 set color ((cat * 140 / #-economic-categories) + 35)]]
+         
+         ; apply kernel
+         apply-monocentric-kernel "poisson" (sqrt (center-job-share / (2 * pi * economic-center-job-number))) economic-center-job-number "tmp-eco" center
+      ]
+      
+      ; transfer from tmp var to jobs
+      ask patches [set potential-jobs (replace-item cat potential-jobs (item cat potential-jobs + tmp-eco)) set tmp-eco 0]
+    
+      set cat cat + 1
+    ]
+  ]
+  
+  ; all jobs available at the beginning
+  ask patches [set available-jobs potential-jobs]
+  
+ 
+  ; compute aggregated variables at city level
+  ask cities [
+    set city-potential-jobs []
+    let cat 0 repeat #-economic-categories [set city-potential-jobs lput (sum [item cat potential-jobs] of area-patches) city-potential-jobs set cat cat + 1]
+  ]
+  
+  let cat 0 set max-potential-jobs [] repeat #-economic-categories [set max-potential-jobs lput (max [item cat potential-jobs] of patches) max-potential-jobs set cat cat + 1]
+  
+end
+
+
+
+
+;;
+;  Setup migrants population
+to setup-migrants
+  
+  output-print "... setup migrants"
+  
+  ; setup is equivalent to an arrival
+  new-migrants-arrival
+  
+end
+
+
+
+
+to setup-patch-list-and-euclidian-distance-matrix
+  set patch-list []
+  let pxcor-list [] let pycor-list []
+  let i 0
+  ask patches[
+    set number i
+    set patch-list lput self patch-list
+    set pxcor-list lput pxcor pxcor-list
+    set pycor-list lput pycor pycor-list
+    set i i + 1
+  ]
+  
+  set distance-matrix matrix:map [exp (- ((sqrt ?) * patch-real-size) / decay-accessibility)] (matrix:plus matrix:map [? ^ 2] (matrix:minus (matrix:from-row-list (rep pxcor-list (count patches))) (matrix:from-column-list (rep pxcor-list (count patches)))) matrix:map [? ^ 2] (matrix:minus (matrix:from-row-list (rep pycor-list (count patches))) (matrix:from-column-list (rep pycor-list (count patches)))))
+  
+  ; WRONG WAY : very slow with many patches
+;  set patch-list []
+;  ; euclidian distance matrix
+;  let #-patches count patches
+;  let res matrix:make-constant #-patches #-patches 0
+;  let p1 0 let p2 0
+;  repeat #-patches [
+;     let x1 ((floor (p1 / world-width)) + min-pxcor) let y1 ((p1 - world-width * floor (p1 / world-width)) + min-pycor)
+;     set patch-list lput patch x1 y1 patch-list
+;     set p2 0
+;     repeat #-patches [
+;        let x2 ((floor (p2 / world-width)) + min-pxcor) let y2 ((p2 - world-width * floor (p2 / world-width)) + min-pycor)
+;        matrix:set res p1 p2 (sqrt ((x1 - x2) ^ 2 + (y1 - y2) ^ 2)) * patch-real-size
+;        set p2 p2 + 1
+;     ]
+;     set p1 p1 + 1
+;  ]
+;  
+;  set distance-matrix res
+end
+
+
+;;
+;
+to setup-policy
+  
+ if policy = "no-policy" [
+   set policy-matrix matrix:make-constant count patches count patches 0
+ ]
+ 
+ 
+ 
+ 
+ 
+end
+
+
+
+
+
+to setup-headless-globals
+  set setup-type "synthetic" ; or "gis"
+  
+  set #-cities 4
+  set max-pop 5e6
+  set rank-size-exp 0.85
+  set center-density 50000
+  set initial-jobs 100000  ; 1000
+  
+  set social-categories "discrete"
+  set wealth-distribution "log-normal"
+  set policy "no-policy"
+  
+  set gibrat-rate 1.005
+  set migration-growth-share 1e-4
+  
+  ;set decay-accessibility 6
+  
+  ;set cost-access-ratio 6e6
+  ;set move-aversion 4e6
+  set beta-discrete-choice 1 ;1e-6  - 1 with normalisation
+  
+  set display-type ""
+  
+  set total-time-steps 5;10 ; 20
+  
+  
+end
+
+
+
+
+
+
+

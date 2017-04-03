@@ -1,0 +1,126 @@
+
+;
+;
+
+
+to grow-cities
+
+  update-city-populations
+  
+  update-city-economics
+  
+  apply-city-growth-patches
+
+end
+
+
+;; 
+;  meso update
+to update-city-populations
+  
+  ; gibrat update of the meso population ;
+  ; then growth on patches according to distance to city-center and density saturation
+  
+  ask cities [
+    let new-population gibrat-rate * city-population
+    set delta-population new-population - city-population
+    set city-population new-population
+  ]
+  
+end
+
+
+;;
+; population -> economics
+to update-city-economics
+  
+  ; simple scaling law : E (t) = E_0 (P_t / P_0)^gamma
+  ;  -> yields also gibrat's growth for economic vars
+  
+  ask cities [
+    let cat 0
+    set delta-economic []
+    repeat #-economic-categories [
+      let new-eco-cat (item cat city-potential-jobs) * (gibrat-rate ^ (item cat economic-scaling-exponents))
+      set delta-economic lput (new-eco-cat - item cat city-potential-jobs) delta-economic
+      set city-potential-jobs replace-item cat city-potential-jobs (new-eco-cat)
+      set cat cat + 1
+    ]
+  ]
+  
+  
+end
+
+
+;;
+;
+to apply-city-growth-patches
+  
+  
+  ask patches [set prev-potential-jobs potential-jobs]
+  
+  ;; population
+  ask cities [
+    let potential-growth-patches area-patches with [population < max-population]
+    let step-pop-incr delta-population / patch-growth-steps
+    
+    repeat patch-growth-steps [
+      let stot sum [population ^ patch-growth-alpha] of potential-growth-patches let s 0 let r random-float 1 let incr? false
+      foreach to-list potential-growth-patches [ask ? [
+          set s s + ((population ^ patch-growth-alpha) / stot)
+          if r < s and not incr? [
+            ask one-of (patches in-radius patch-growth-noise-radius with [population < max-population]) [ ; note : at least himself
+              set population population + step-pop-incr
+            ] set incr? true
+          ]
+        ]]
+    ]
+    
+    ;; economics : idem ?
+    let cat 0 repeat #-economic-categories [
+       let potential-eco-growth-patches area-patches with [item cat potential-jobs < item cat max-potential-jobs]
+       let step-eco-incr item cat delta-economic / patch-growth-steps
+       repeat patch-growth-steps [
+         let stot sum [item cat potential-jobs ^ patch-growth-alpha] of potential-eco-growth-patches let s 0 let r random-float 1 let incr? false
+         foreach to-list potential-eco-growth-patches [ask ? [
+            set s s + ((item cat potential-jobs ^ patch-growth-alpha) / stot)
+             if r < s and not incr? [
+               ask one-of (patches in-radius patch-growth-noise-radius with [item cat potential-jobs < item cat max-potential-jobs]) [ ; note : at least himself
+                set potential-jobs replace-item cat potential-jobs (item cat potential-jobs + step-eco-incr)
+             ] set incr? true
+            ]
+          ]]
+       ]
+    
+    
+       set cat cat + 1
+    ]
+    
+    
+  ]
+  
+  ;; add the newly created jobs to available
+  ask patches [
+   let cat 0 repeat #-economic-categories [set available-jobs replace-item cat available-jobs (item cat available-jobs + item cat potential-jobs - item cat prev-potential-jobs) set cat cat + 1] 
+  ]
+  
+  
+  
+end
+
+
+
+to new-city-synthetic
+  ;setxy random-xcor random-ycor  
+  move-to one-of (patches with [abs pxcor < max-pxcor * 0.9 and abs pycor < max-pycor * 0.9]) ;with-max [min (map [distance ?] to-list cities)]
+  new-city 
+end
+
+
+to new-city
+  set shape "house" set color green set size 2
+end
+
+
+
+
