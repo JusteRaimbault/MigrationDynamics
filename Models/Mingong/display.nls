@@ -26,12 +26,33 @@ to color-patches
     ]
   ]
   
+  if display-type = "potential-jobs" [
+    let mi [] let ma [] let c 0 repeat #-economic-categories [set mi lput (min [item c potential-jobs] of patches) mi set ma lput (max [item c potential-jobs] of patches) ma set c c + 1]
+    ask patches [
+       ; color : dominant economic activity 
+       let pma max potential-jobs let cat 0 set c 0 foreach potential-jobs[if ? = pma [set cat c]set c c + 1]
+       if (item cat mi) = (item cat ma) [show (word "mi : "(item cat mi) " ; ma : " (item cat ma) " ; jobs : " (item cat potential-jobs))]
+       set pcolor scale-color ((cat * 140 / #-economic-categories) + 35) (item cat potential-jobs) (item cat mi) (item cat ma)
+    ]
+  ]
+  
   if display-type = "accessibility" [
+    let mi min [item display-acc-category accessibilities] of patches let ma max [item display-acc-category accessibilities] of patches
+    ask patches [set pcolor scale-color green item display-acc-category accessibilities mi ma]
+  ]
+  
+  if display-type = "life-cost" [
+    let mi min [life-cost] of patches let ma max [life-cost] of patches
+    ask patches [set pcolor scale-color yellow life-cost mi ma]
+  ]
+  
+  
+  if display-type = "utility" [
+    ; makes no real sense to plot utility per patch
     
   ]
   
 end
-
 
 
 
@@ -57,3 +78,17 @@ to draw-boundaries
   
 end
 
+
+;;
+;  plots
+
+to plot-distrib-wealths
+  set-current-plot "wealth-distrib" set-current-plot-pen "hist" set-plot-pen-mode 1 set-histogram-num-bars (count migrants / 5) set-plot-x-range min [wealth] of migrants max [wealth] of migrants
+  histogram [wealth] of migrants
+end
+
+
+to plot-distrib-categories
+  set-current-plot "categories" set-current-plot-pen "hist" set-plot-pen-mode 1 set-histogram-num-bars 2 set-plot-x-range -0.5 1.5
+  histogram [economic-category] of migrants
+end

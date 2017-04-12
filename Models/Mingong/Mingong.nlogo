@@ -1,5 +1,5 @@
 
-extensions [matrix table gis]
+extensions [matrix table gis morphology]
 
 __includes [
   
@@ -15,6 +15,8 @@ __includes [
   "indicators.nls"
   
   
+  "experiments.nls"
+  
   ;display
   "display.nls"
   
@@ -24,6 +26,7 @@ __includes [
  
   ; test
   "test/city-growth.nls"
+  "test/test-migration.nls"
   
 ]
 
@@ -132,7 +135,7 @@ globals [
   
   ; wealth distribution
   lognormal-wealth-logmean
-  lognormal-wealth-logsigma
+  ;lognormal-wealth-logsigma
   uniform-wealth-min
   uniform-wealth-max
   
@@ -156,12 +159,11 @@ globals [
 
 patches-own [
   
-  
-  ; city to which patch belongs
-  owning-city
-  
   ; total population on the patch
   population
+  
+  ; tmp var to use kernel without list issues and for morphology extension
+  tmp-eco
   
   ; economic
   ;  - potential-jobs per economic sector : list, for which item i corresponds to sector i
@@ -177,8 +179,11 @@ patches-own [
   ; accessibilities by csp
   accessibilities
   
-  ; tmp var to use kernel without list issues
-  tmp-eco
+  ; city to which patch belongs
+  owning-city
+  
+  
+  
   
   ; index in runtime matrices/lists
   number
@@ -251,11 +256,11 @@ migrants-own [
 GRAPHICS-WINDOW
 393
 10
-952
-590
-30
-30
-9.0
+895
+533
+20
+20
+12.0
 1
 10
 1
@@ -265,10 +270,10 @@ GRAPHICS-WINDOW
 0
 0
 1
--30
-30
--30
-30
+-20
+20
+-20
+20
 0
 0
 1
@@ -407,9 +412,9 @@ SLIDER
 migration-growth-share
 migration-growth-share
 0
-0.01
-5.0E-4
 0.0001
+1.0E-4
+0.00001
 1
 NIL
 HORIZONTAL
@@ -426,20 +431,20 @@ count migrants
 11
 
 CHOOSER
-6
-630
-144
-675
+9
+566
+147
+611
 display-type
 display-type
-"population" "potential-jobs" "accessibility"
-0
+"population" "potential-jobs" "available-jobs" "accessibility" "life-cost" "utility"
+4
 
 BUTTON
-150
-637
-224
-670
+153
+573
+227
+606
 update
 update-display
 NIL
@@ -476,7 +481,7 @@ OUTPUT
 1050
 550
 1399
-678
+717
 10
 
 BUTTON
@@ -542,7 +547,7 @@ decay-accessibility
 decay-accessibility
 0
 50
-6
+2
 1
 1
 NIL
@@ -620,9 +625,9 @@ SLIDER
 beta-discrete-choice
 beta-discrete-choice
 0
-1e-5
-1.0E-6
-1e-7
+10
+5
+0.1
 1
 NIL
 HORIZONTAL
@@ -701,10 +706,10 @@ sum [sum available-jobs] of patches
 11
 
 PLOT
-972
-20
-1180
-158
+957
+306
+1165
+444
 wealth
 NIL
 NIL
@@ -719,10 +724,10 @@ PENS
 "default" 1.0 0 -16777216 true "" "plot mean [wealth] of migrants"
 
 PLOT
-973
-161
-1180
-281
+1170
+305
+1377
+444
 migrations
 NIL
 NIL
@@ -745,6 +750,106 @@ policy
 policy
 "no-policy" "random"
 0
+
+PLOT
+960
+11
+1170
+162
+wealth-distrib
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"plot-distrib-wealths" "plot-distrib-wealths"
+PENS
+"hist" 1.0 0 -16777216 true "" ""
+
+SLIDER
+3
+470
+196
+503
+lognormal-wealth-logsigma
+lognormal-wealth-logsigma
+0
+1
+0.3
+0.1
+1
+NIL
+HORIZONTAL
+
+PLOT
+958
+164
+1169
+298
+categories
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"plot-distrib-categories" "plot-distrib-categories"
+PENS
+"hist" 1.0 0 -16777216 true "" ""
+
+SLIDER
+9
+614
+160
+647
+display-acc-category
+display-acc-category
+0
+1
+0
+1
+1
+NIL
+HORIZONTAL
+
+BUTTON
+1213
+473
+1288
+506
+probas
+display-migration-probas
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+1271
+509
+1407
+542
+NIL
+display-utilities
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
 
 @#$#@#$#@
 ## WHAT IS IT?

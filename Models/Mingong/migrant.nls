@@ -85,8 +85,9 @@ end
 ;;
 ;  Computes economic category from wealth
 to-report migrant-economic-category
-  let res 0
-  let cat 0 foreach economic-categories-breaks [if wealth < ? [set res cat] set cat cat + 1]
+  let res -1
+  let cat 0 foreach economic-categories-breaks [if wealth < ? and res = -1 [set res cat] set cat cat + 1]
+  if res = -1 [set res length economic-categories-breaks - 1]
   report res
 end
 

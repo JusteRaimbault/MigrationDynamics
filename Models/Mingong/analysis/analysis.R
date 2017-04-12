@@ -2,14 +2,21 @@
 library(dplyr)
 library(ggplot2)
 
-setwd(paste0(Sys.getenv('CS_HOME'),'/MigrationDynamics/Models/exploration'))
+setwd(paste0(Sys.getenv('CS_HOME'),'/MigrationDynamics/Models/Mingong'))
 
-res <- as.tbl(read.csv('2016_12_03_14_46_02_grid.csv'))
-res$id = as.character(cumsum(c(1,diff(res$accDecay)>0)))
+#res <- as.tbl(read.csv('2016_12_03_14_46_02_grid.csv'))
+res <- as.tbl(read.csv('exploration/2017_04_07_13_58_56_grid_uniform_grid.csv',stringsAsFactors = FALSE))
 
-
+params=c("accDecay","costAccessRatio","moveAversion","wealthSigma")
 indics = c("wealthGain","indivMigrations")
 
+res$id=rep("",nrow(res))
+i=1
+for(row in which(!duplicated(res[,params]))){
+  show(i);currentrow=res[row,params]
+  res$id[res$accDecay==currentrow$accDecay&res$costAccessRatio==currentrow$costAccessRatio&res$moveAversion==currentrow$moveAversion&res$wealthSigma==currentrow$wealthSigma]=as.character(i)
+  i=i+1
+}
 
 
 
@@ -37,9 +44,23 @@ sres = res %>% group_by(accDecay,costAccessRatio,wealthSigma,moveAversion)%>% su
 )
 
 
-indic="wealthGain"
+indic="indivMigrations"
 g = ggplot(sres,aes_string(x="wealthSigma",y="costAccessRatio",fill=indic))
 g+geom_raster(hjust=0,vjust=0)+facet_grid(moveAversion~accDecay,scales = "free")+scale_fill_gradient(low='yellow',high='red')
+
+
+###
+for(indic in indics){
+g=ggplot(sres,aes_string(x="wealthSigma",y=indic,color="moveAversion",group="moveAversion"))
+g+geom_line()+facet_grid(costAccessRatio~accDecay,scales="free")
+}
+###
+
+
+
+
+
+
 
 
 

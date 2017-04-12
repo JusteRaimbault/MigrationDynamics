@@ -40,8 +40,8 @@
 
 % encoding 
 \usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-
+%\usepackage[T1]{fontenc}
+%\usepackage{ctex}
 
 % general packages without options
 \usepackage{amsmath,amssymb,amsthm,bbm}
@@ -130,26 +130,28 @@
 
 
 
-%\renewcommand{\abstractname}{}
-
-
-\newcommand{\cinzia}[1]{\textcolor{red}{\textbf{\textit{#1}}}}
+\renewcommand{\abstractname}{Abstract}
+\renewcommand\refname{References}
+\renewcommand\figurename{Figure}
 
 % comments and responses
 \usepackage{xparse}
+\usepackage{ifthen}
 \DeclareDocumentCommand{\comment}{m o o o o}
-{%
-    \textcolor{red}{#1}
-    \IfValueT{#2}{\textcolor{blue}{#2}}
-    \IfValueT{#3}{\textcolor{ForestGreen}{#3}}
-    \IfValueT{#4}{\textcolor{red!50!blue}{#4}}
-    \IfValueT{#5}{\textcolor{Aquamarine}{#5}}
+{\ifthenelse{\draft=1}{
+    \textcolor{red}{\textbf{C : }#1}
+    \IfValueT{#2}{\textcolor{blue}{\textbf{A1 : }#2}}
+    \IfValueT{#3}{\textcolor{ForestGreen}{\textbf{A2 : }#3}}
+    \IfValueT{#4}{\textcolor{red!50!blue}{\textbf{A3 : }#4}}
+    \IfValueT{#5}{\textcolor{Aquamarine}{\textbf{A4 : }#5}}
+ }{}
 }
 
 
 % todo
-\newcommand{\todo}[1]{\textcolor{red!50!blue}{\textbf{\textit{#1}}}}
-
+\newcommand{\todo}[1]{
+\ifthenelse{\draft=1}{\textcolor{red!50!blue}{\textbf{TODO : \textit{#1}}}}{}
+}
 
 
 %\usepackage[UTF8]{ctex}

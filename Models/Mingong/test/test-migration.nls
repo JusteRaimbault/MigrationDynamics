@@ -1,0 +1,30 @@
+
+;;
+; test migration probas
+
+
+to display-migration-probas
+  ask patches [set pcolor black]
+  
+  ask one-of patches with [count migrants-here > 0] [   
+     let probas item 0 patch-probabilities display-acc-category
+     let ma max probas let mi min probas show mi show ma
+     let i 0 foreach patch-list [if ? = self [show item i probas] ask ? [set pcolor scale-color green item i probas mi ma] set i i + 1]
+     set pcolor orange
+  ]
+     
+end
+
+
+to display-utilities
+  ask patches [set pcolor black]
+  
+  ask one-of patches with [count migrants-here > 0] [   
+     let probas item 1 patch-probabilities display-acc-category
+     let ma max probas let mi min probas show mi show ma
+     set probas map [(? - mi) / (ma - mi)] probas
+     let i 0 foreach patch-list [if ? = self [show item i probas] ask ? [set pcolor scale-color green item i probas 0 1] set i i + 1]
+     set pcolor orange
+  ]
+     
+end

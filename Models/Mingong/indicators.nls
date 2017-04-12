@@ -70,3 +70,60 @@ end
 ; "social loss" : distance to social close people ?
 
 ; spatial indicators ? -> segregation, entropy, etc.
+
+
+
+;;
+; morphological indicators
+
+to-report moran-population
+  report morphology:moran 0
+end
+
+to-report entropy-population
+  report morphology:entropy 0
+end
+
+to-report slope-population
+  report first morphology:slope 0
+end
+
+to-report slope-rsquared-population
+  report last morphology:slope 0
+end
+
+to-report mean-distance-population
+  report morphology:distance 0
+end
+
+
+to-report moran-eco [cat]
+  ask patches [set tmp-eco item cat potential-jobs]
+  report morphology:moran 1
+end
+
+to-report entropy-eco [cat]
+  ask patches [set tmp-eco item cat potential-jobs]
+  report morphology:entropy 1
+end
+
+to-report slope-eco [cat]
+  ask patches [set tmp-eco item cat potential-jobs]
+  report first morphology:slope 1
+end
+
+to-report slope-rsquared-eco [cat]
+  ask patches [set tmp-eco item cat potential-jobs]
+  report last morphology:slope 1
+end
+
+to-report mean-distance-eco [cat]
+  ask patches [set tmp-eco item cat potential-jobs]
+  report morphology:distance 1
+end
+
+
+
+
+
+

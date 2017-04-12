@@ -15,6 +15,8 @@ to update-utilities
   
   update-utilities-mat
   
+  update-patch-acc-vars
+  
   ; no need to compute ALL probabilities -> only for patches with migrants > 0
   ;update-probabilities
   
@@ -37,6 +39,14 @@ to update-patches-summary-vars
   
 end
 
+
+;;
+;
+to update-patch-acc-vars
+  if headless? = 0 [
+     let i 0 foreach patch-list [ask ? [set accessibilities (list item i item 0 patches-accessibilities item i item 1 patches-accessibilities)]set i i + 1]
+  ]
+end
 
 
 
