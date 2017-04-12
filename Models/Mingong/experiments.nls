@@ -5,12 +5,15 @@
 
 ;;
 ;  parameters to be explored
-to setup-experiment [costacc-ratio wealthdistrib-sigma acc-decay mov-aversion]
+to setup-experiment [costacc-ratio wealthdistrib-sigma acc-decay mov-aversion gib-rate]
   
   set cost-access-ratio costacc-ratio  ; 6e6 
   set lognormal-wealth-logsigma wealthdistrib-sigma; 0.3
   set decay-accessibility acc-decay;6
   set move-aversion mov-aversion;4e6
+  
+  ; "meta-parameters"
+  set gibrat-rate gib-rate
   
   set headless? true
   

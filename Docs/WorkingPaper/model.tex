@@ -170,7 +170,13 @@ what simplifies into a reduced form, with $\beta' = \frac{\beta}{Z_0}$, $\gamma 
 
 Residential movement is drawn randomly according to these probabilities, and jobs are chosen around new residence following an exponentially decreasing probability.
 
-\item Migrants update their wealth and eventually economic category, according to 
+\item Migrants update their wealth and eventually economic category, according to an abstract ``quality of place'' that we associate to per-capita GDP which follows a scaling law of population
+
+%population / max-population * [city-population] of owning-city / economic-p0
+
+\[
+w = w\cdot \left( 1 + \frac{P_i}{\max P_j} \right)
+\]
 
 \end{enumerate}
 
@@ -194,6 +200,8 @@ Residential movement is drawn randomly according to these probabilities, and job
 
 %%%%%%%%%%%%%%%%%%%%
 \section{Results}
+%%%%%%%%%%%%%%%%%%%%
+
 
 
 
@@ -214,7 +222,9 @@ Expected Results :
 
 
 
-\paragraph{Model Validation}
+
+%%%%%%%%%%%%%%%%%%%%
+\subsection{Model Validation}
 
 \begin{itemize}
 \item Internal validation : statistical consistence ; system trajectories ; path-dependency.
@@ -248,7 +258,26 @@ Expected Results :
 
 
 
-\paragraph{Application}
+%%%%%%%%%%%%%%%%%%%%
+\subsection{Stylized Facts}
+
+
+
+\paragraph{Role of economic categories}
+
+
+
+\paragraph{Sensitivity to Urban Form}
+
+\comment{auxiliary question ?}
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%
+\subsection{Real Configuration}
 
 \textit{Stylize Pearl River Delta configuration}
 

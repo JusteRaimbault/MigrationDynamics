@@ -44,7 +44,14 @@ end
 ;
 to update-patch-acc-vars
   if headless? = 0 [
-     let i 0 foreach patch-list [ask ? [set accessibilities (list item i item 0 patches-accessibilities item i item 1 patches-accessibilities)]set i i + 1]
+     let i 0
+     foreach patch-list [
+       ask ? [
+         let acc [] let cat 0 repeat #-economic-categories [set acc lput (item i item cat patches-accessibilities) acc set cat cat + 1]
+         set accessibilities acc
+       ]
+       set i i + 1
+     ]
   ]
 end
 
@@ -53,7 +60,8 @@ end
 ;;
 ; patch procedure that gives life-cost - can be tuned
 to-report life-cost
-  report population / max-population * [city-population] of owning-city / economic-p0
+  ;report population / max-population * [city-population] of owning-city / economic-p0
+  report [city-population] of owning-city / economic-p0
 end
 
 
@@ -70,9 +78,6 @@ to update-accessibilities
     set cat cat + 1
   ]
   
-  ; update patch var - useful for display, not for perf
-  ;  - ignored for now ?
-  
 end
 
 
@@ -88,8 +93,13 @@ to update-utilities-mat
     let deltaZ (matrix:minus (matrix:from-row-list rep (item cat patches-accessibilities) (count patches)) (matrix:from-column-list rep (item cat patches-accessibilities) (count patches)))
     
     let cat-utility-mat (matrix:plus deltaC deltaZ policy-matrix (- move-aversion))
+    
+    if item cat utility-norm = 0 [set utility-norm replace-item cat utility-norm (max map max matrix:to-column-list cat-utility-mat - min map min matrix:to-column-list cat-utility-mat)]
+    
+    ; rescale here to have utilities in [0,1]
+    set cat-utility-mat matrix:times (matrix:plus cat-utility-mat (- min map min matrix:to-column-list cat-utility-mat)) (1 / (max map max matrix:to-column-list cat-utility-mat - min map min matrix:to-column-list cat-utility-mat))
+    
     set utilities lput cat-utility-mat utilities
-    if item cat utility-norm = 0 [set utility-norm replace-item cat utility-norm max map max matrix:to-column-list cat-utility-mat]
     set cat cat + 1
   ]
 end
@@ -102,7 +112,8 @@ to-report patch-probabilities [cat]
   
   ; TODO patch with no housing : add 0 probability
   
-  let patch-utils map [? / (item cat utility-norm)] matrix:get-row (item cat utilities) number
+  ;let patch-utils map [? / (item cat utility-norm)] matrix:get-row (item cat utilities) number
+  let patch-utils matrix:get-row (item cat utilities) number
   let patch-nn-probas map [exp (beta-discrete-choice * ?)] patch-utils
   let stot sum patch-nn-probas
   report (list map [? / (1 + stot)] patch-nn-probas patch-utils)

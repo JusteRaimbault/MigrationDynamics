@@ -12,7 +12,8 @@ to migration
   output-print "... migration"
   
   set total-migrations total-migrations + #-migrations
-  set #-migrations 0
+  set #-migrations 0 set prop-migrations 0
+  set migrations-cat rep 0 #-economic-categories
   
   ask patches with [count migrants-here > 0] [
      let cat 0 repeat #-economic-categories [
@@ -21,20 +22,20 @@ to migration
        
        if count potential-movers > 0 [
        
-       let probas-all patch-probabilities cat
-       let probas item 0 probas-all let utils item 1 probas-all
-       let proba-stay 1 - sum probas
-       ;let drawing [] foreach potential-movers [set drawing lput (list random-float 1 ?) drawing]
-       ask potential-movers [set drawing random-float 1 set moving? false]
-       ;let sdrawing sort-by [first ?1 < first ?2] drawing
-       set potential-movers potential-movers with [drawing > proba-stay]
-       let s proba-stay let i 0
-       foreach probas [
-         set s s + ? ask potential-movers with [drawing < s and not moving?] [set moving? true set destination i set delta-u item i utils]
-         set i i + 1
-       ]
+         let probas-all patch-probabilities cat
+         let probas item 0 probas-all let utils item 1 probas-all
+         let proba-stay 1 - sum probas
+         ;let drawing [] foreach potential-movers [set drawing lput (list random-float 1 ?) drawing]
+         ask potential-movers [set drawing random-float 1 set moving? false]
+         ;let sdrawing sort-by [first ?1 < first ?2] drawing
+         set potential-movers potential-movers with [drawing > proba-stay]
+         let s proba-stay let i 0
+         foreach probas [
+           set s s + ? ask potential-movers with [drawing < s and not moving?] [set moving? true set destination i set delta-u item i utils]
+           set i i + 1
+         ]
        
-       ask potential-movers with [moving?] [move]
+         ask potential-movers with [moving?] [move]
        
        ]
        
@@ -42,6 +43,7 @@ to migration
      ]
   ]
   
+  set prop-migrations #-migrations / count migrants
   
 end
 

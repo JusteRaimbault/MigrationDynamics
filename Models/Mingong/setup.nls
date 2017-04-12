@@ -51,6 +51,8 @@ to setup-globals
 
   set migrant-count table:make 
 
+  ifelse migration-growth-share = 0 [set initial-migrant-prop 5e-4][set initial-migrant-prop migration-growth-share]
+
   ; migrant wealth
   set lognormal-wealth-logmean 10
   ;set lognormal-wealth-logsigma 0.3
@@ -219,14 +221,16 @@ to setup-synthetic-economy
    
   ; economic categories
   ;  27006 : 75% of log-normal (10,0.3) distribution
-  set economic-categories-breaks [28000 1e9]
-
-  set #-economic-categories length economic-categories-breaks
   
+  ;set #-economic-categories 1
+  set #-economic-categories 2
+  
+  ifelse #-economic-categories = 1 [set economic-categories-breaks [1e9]][set economic-categories-breaks [28000 1e9]]
+ 
   ; simple for now : one innovative sector and one industry
-  set economic-scaling-exponents [1.2 0.9]
-  set economic-sectors-shares [0.25 0.75]
-  
+  ifelse #-economic-categories = 1 [set economic-scaling-exponents [1.2]][set economic-scaling-exponents [1.2 0.9]]
+  ifelse #-economic-categories = 1 [set economic-sectors-shares [1]][set economic-sectors-shares [0.25 0.75]]
+
   ; economic configuration
   ;  to simplify : category == sector
   
@@ -243,9 +247,9 @@ to setup-synthetic-economy
       let current-jobs (item cat economic-sectors-shares) * initial-jobs * (([city-population] of ? / economic-p0) ^ (item cat economic-scaling-exponents))
       
       ; category-specific parameters
-      set current-centers floor (1 + cat * (synth-eco-max-center-number - 1)/ (#-economic-categories - 1)) ;show current-centers
-      set current-pop-threshold (1 + cat * (synth-eco-max-pop-threshold - 1)/ (#-economic-categories - 1)) ;show current-pop-threshold
-      set current-noise 2 + cat * synth-eco-max-loc-noise / (#-economic-categories - 1) ;show current-noise
+      ifelse #-economic-categories = 1 [set current-centers synth-eco-max-center-number][set current-centers floor (1 + cat * (synth-eco-max-center-number - 1)/ (#-economic-categories - 1))]
+      ifelse #-economic-categories = 1 [set current-pop-threshold synth-eco-max-pop-threshold][set current-pop-threshold (1 + cat * (synth-eco-max-pop-threshold - 1)/ (#-economic-categories - 1))]
+      ifelse #-economic-categories = 1 [set current-noise synth-eco-max-loc-noise][set current-noise 2 + cat * synth-eco-max-loc-noise / (#-economic-categories - 1)]
      
       let center-job-share current-jobs / current-centers
       
@@ -291,8 +295,10 @@ to setup-migrants
   
   output-print "... setup migrants"
   
-  ; setup is equivalent to an arrival
-  new-migrants-arrival
+  ; setup is equivalent to an arrival ? not in the case of no migration
+  create-migrants (floor total-population * initial-migrant-prop / 100) [
+    new-migrant
+  ]
   
 end
 

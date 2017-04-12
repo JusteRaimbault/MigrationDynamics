@@ -43,6 +43,8 @@ globals [
   ; max population on a patch
   max-population
   
+  ; max-city-population = economic-p0
+  
   ; number of steps for patch population growth
   patch-growth-steps
   patch-growth-alpha
@@ -71,14 +73,22 @@ globals [
   ;;;;;;;
   ;; Migration
   #-migrations
+  prop-migrations
   total-wealth-gain
   
+  ; number of migrations per category
+  migrations-cat
+  
+  ; cumulated number of migrations
   total-migrations-cat
+  
   total-delta-u-cat
   utility-norm
   total-time-steps
   individual-migrations
   total-migrations
+  
+  initial-migrant-prop
   
   ;;;
   ;; Runtime performance variables
@@ -351,10 +361,10 @@ NIL
 HORIZONTAL
 
 MONITOR
-1273
-13
-1352
-58
+988
+416
+1067
+461
 city pop
 sum [city-population] of cities
 0
@@ -379,10 +389,10 @@ NIL
 1
 
 MONITOR
-1195
-13
-1271
-58
+910
+416
+986
+461
 patch pop
 sum [population] of patches
 0
@@ -413,17 +423,17 @@ migration-growth-share
 migration-growth-share
 0
 0.0001
-1.0E-4
+0
 0.00001
 1
 NIL
 HORIZONTAL
 
 MONITOR
-1197
-106
-1263
-151
+1260
+414
+1326
+459
 migrants
 count migrants
 17
@@ -438,7 +448,7 @@ CHOOSER
 display-type
 display-type
 "population" "potential-jobs" "available-jobs" "accessibility" "life-cost" "utility"
-4
+1
 
 BUTTON
 153
@@ -502,10 +512,10 @@ NIL
 1
 
 MONITOR
-1355
-13
-1412
-58
+1070
+416
+1127
+461
 delta
 sum [population] of patches - sum [city-population] of cities
 17
@@ -528,10 +538,10 @@ NIL
 HORIZONTAL
 
 MONITOR
-1196
-59
-1260
-104
+1130
+416
+1194
+461
 pot jobs
 sum [sum potential-jobs] of patches
 17
@@ -571,13 +581,13 @@ HORIZONTAL
 SLIDER
 3
 434
-146
+163
 467
 move-aversion
 move-aversion
 0
 5e7
-4300000
+49310000
 1e4
 1
 NIL
@@ -618,15 +628,15 @@ NIL
 1
 
 SLIDER
-149
-434
-307
-467
+166
+433
+324
+466
 beta-discrete-choice
 beta-discrete-choice
 0
-10
-5
+3
+2.5
 0.1
 1
 NIL
@@ -667,10 +677,10 @@ NIL
 1
 
 BUTTON
-111
-283
-174
-316
+100
+282
+163
+315
 NIL
 go
 T
@@ -684,10 +694,10 @@ NIL
 1
 
 MONITOR
-1265
-106
-1334
-151
+1328
+414
+1397
+459
 migrations
 #-migrations
 17
@@ -695,10 +705,10 @@ migrations
 11
 
 MONITOR
-1265
-58
-1322
-103
+1199
+415
+1256
+460
 av jobs
 sum [sum available-jobs] of patches
 17
@@ -706,10 +716,10 @@ sum [sum available-jobs] of patches
 11
 
 PLOT
-957
-306
-1165
-444
+917
+146
+1125
+284
 wealth
 NIL
 NIL
@@ -724,22 +734,24 @@ PENS
 "default" 1.0 0 -16777216 true "" "plot mean [wealth] of migrants"
 
 PLOT
-1170
-305
-1377
-444
+1130
+145
+1337
+284
 migrations
 NIL
 NIL
 0.0
 10.0
 0.0
-10.0
+1.0
 true
 false
 "" ""
 PENS
-"default" 1.0 0 -16777216 true "" "plot #-migrations"
+"default" 1.0 0 -16777216 true "" "plot prop-migrations"
+"pen-1" 1.0 0 -6459832 true "" "if #-migrations > 0 [plot item 0 migrations-cat * prop-migrations / #-migrations]"
+"pen-2" 1.0 0 -13791810 true "" "if #-migrations > 0 and #-economic-categories > 1 [plot item 1 migrations-cat * prop-migrations / #-migrations]"
 
 CHOOSER
 237
@@ -752,10 +764,10 @@ policy
 0
 
 PLOT
-960
+918
 11
-1170
-162
+1078
+137
 wealth-distrib
 NIL
 NIL
@@ -785,10 +797,10 @@ NIL
 HORIZONTAL
 
 PLOT
-958
-164
-1169
-298
+1083
+11
+1243
+138
 categories
 NIL
 NIL
@@ -837,7 +849,7 @@ NIL
 BUTTON
 1271
 509
-1407
+1367
 542
 NIL
 display-utilities
@@ -850,6 +862,39 @@ NIL
 NIL
 NIL
 1
+
+SLIDER
+197
+470
+327
+503
+income-growth
+income-growth
+0
+1
+0
+0.05
+1
+NIL
+HORIZONTAL
+
+PLOT
+1246
+12
+1406
+138
+migrants
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plot count migrants"
 
 @#$#@#$#@
 ## WHAT IS IT?
