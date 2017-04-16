@@ -19,6 +19,10 @@ to-report get-total-migrations
   report total-migrations
 end
 
+to-report get-migrations-ts
+  report prop-migrations-ts
+end
+
 to-report migration-0
   report item 0 total-migrations-cat
 end
@@ -67,9 +71,27 @@ to-report job-distance-inequality
 end
 
 
+to-report segreg-cat-shares
+  report count migrants with [economic-category = 1] / count migrants with [economic-category = 0]
+end
+
+
 ; "social loss" : distance to social close people ?
 
 ; spatial indicators ? -> segregation, entropy, etc.
+
+
+
+
+;; utilities
+
+to-report utilities-quantiles-origin [cat qs]
+  ifelse cat >= #-economic-categories [report qs][
+    report quantiles (matrix:get-row (item cat utilities) ([number] of patch 0 0)) qs
+  ]
+end
+
+
 
 
 
@@ -98,28 +120,38 @@ end
 
 
 to-report moran-eco [cat]
-  ask patches [set tmp-eco item cat potential-jobs]
-  report morphology:moran 1
+  ifelse cat >= #-economic-categories [report 0][
+    ask patches [set tmp-eco item cat potential-jobs]
+    report morphology:moran 1
+  ]
 end
 
 to-report entropy-eco [cat]
-  ask patches [set tmp-eco item cat potential-jobs]
-  report morphology:entropy 1
+  ifelse cat >= #-economic-categories [report 0][
+    ask patches [set tmp-eco item cat potential-jobs]
+    report morphology:entropy 1
+  ]
 end
 
 to-report slope-eco [cat]
-  ask patches [set tmp-eco item cat potential-jobs]
-  report first morphology:slope 1
+  ifelse cat >= #-economic-categories [report 0][
+    ask patches [set tmp-eco item cat potential-jobs]
+    report first morphology:slope 1
+  ]
 end
 
 to-report slope-rsquared-eco [cat]
-  ask patches [set tmp-eco item cat potential-jobs]
-  report last morphology:slope 1
+  ifelse cat >= #-economic-categories [report 0][
+    ask patches [set tmp-eco item cat potential-jobs]
+    report last morphology:slope 1
+  ]
 end
 
 to-report mean-distance-eco [cat]
-  ask patches [set tmp-eco item cat potential-jobs]
-  report morphology:distance 1
+  ifelse cat >= #-economic-categories [report 0][
+    ask patches [set tmp-eco item cat potential-jobs]
+    report morphology:distance 1
+  ]
 end
 
 

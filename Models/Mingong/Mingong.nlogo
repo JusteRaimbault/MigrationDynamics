@@ -23,6 +23,7 @@ __includes [
   ; utils
   "utils/SpatialKernels.nls"
   "utils/List.nls"
+  "utils/Statistics.nls"
  
   ; test
   "test/city-growth.nls"
@@ -64,7 +65,7 @@ globals [
   ; wage breaks between economic categories
   economic-categories-breaks
   
-  #-economic-categories
+  ;#-economic-categories
   
   max-potential-jobs
   
@@ -74,6 +75,8 @@ globals [
   ;; Migration
   #-migrations
   prop-migrations
+  prop-migrations-ts
+  
   total-wealth-gain
   
   ; number of migrations per category
@@ -372,10 +375,10 @@ sum [city-population] of cities
 11
 
 BUTTON
-25
-282
-91
-315
+20
+301
+86
+334
 NIL
 setup
 NIL
@@ -408,7 +411,7 @@ gibrat-rate
 gibrat-rate
 0
 1.1
-1.02
+1
 0.01
 1
 NIL
@@ -468,20 +471,20 @@ NIL
 1
 
 CHOOSER
-6
-198
-127
-243
+8
+183
+129
+228
 wealth-distribution
 wealth-distribution
 "log-normal" "uniform"
 0
 
 CHOOSER
-129
-198
-235
-243
+131
+183
+237
+228
 social-categories
 social-categories
 "discrete"
@@ -572,7 +575,7 @@ cost-access-ratio
 cost-access-ratio
 0
 1e7
-6014000
+2418000
 1e3
 1
 NIL
@@ -586,9 +589,9 @@ SLIDER
 move-aversion
 move-aversion
 0
-5e7
-49310000
-1e4
+10
+1
+1
 1
 NIL
 HORIZONTAL
@@ -635,8 +638,8 @@ SLIDER
 beta-discrete-choice
 beta-discrete-choice
 0
-3
-2.5
+10
+3.5
 0.1
 1
 NIL
@@ -677,10 +680,10 @@ NIL
 1
 
 BUTTON
-100
-282
-163
-315
+95
+301
+158
+334
 NIL
 go
 T
@@ -754,10 +757,10 @@ PENS
 "pen-2" 1.0 0 -13791810 true "" "if #-migrations > 0 and #-economic-categories > 1 [plot item 1 migrations-cat * prop-migrations / #-migrations]"
 
 CHOOSER
-237
-198
-329
-243
+239
+183
+331
+228
 policy
 policy
 "no-policy" "random"
@@ -895,6 +898,49 @@ false
 "" ""
 PENS
 "default" 1.0 0 -16777216 true "" "plot count migrants"
+
+SLIDER
+124
+131
+287
+164
+#-economic-categories
+#-economic-categories
+1
+2
+1
+1
+1
+NIL
+HORIZONTAL
+
+CHOOSER
+7
+229
+106
+274
+life-cost-mode
+life-cost-mode
+"city" "population" "city-and-population"
+2
+
+PLOT
+916
+286
+1228
+406
+utilities-origin
+NIL
+NIL
+0.0
+10.0
+0.0
+1.0
+true
+false
+"" "plot-utilities-origin"
+PENS
+"utils" 1.0 0 -16777216 true "" ""
 
 @#$#@#$#@
 ## WHAT IS IT?

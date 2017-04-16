@@ -83,6 +83,10 @@ to setup-globals
   
   set utility-norm (list 0 0)
   
+  ;;;;;
+  ;; indicators
+  set prop-migrations-ts []
+  
 end
 
 
@@ -222,9 +226,6 @@ to setup-synthetic-economy
   ; economic categories
   ;  27006 : 75% of log-normal (10,0.3) distribution
   
-  ;set #-economic-categories 1
-  set #-economic-categories 2
-  
   ifelse #-economic-categories = 1 [set economic-categories-breaks [1e9]][set economic-categories-breaks [28000 1e9]]
  
   ; simple for now : one innovative sector and one industry
@@ -355,38 +356,6 @@ to setup-policy
  
 end
 
-
-
-
-
-to setup-headless-globals
-  set setup-type "synthetic" ; or "gis"
-  
-  set #-cities 4
-  set max-pop 5e6
-  set rank-size-exp 0.85
-  set center-density 50000
-  set initial-jobs 100000  ; 1000
-  
-  set social-categories "discrete"
-  set wealth-distribution "log-normal"
-  set policy "no-policy"
-  
-  set gibrat-rate 1.005
-  set migration-growth-share 1e-4
-  
-  ;set decay-accessibility 6
-  
-  ;set cost-access-ratio 6e6
-  ;set move-aversion 4e6
-  set beta-discrete-choice 1 ;1e-6  - 1 with normalisation
-  
-  set display-type ""
-  
-  set total-time-steps 5;10 ; 20
-  
-  
-end
 
 
 

@@ -92,3 +92,20 @@ to plot-distrib-categories
   set-current-plot "categories" set-current-plot-pen "hist" set-plot-pen-mode 1 set-histogram-num-bars 2 set-plot-x-range -0.5 1.5
   histogram [economic-category] of migrants
 end
+
+
+to plot-utilities-origin
+  set-current-plot "utilities-origin" set-current-plot-pen "utils" set-plot-pen-mode 2
+  let qs seq 0 0.99 0.01 let vals utilities-quantiles-origin 0 qs
+  set-plot-x-range min vals max vals
+  let i 0 foreach vals [
+    plotxy ? item i qs
+    set i i + 1 
+  ]
+end  
+
+
+
+
+
+

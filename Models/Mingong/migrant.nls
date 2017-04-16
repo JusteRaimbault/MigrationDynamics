@@ -141,7 +141,7 @@ to update-wealth
   ; update wealth -> what eq ?
   ;  life cost is consistent
   
-  set total-wealth-gain total-wealth-gain + (wealth * [life-cost] of patch-here)
+  set total-wealth-gain total-wealth-gain + (wealth * income-growth * [life-cost] of patch-here)
   
   set wealth wealth * (1 + (income-growth * [life-cost] of patch-here)) ; add a constant dimensional parameter
   

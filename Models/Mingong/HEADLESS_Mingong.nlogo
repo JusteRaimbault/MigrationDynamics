@@ -1,5 +1,5 @@
 
-extensions [matrix table gis]
+extensions [matrix table gis morphology]
 
 __includes [
   
@@ -25,6 +25,7 @@ __includes [
   ; utils
   "utils/SpatialKernels.nls"
   "utils/List.nls"
+  "utils/Statistics.nls"
  
   ; test
   "test/city-growth.nls"
@@ -74,6 +75,8 @@ globals [
   ;;;;;;;
   ;; Migration
   #-migrations
+  migrations-cat
+  prop-migrations-ts
   total-migrations
   total-migrations-cat
   total-delta-u-cat
@@ -186,7 +189,15 @@ globals [
   
   policy
   
+  initial-migrant-prop
   
+  income-growth
+  
+  life-cost-mode
+  
+  prop-migrations
+  
+  display-acc-category
 ]
 
 
@@ -194,12 +205,14 @@ globals [
 
 patches-own [
   
+  ; total population on the patch
+  population
+  
+  ; tmp var to use kernel without list issues
+  tmp-eco
   
   ; city to which patch belongs
   owning-city
-  
-  ; total population on the patch
-  population
   
   ; economic
   ;  - potential-jobs per economic sector : list, for which item i corresponds to sector i
@@ -215,8 +228,7 @@ patches-own [
   ; accessibilities by csp
   accessibilities
   
-  ; tmp var to use kernel without list issues
-  tmp-eco
+  
   
   ; index in runtime matrices/lists
   number
@@ -286,10 +298,10 @@ migrants-own [
 GRAPHICS-WINDOW
 393
 10
-952
-590
-30
-30
+772
+410
+20
+20
 9.0
 1
 10
@@ -300,10 +312,10 @@ GRAPHICS-WINDOW
 0
 0
 1
--30
-30
--30
-30
+-20
+20
+-20
+20
 0
 0
 1

@@ -45,5 +45,8 @@ to migration
   
   set prop-migrations #-migrations / count migrants
   
+  set prop-migrations-ts lput prop-migrations prop-migrations-ts
+  
+  
 end
 
