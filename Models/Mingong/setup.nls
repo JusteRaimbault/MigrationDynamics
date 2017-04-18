@@ -51,7 +51,7 @@ to setup-globals
 
   set migrant-count table:make 
 
-  ifelse migration-growth-share = 0 [set initial-migrant-prop 5e-4][set initial-migrant-prop migration-growth-share]
+  ifelse migration-growth-share = 0 [set initial-migrant-prop 1e-3][set initial-migrant-prop migration-growth-share]
 
   ; migrant wealth
   set lognormal-wealth-logmean 10

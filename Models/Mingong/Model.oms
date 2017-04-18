@@ -9,6 +9,7 @@ val betaDC = Val[Double]
 val incomeGrowth = Val[Double]
 val numCategories = Val[Int]
 val lifeCostMode = Val[Int]
+val finalTime = Val[Int]
 
 // indicators
 //principal
@@ -47,12 +48,12 @@ val id = Val[Int]
 val replication = Val[Int]
 
 // setup-experiment [costacc-ratio wealthdistrib-sigma acc-decay mov-aversion gib-rate migr-share beta-dc inc-growth num-categories life-cost-md]
-val cmds = Seq("setup-experiment ${costAccessRatio} ${wealthSigma} ${accDecay} ${moveAversion} ${gibratRate} ${migrationShare} ${betaDC} ${incomeGrowth} ${numCategories} ${lifeCostMode}","go-experiment")
+val cmds = Seq("setup-experiment ${costAccessRatio} ${wealthSigma} ${accDecay} ${moveAversion} ${gibratRate} ${migrationShare} ${betaDC} ${incomeGrowth} ${numCategories} ${lifeCostMode} ${finalTime}","go-experiment")
 
 val model =
 NetLogo5Task.workspace(workDirectory,"HEADLESS_Mingong.nlogo",cmds) set(
-    inputs += (costAccessRatio,wealthSigma,accDecay,moveAversion,gibratRate,migrationShare,betaDC,incomeGrowth,numCategories,lifeCostMode),
-    outputs += (costAccessRatio,wealthSigma,accDecay,moveAversion,gibratRate,migrationShare,betaDC,incomeGrowth,numCategories,lifeCostMode),
+    inputs += (costAccessRatio,wealthSigma,accDecay,moveAversion,gibratRate,migrationShare,betaDC,incomeGrowth,numCategories,lifeCostMode,finalTime,id),
+    outputs += (costAccessRatio,wealthSigma,accDecay,moveAversion,gibratRate,migrationShare,betaDC,incomeGrowth,numCategories,lifeCostMode,finalTime,id),
     netLogoOutputs += ("total-wealth", wealth),
     netLogoOutputs += ("get-total-wealth-gain", wealthGain),
     netLogoOutputs += ("migration-0", migration0),

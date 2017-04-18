@@ -8,7 +8,12 @@
 
 
 \title{Agent-based Modeling of Migrant Workers Residential Dynamics within a Mega-city Region: the Case of Pearl River Delta, China
+<<<<<<< HEAD
 %Challenging Preconceived Ideas with an Agent-based Model
+=======
+\bigskip\\
+\textit{Working Paper}
+>>>>>>> 56e54e7cbc1f36ec2d9f5303bb260c6aae7c3df0
 }
 \author{\noun{Cinzia Losavio} and \noun{Juste Raimbault}\\
 UMR CNRS 8504 Géographie-cités
@@ -150,9 +155,7 @@ At each time step, the system evolves sequentially according to the following ru
 \begin{enumerate}
 \item Cities mesoscopic variables $\tilde{P}_k(t)$ and $\tilde{E}_k^{c}(t)$ are deterministically updated. Population follows the very simple assumption of the expectancy of a Gibrat's law, i.e. $\tilde{P}_k(t)= g_k \cdot \tilde{P}_k(t-1)$. Economy follows a scaling law of population: $\tilde{E}_k^{(c)}(t) = E_k^{(c,0)}\cdot \left(\frac{\tilde{P}_k(t)}{P_0}\right)^{\gamma_k^{(c)}}$.
 
-\item Patches variables are updated conditionally to the new aggregated values. For population, we adapt the aggregation-diffusion process detailed in~\cite{raimbault2016calibration}: a density ceil is introduced and diffusion is replaced by spatial noise\footnote{formally, let $\Delta \tilde{P}_k(t) = \tilde{P}_k(t) - \tilde{P}_k(t-1)$}.
-
-%\textit{Using a simple urban growth model of aggregation, deterministic for population and a bit more random for jobs ; still to be clarified}.
+\item Patches variables are updated conditionally to the new aggregated values. For population, we adapt the aggregation-diffusion process detailed in~\cite{raimbault2016calibration}: a density ceil is introduced and diffusion is replaced by spatial noise. More precisely, let $\Delta \tilde{P}_k(t) = \tilde{P}_k(t) - \tilde{P}_k(t-1)$.
 
 \item A number of new migrants, proportional to Gibrat growth rate, enter the region. They lean on social network %(关系，guanxi) 
 to first settle in the city and agglomerate following a preferential attachment by place of origin.
@@ -192,9 +195,7 @@ w = w\cdot \left( 1 + \frac{P_i}{\max P_j} \right)
 
 \paragraph{Synthetic Data Generation}
 
-
-
-\textit{TBW}
+A synthetic mega-city region is generated following simple stylized facts for systems of cities
 
 
 
@@ -222,22 +223,32 @@ Expected Results :
 
 
 
+<<<<<<< HEAD
 
 %%%%%%%%%%%%%%%%%%%%
 \subsection{Model Validation}
+=======
+>>>>>>> 56e54e7cbc1f36ec2d9f5303bb260c6aae7c3df0
 
-\begin{itemize}
-\item Internal validation : statistical consistence ; system trajectories ; path-dependency.
-\item External validation : stylized facts from synthetic data exploration ?
-\end{itemize}
+%%%%%%%%%%%%%%%%%%%%
+\subsection{Model Validation and Exploration}
+
+\paragraph{Internal validation} 
+
+statistical consistence : cf Fig.~\ref{fig:statistical-valid} ; system trajectories ; path-dependency.
+
+
+\paragraph{External validation}
+
+We first establish the behavior of the model on the simplest baseline situation, to which will be compared more complex parameter configurations. The baseline assumes no city growth ($g_k=1$)
 
 
 %%%%%%%%%%%%%%%%
 \begin{figure}
 \centering
-\includegraphics[width=0.45\textwidth]{figures/hist_indiv}
-\includegraphics[width=0.45\textwidth]{figures/hist_wealthGain}
-\caption{Statistical distributions of number of individual migrations and wealth gain over ? runs, for some example parameter points}
+\includegraphics[width=0.48\textwidth]{figures/baseline_hist_indivMigrations_colorbetaDC}
+\includegraphics[width=0.48\textwidth]{figures/baseline_hist_jobDistance0_colorbetaDC}
+\caption{Statistical distributions of number of individual migrations and wealth gain over 50 runs, for some example parameter points}
 \label{fig:statistical-valid}
 \end{figure}
 %%%%%%%%%%%%%%%%
@@ -247,10 +258,22 @@ Expected Results :
 %%%%%%%%%%%%%%%%
 \begin{figure}
 \centering
-\includegraphics[width=\textwidth]{figures/wealthGain}\\
-\includegraphics[width=\textwidth]{figures/deltaU1}
-\caption{Phase diagrams in 4 dimensional parameter space, over ? runs, for wealth gain and $\Delta U_1$}
+\includegraphics[width=0.48\textwidth]{figures/baseline_indicdeltaU0}
+\includegraphics[width=0.48\textwidth]{figures/baseline_indicindivMigrations}\\
+\includegraphics[width=0.48\textwidth]{figures/baseline_indicjobDistance0}
+\includegraphics[width=0.48\textwidth]{figures/baseline_indicutilitiesDecOrigin0_5}
+\caption{Model behavior, averaged over 50 runs, for a baseline configuration.}
 \label{fig:statistical-valid}
+\end{figure}
+%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth,height=0.3\textheight]{figures/migr-diff}
+\caption{}
+\label{fig:migr-diff}
 \end{figure}
 %%%%%%%%%%%%%%%%
 
@@ -258,6 +281,11 @@ Expected Results :
 
 
 
+%%%%%%%%%%%%%%%%
+\subsection{Stylized Facts}
+
+
+<<<<<<< HEAD
 %%%%%%%%%%%%%%%%%%%%
 \subsection{Stylized Facts}
 
@@ -278,17 +306,26 @@ Expected Results :
 
 %%%%%%%%%%%%%%%%%%%%
 \subsection{Real Configuration}
+=======
+>>>>>>> 56e54e7cbc1f36ec2d9f5303bb260c6aae7c3df0
 
-\textit{Stylize Pearl River Delta configuration}
 
-\paragraph{Experience Plan} \textit{concrete qualitative questions that can be asked to the model, e.g. :
+%%%%%%%%%%%%%%%%
+\subsection{Application}
+
+\paragraph{Stylized Pearl River Delta configuration}
+
+The model is parametrized on a simplified configuration, with the sufficient information at the relevant scale: even if population data for example can be used with a very high resolution, it makes no sense regarding model ontology to include too precise GIS data as the city growth mechanisms are approximated processes. An correspondence between population and employment data is furthermore desirable, the former being available only at the scale of cities.
+
+
+\paragraph{Experience Plan}
+
+\textit{concrete qualitative questions that can be asked to the model :}
 \begin{itemize}
 \item what is the impact of varying wealth distribution shape and width on system dynamics/migrant trajectories ?
-\item what is the impact of various spatial distribution of $h_j^{(c)}$, i.e. different government policies ?
-\item Comparison with and without Hong-Kong and Macao
-\item \ldots
+\item what is the impact of various spatial distribution of $h_j^{(c)}$, i.e. different government policies ? \comment{(Juste) Sur ce point le mieux serait de tester les politiques que tu as pu mettre en évidence, de manière scénarisée ?}
+\item Comparison with and without Hong-Kong and Macao \comment{(Juste) I'm not sure this point is a good idea, as interactions processes are quite different (e.g. daily commuting, different migration rules, etc.) and it would become a gaz factory to include them in the model.}
 \end{itemize}
-}
 
 
 

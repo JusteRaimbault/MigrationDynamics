@@ -17,6 +17,10 @@ names(res)<-c(
   "slopeEco0","slopeEco1","slopePop","slopeRsqEco0","slopeRsqEco1","slopeRsqPop",
   paste0("utilitiesDecOrigin0_",1:9),paste0("utilitiesDecOrigin1_",1:9),"wealth","wealthGain","wealthSigma")
 
+params=c("betaDC","costAccessRatio","moveAversion")#,"wealthSigma","accDecay")
+#indics = c("indivMigrations","deltaU0","migration0","migration1","deltaU1","jobDistance1",
+#           "jobDistance0","utilitiesDecOrigin0_5","utilitiesDecOrigin0_1","utilitiesDecOrigin0_9")
+
 res$id=rep("",nrow(res))
 i=1
 for(row in which(!duplicated(res[,params]))){
@@ -25,14 +29,21 @@ for(row in which(!duplicated(res[,params]))){
   i=i+1
 }
 
+res2 = as.tbl(read.csv('exploration/2017_04_18_10_32_48_grid_baselineext_grid.csv',stringsAsFactors = FALSE,header=F,skip = 1))
+names(res2)<-c(
+  "accDecay","betaDC","costAccessRatio","deltaU0","deltaU1","distEco0","distEco1",
+  "distPop","entropyEco0","entropyEco1","entropyPop","gibratRate","id","incomeGrowth",
+  "indivMigrations","jobDistance0","jobDistance1","lifeCostMode","migration0","migration1",
+  "migrationShare",paste0("migrationTS_",1:10),
+  "moranEco0","moranEco1","moranPop","moveAversion","numCategories","segregCatShare",
+  "slopeEco0","slopeEco1","slopePop","slopeRsqEco0","slopeRsqEco1","slopeRsqPop",
+  paste0("utilitiesDecOrigin0_",1:9),paste0("utilitiesDecOrigin1_",1:9),"wealth","wealthGain","wealthSigma")
+res2$id=as.character(as.numeric(res2$id)+max(as.numeric(res$id))+1)
 
+res=rbind(res,res2[,colnames(res)])
 
-params=c("betaDC","costAccessRatio","moveAversion")#,"wealthSigma","accDecay")
-indics = c("indivMigrations","deltaU0","migration0","jobDistance0","utilitiesDecOrigin0_5","utilitiesDecOrigin0_1","utilitiesDecOrigin0_9")
-
-
-resdir = paste0(Sys.getenv('CS_HOME'),'/MigrationDynamics/Results/Exploration/20170414_gridbaseline/')
-
+resdir = paste0(Sys.getenv('CS_HOME'),'/MigrationDynamics/Results/Exploration/20170418_baselineext/')
+dir.create(resdir)
 
 # histograms
 
@@ -103,8 +114,8 @@ g+geom_point()+geom_line()+facet_grid(moveAversion~costAccessRatio,scales="free"
 ##
 sres = res %>% group_by(betaDC,costAccessRatio,moveAversion) %>% summarise(diff = mean(migrationTS_10+migrationTS_9-migrationTS_1-migrationTS_2))
 g=ggplot(sres,aes(x=betaDC,y=diff,color=moveAversion,group=moveAversion))
-g+geom_line()+facet_wrap(~costAccessRatio)+xlab("Final Migrations - Initial Migrations")
-ggsave()
+g+geom_line()+facet_wrap(~costAccessRatio)+ylab("Final Migrations - Initial Migrations")
+ggsave(paste0(resdir,'migr-diff.pdf'),width=15,height=10,units='cm')
 
 
 

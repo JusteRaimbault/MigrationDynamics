@@ -5,7 +5,7 @@
 
 ;;
 ;  parameters to be explored
-to setup-experiment [costacc-ratio wealthdistrib-sigma acc-decay mov-aversion gib-rate migr-share beta-dc inc-growth num-categories life-cost-md]
+to setup-experiment [costacc-ratio wealthdistrib-sigma acc-decay mov-aversion gib-rate migr-share beta-dc inc-growth num-categories life-cost-md final-time]
   
   set cost-access-ratio costacc-ratio  ; 6e6 
   set lognormal-wealth-logsigma wealthdistrib-sigma; 0.3
@@ -17,9 +17,7 @@ to setup-experiment [costacc-ratio wealthdistrib-sigma acc-decay mov-aversion gi
   set income-growth inc-growth ; \in [0,1]
   set #-economic-categories num-categories
   if life-cost-md = 0 [set life-cost-mode "city"] if life-cost-md = 1 [set life-cost-mode "population"] if life-cost-md = 2 [set life-cost-mode "city-and-population"]
-  
-  ; hardcoded meta-params
-  set total-time-steps 10 ; 20
+  set total-time-steps final-time;10 20
   
   set headless? true
   
