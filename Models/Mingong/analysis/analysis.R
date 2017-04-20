@@ -5,7 +5,8 @@ library(reshape2)
 
 setwd(paste0(Sys.getenv('CS_HOME'),'/MigrationDynamics/Results/Exploration'))
 
-res <- as.tbl(read.csv('20170418_gridbaseline/data/2017_04_18_13_48_52_grid_baseline_grid.csv',stringsAsFactors = FALSE,header=F,skip = 1))
+res1 <- as.tbl(read.csv('20170418_gridbaseline/data/2017_04_18_13_48_52_grid_baseline_grid.csv',stringsAsFactors = FALSE,header=F,skip = 1))
+res <- as.tbl(read.csv('20170419_gridbaselinetwocat/data/2017_04_19_10_33_53_grid_baselinetwocat_grid.csv',stringsAsFactors = FALSE,header=F,skip = 1))
 
 finalTime = as.numeric(res[1,12])
 names(res)<-c(
@@ -17,14 +18,16 @@ names(res)<-c(
   "slopeEco0","slopeEco1","slopePop","slopeRsqEco0","slopeRsqEco1","slopeRsqPop",
   paste0("utilitiesDecOrigin0_",1:9),paste0("utilitiesDecOrigin1_",1:9),"wealth","wealthGain","wealthSigma")
 
+names(res1)<-names(res)
+
 params=c("betaDC","costAccessRatio","moveAversion")#,"wealthSigma","accDecay")
-#indics = c("indivMigrations","deltaU0","migration0","migration1","deltaU1","jobDistance1",
-#           "jobDistance0","utilitiesDecOrigin0_5","utilitiesDecOrigin0_1","utilitiesDecOrigin0_9")
-indics = c("indivMigrations","deltaU0","migration0","jobDistance0","utilitiesDecOrigin0_5",
-           "utilitiesDecOrigin0_1","utilitiesDecOrigin0_9")
+indics = c("indivMigrations","deltaU0","migration0","migration1","deltaU1","jobDistance1",
+           "jobDistance0","utilitiesDecOrigin0_5","utilitiesDecOrigin0_1","utilitiesDecOrigin0_9")
+#indics = c("indivMigrations","deltaU0","migration0","jobDistance0","utilitiesDecOrigin0_5",
+#           "utilitiesDecOrigin0_1","utilitiesDecOrigin0_9")
            
 
-resdir = paste0(Sys.getenv('CS_HOME'),'/MigrationDynamics/Results/Exploration/20170418_gridbaseline/')
+resdir = paste0(Sys.getenv('CS_HOME'),'/MigrationDynamics/Results/Exploration/20170419_gridbaselinetwocat/')
 dir.create(resdir)
 
 # histograms
