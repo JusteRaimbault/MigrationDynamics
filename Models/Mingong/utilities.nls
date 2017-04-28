@@ -89,9 +89,13 @@ to update-utilities-mat
   set utilities []
   
   let deltaC matrix:times cost-access-ratio (matrix:minus (matrix:from-column-list rep patches-life-cost (count patches)) (matrix:from-row-list rep patches-life-cost (count patches)))
+  let meanDeltaC matrix:mean deltaC
+  show (word " ∆C = " meanDeltaC)
   
   let cat 0 repeat #-economic-categories [
     let deltaZ (matrix:minus (matrix:from-row-list rep (item cat patches-accessibilities) (count patches)) (matrix:from-column-list rep (item cat patches-accessibilities) (count patches)))
+    let meanDeltaz matrix:mean deltaZ
+    show (word "cat " cat " ∆Z =" meanDeltaZ)
     
     let cat-utility-mat (matrix:plus deltaC deltaZ)
     

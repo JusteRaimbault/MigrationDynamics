@@ -24,6 +24,7 @@ __includes [
   "utils/SpatialKernels.nls"
   "utils/List.nls"
   "utils/Statistics.nls"
+  "utils/Matrix.nls"
  
   ; test
   "test/city-growth.nls"
@@ -575,8 +576,8 @@ cost-access-ratio
 cost-access-ratio
 0
 1e7
-2418000
-1e3
+100000
+1e5
 1
 NIL
 HORIZONTAL
@@ -590,7 +591,7 @@ move-aversion
 move-aversion
 0
 10
-1
+0
 1
 1
 NIL
@@ -639,7 +640,7 @@ beta-discrete-choice
 beta-discrete-choice
 0
 10
-3.5
+9.2
 0.1
 1
 NIL
