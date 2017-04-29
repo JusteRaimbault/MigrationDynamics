@@ -45,6 +45,7 @@ to setup-globals
   set gis-population-raster-file "setup/gis/pop2010_wgs84_georef.asc"
   set gis-sea-file "setup/gis/sea.shp"
   set gis-cities-file "setup/gis/cities.shp"
+  set gis-economic-areas-file "setup/gis/areas_data.shp"
   
   ;;;
   ;; Migrants
@@ -100,6 +101,7 @@ to setup-world
   if setup-type = "synthetic" [
     setup-synthetic-population
   ]
+  
   if setup-type = "gis" [
      ; world-enveloppe
     gis:set-world-envelope gis:envelope-of gis:load-dataset gis-extent-file
@@ -111,6 +113,9 @@ to setup-world
     
     setup-gis-population
     
+    setup-gis-cities
+    
+    
   ]
   
   setup-population-common
@@ -119,10 +124,7 @@ to setup-world
   ;;
   ;  economy
   
-  if setup-type = "synthetic" [
-    setup-synthetic-economy 
-  ]
-  
+  setup-economy
   
   
 end
@@ -134,7 +136,10 @@ to setup-population-common
   
   ; area
   ask patches [set owning-city one-of cities with-min [distance myself]]
-  ask cities [set area-patches patches with [owning-city = myself]]
+  ask cities [
+    set area-patches patches with [owning-city = myself]
+    set city-population sum [population] of area-patches
+  ]
   
   ; draw boundaries
   draw-boundaries
@@ -190,7 +195,12 @@ to setup-gis-cities
      foreach gis:vertex-lists-of ? [
         foreach ? [
           let current-location gis:location-of ?
-          create-cities 1 [set city-population current-pop set city-potential-jobs current-employment set name current-name new-city]
+          create-cities 1 [
+            ;set city-population current-pop
+            set city-potential-jobs current-employment
+            set name current-name new-city
+            setxy first current-location last current-location
+          ]
        ] 
     ]
   ]
@@ -211,20 +221,13 @@ end
 
 
 
-
-
 ;;
-;  Synthetic setup of an economic configuration
 ;
-;    stylized configuration : N sectors ; N : single center, CBD ; 1 : industry, many centers, smaller radius
-; 
-;  
-to setup-synthetic-economy
+to setup-economy
   
-  output-print "...... synthetic economy"
-   
   ; economic categories
   ;  27006 : 75% of log-normal (10,0.3) distribution
+  if setup-type = "gis" [set #-economic-categories 2]
   
   ifelse #-economic-categories = 1 [set economic-categories-breaks [1e9]][set economic-categories-breaks [28000 1e9]]
  
@@ -239,6 +242,42 @@ to setup-synthetic-economy
   ask patches [
     set potential-jobs rep 0 #-economic-categories
   ]
+  
+  
+  if setup-type = "synthetic" [
+    setup-synthetic-economy 
+  ]
+  
+  if setup-type = "gis" [
+    setup-gis-economy 
+  ]
+  
+  
+  ; all jobs available at the beginning
+  ask patches [set available-jobs potential-jobs]
+  
+ 
+  ; compute aggregated variables at city level
+  ask cities [
+    set city-potential-jobs []
+    let cat 0 repeat #-economic-categories [set city-potential-jobs lput (sum [item cat potential-jobs] of area-patches) city-potential-jobs set cat cat + 1]
+  ]
+  
+  let cat 0 set max-potential-jobs [] repeat #-economic-categories [set max-potential-jobs lput (max [item cat potential-jobs] of patches) max-potential-jobs set cat cat + 1] 
+  
+end
+
+
+;;
+;  Synthetic setup of an economic configuration
+;
+;    stylized configuration : N sectors ; N : single center, CBD ; 1 : industry, many centers, smaller radius
+; 
+to setup-synthetic-economy
+  
+  output-print "...... synthetic economy"
+   
+  
   
   foreach to-list cities [
     let cat 0 let current-centers 1 let current-pop-threshold 0 let current-noise 0
@@ -273,21 +312,43 @@ to setup-synthetic-economy
     ]
   ]
   
-  ; all jobs available at the beginning
-  ask patches [set available-jobs potential-jobs]
-  
- 
-  ; compute aggregated variables at city level
-  ask cities [
-    set city-potential-jobs []
-    let cat 0 repeat #-economic-categories [set city-potential-jobs lput (sum [item cat potential-jobs] of area-patches) city-potential-jobs set cat cat + 1]
-  ]
-  
-  let cat 0 set max-potential-jobs [] repeat #-economic-categories [set max-potential-jobs lput (max [item cat potential-jobs] of patches) max-potential-jobs set cat cat + 1]
-  
 end
 
-
+;;
+;
+to setup-gis-economy
+  let economic-dataset gis:load-dataset gis-economic-areas-file
+  let properties gis:property-names economic-dataset show properties
+  
+  ;gis:set-drawing-color blue gis:fill economic-dataset 1
+  
+  foreach gis:feature-list-of economic-dataset [
+     let current-employment-cat0 0 if member? "PRMRY_S" properties [set current-employment-cat0 gis:property-value ? "PRMRY_S"]
+     let current-employment-cat1 1 if member? "TERTIRY" properties [set current-employment-cat1 gis:property-value ? "TERTIRY"]
+     
+     ;let loc gis:location-of gis:centroid-of ? ;show loc ask patch first loc last loc [set pcolor yellow]
+     
+     let eco-area-patches patches with [gis:contains? ? self or gis:intersects? ? self]
+     
+     if count eco-area-patches > 0 [
+       repeat 1000 [ask one-of eco-area-patches [set potential-jobs (list (item 0 potential-jobs + current-employment-cat0 / 1000) (item 1 potential-jobs + current-employment-cat1 / 1000))]]
+     ]
+     
+     ; random inside areas ?
+     
+     ;foreach gis:vertex-lists-of ? [
+     ;   foreach ? [
+     ;     let current-location gis:location-of ?
+     ;     create-cities 1 [
+     ;       ;set city-population current-pop
+     ;       set city-potential-jobs current-employment
+     ;       set name current-name new-city
+     ;       setxy first current-location last current-location
+     ;     ]
+     ;  ] 
+    ;]
+  ]
+end
 
 
 ;;

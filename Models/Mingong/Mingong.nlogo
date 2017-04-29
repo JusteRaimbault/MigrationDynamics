@@ -59,6 +59,7 @@ globals [
   gis-population-raster-file
   gis-sea-file
   gis-cities-file
+  gis-economic-areas-file
   
   ;;;;;;;;;
   ;; Economic
@@ -302,7 +303,7 @@ CHOOSER
 setup-type
 setup-type
 "synthetic" "gis"
-0
+1
 
 SLIDER
 5
@@ -909,7 +910,7 @@ SLIDER
 #-economic-categories
 1
 2
-1
+2
 1
 1
 NIL

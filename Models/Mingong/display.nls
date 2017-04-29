@@ -52,6 +52,9 @@ to color-patches
     
   ]
   
+  
+  if count patches with [sea? = true] > 0 [ask patches with [sea? = true] [set pcolor blue]]
+  
 end
 
 
