@@ -85,9 +85,11 @@ end
 
 ;; utilities
 
-to-report utilities-quantiles-origin [cat qs]
+to-report utilities-quantiles-origin [cat qs strictly-positive?]
   ifelse cat >= #-economic-categories [report qs][
-    report quantiles (matrix:get-row (item cat utilities) ([number] of patch 0 0)) qs
+    let vals (matrix:get-row (item cat utilities) ([number] of patch 0 0))
+    if strictly-positive? = true [set vals remove 0 vals]
+    report quantiles vals qs
   ]
 end
 

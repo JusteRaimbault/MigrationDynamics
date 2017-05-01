@@ -100,6 +100,8 @@ to setup-world
   
   if setup-type = "synthetic" [
     setup-synthetic-population
+    
+    ask patches [set sea? false]
   ]
   
   if setup-type = "gis" [
@@ -120,6 +122,7 @@ to setup-world
   
   setup-population-common
   
+  update-liveable-patches
   
   ;;
   ;  economy
@@ -330,23 +333,11 @@ to setup-gis-economy
      
      let eco-area-patches patches with [gis:contains? ? self or gis:intersects? ? self]
      
+     ; random inside areas
      if count eco-area-patches > 0 [
        repeat 1000 [ask one-of eco-area-patches [set potential-jobs (list (item 0 potential-jobs + current-employment-cat0 / 1000) (item 1 potential-jobs + current-employment-cat1 / 1000))]]
      ]
      
-     ; random inside areas ?
-     
-     ;foreach gis:vertex-lists-of ? [
-     ;   foreach ? [
-     ;     let current-location gis:location-of ?
-     ;     create-cities 1 [
-     ;       ;set city-population current-pop
-     ;       set city-potential-jobs current-employment
-     ;       set name current-name new-city
-     ;       setxy first current-location last current-location
-     ;     ]
-     ;  ] 
-    ;]
   ]
 end
 
@@ -366,7 +357,8 @@ end
 
 
 
-
+;;
+; setup distance matrix
 to setup-patch-list-and-euclidian-distance-matrix
   set patch-list []
   let pxcor-list [] let pycor-list []
@@ -380,26 +372,7 @@ to setup-patch-list-and-euclidian-distance-matrix
   ]
   
   set distance-matrix matrix:map [exp (- ((sqrt ?) * patch-real-size) / decay-accessibility)] (matrix:plus matrix:map [? ^ 2] (matrix:minus (matrix:from-row-list (rep pxcor-list (count patches))) (matrix:from-column-list (rep pxcor-list (count patches)))) matrix:map [? ^ 2] (matrix:minus (matrix:from-row-list (rep pycor-list (count patches))) (matrix:from-column-list (rep pycor-list (count patches)))))
-  
-  ; WRONG WAY : very slow with many patches
-;  set patch-list []
-;  ; euclidian distance matrix
-;  let #-patches count patches
-;  let res matrix:make-constant #-patches #-patches 0
-;  let p1 0 let p2 0
-;  repeat #-patches [
-;     let x1 ((floor (p1 / world-width)) + min-pxcor) let y1 ((p1 - world-width * floor (p1 / world-width)) + min-pycor)
-;     set patch-list lput patch x1 y1 patch-list
-;     set p2 0
-;     repeat #-patches [
-;        let x2 ((floor (p2 / world-width)) + min-pxcor) let y2 ((p2 - world-width * floor (p2 / world-width)) + min-pycor)
-;        matrix:set res p1 p2 (sqrt ((x1 - x2) ^ 2 + (y1 - y2) ^ 2)) * patch-real-size
-;        set p2 p2 + 1
-;     ]
-;     set p1 p1 + 1
-;  ]
-;  
-;  set distance-matrix res
+
 end
 
 

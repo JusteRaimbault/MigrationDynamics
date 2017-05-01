@@ -11,6 +11,8 @@ to grow-cities
   
   apply-city-growth-patches
 
+  update-liveable-patches
+
 end
 
 
@@ -106,6 +108,14 @@ to apply-city-growth-patches
   
   
   
+end
+
+
+;;
+; set liveable patches where there is population
+to update-liveable-patches
+  ask patches [set liveable? true]
+  ask patches with [population = 0 or sea? = true] [set liveable? false]
 end
 
 

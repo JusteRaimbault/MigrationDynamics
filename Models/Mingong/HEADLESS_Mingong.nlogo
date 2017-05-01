@@ -26,6 +26,7 @@ __includes [
   "utils/SpatialKernels.nls"
   "utils/List.nls"
   "utils/Statistics.nls"
+  "utils/Matrix.nls"
  
   ; test
   "test/city-growth.nls"
@@ -58,7 +59,7 @@ globals [
   gis-population-raster-file
   gis-sea-file
   gis-cities-file
-  
+  gis-economic-areas-file
   
   ;;;;;;;;;
   ;; Economic
@@ -234,6 +235,8 @@ patches-own [
   number
   
   sea?
+  
+  liveable?
   
 ]
 

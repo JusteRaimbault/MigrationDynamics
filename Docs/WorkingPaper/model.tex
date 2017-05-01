@@ -8,12 +8,6 @@
 
 
 \title{Agent-based Modeling of Migrant Workers Residential Dynamics within a Mega-city Region: the Case of Pearl River Delta, China
-<<<<<<< HEAD
-%Challenging Preconceived Ideas with an Agent-based Model
-=======
-\bigskip\\
-\textit{Working Paper}
->>>>>>> 56e54e7cbc1f36ec2d9f5303bb260c6aae7c3df0
 }
 \author{\noun{Cinzia Losavio} and \noun{Juste Raimbault}\\
 UMR CNRS 8504 Géographie-cités
@@ -29,8 +23,8 @@ UMR CNRS 8504 Géographie-cités
 
 
 \begin{abstract}
-Over the last three decades, rural-urban migrant-workers have been a driving force for China's economy, raising attention on associated socio-economical issues. However, the importance of their economic diversity and social mobility has been poorly considered in the analysis of urban development strategy.
-We use an agent-based model to simulate residential dynamics of migrants in Pearl River Delta (PRD) mega city region, taking into account the full range of migrants’ socio-economical status and their evolution. Mega-city regions have become a new scale of Chinese State regulation, and PRD represent the most prosperous and dynamic one in term of migration waves, standing as an ideal unit of analysis.
+Over the last three decades, rural-to-urban migrant-workers have been a driving force for China's economy, raising attention on associated socio-economical issues. However, the importance of their economic diversity and social mobility has been poorly considered in the analysis of urban development strategy.
+We use an agent-based model to simulate residential dynamics of migrants in Pearl River Delta (PRD) mega city region, taking into account the full range of migrants’ socio-economical status and their evolution. Mega-city regions have become a new scale of Chinese State regulation \comment{source ?}, and PRD represent the most prosperous and dynamic one in term of migration waves, standing as an ideal unit of analysis.
 Our model unveils emergent patterns of dynamics, from micro behavior rules of discrete mobility choices. These choices are conditional to urban and economic environment, which evolution is controlled by meso-scale independent dynamics.
 The two scales are coupled through the dependence of discrete choice utilities to generalized accessibility that combines patch-level urban and economic context with a feedback of the dynamics themselves. This multi-scale aspect is crucial to distinguish endogenous form exogenous effects in regional migration patterns.
 We perform simulations to internally validate the model on synthetic data, by assessing statistical consistence and establishing phase diagrams across the parameter space.
@@ -54,13 +48,13 @@ Further work is directed towards a qualitative external validation of the model,
 
 \paragraph{Mega-city Regions}
 
-Mega-city regions (MCRs) are integrated sets of cities and their surrounding suburban hinterlands across which labour and capital can be reallocated at very low cost~\cite{florida2008rise}. It was first coined by Gottmann~\cite{gottman1961megalopolis} using the term megalopolis, that he defines as “urban area of several tens of millions of people, including several cities and major urban centers, and extending continuously over several 100 km”. It represents the new economic unit that emerges as metropolitan regions not only grow upward and become denser but also grow outward and into one another. These spaces result of the networking of a group of metropolitan areas deployed around very large cities and it is characterized by the “symbiosis between urban and rural areas”. Other characteristic are migration flows, density of connections, and regional migration patterns. 
+Mega-city regions (MCRs) are integrated sets of cities and their surrounding suburban hinterlands across which labour and capital can be reallocated at very low cost~\cite{florida2008rise}. The expression ``Mega-city Region'' was first coined by Gottmann~\cite{gottman1961megalopolis} using the term megalopolis, that he defines as “urban area of several tens of millions of people, including several cities and major urban centers, and extending continuously over several 100 km”. It represents the new economic unit that emerges as metropolitan regions not only grow upward and become denser but also grow outward and into one another. \comment{source ?} These spaces result of the networking of a group of metropolitan areas deployed around very large cities and it is characterized by the “symbiosis between urban and rural areas”.\comment{source ?}  Other characteristic are migration flows, density of connections, and regional migration patterns. 
 
 
 
 \paragraph{Pearl River Delta}
 
-Since the gradual decentralization of the state power which occurred in the beginning of  1990 Mega-city regions have become a new scale of Chinese State regulation, and in particular the pearl River Delta, represent the most prosperous and dynamic one in term of migration waves. That’s why we choose PRD as our unit of study. Since the Open Door Policy was implemented in 1978 the PRD launch a process of rapid economic and social transformation, becoming a global manufacturing region attracting an increasing number of migrant-workers from all over China. In fact, PRD was designed as an open economic zone in 1984, and was granted many ‘one step ahead’ policies to attract foreign capital, becoming the most important exporter center since economic reform. That results in an astonishing rise of population in the area. That today count more than 50 million people. If during the first year of the opening-up reforms the barycenter of the region was Guangzhou, over the last decade PRD has become increasing polycentric.
+Since the gradual decentralization of the state power which occurred in the beginning of  1990 Mega-city regions have become a new scale of Chinese State regulation, and in particular the pearl River Delta, represent the most prosperous and dynamic one in term of migration waves.\comment{check source} That’s why we choose PRD as our unit of study. Since the Open Door Policy was implemented in 1978 the PRD launch a process of rapid economic and social transformation, becoming a global manufacturing region attracting an increasing number of migrant-workers from all over China. In fact, PRD was designed as an open economic zone in 1984, and was granted many ‘one step ahead’ policies to attract foreign capital, becoming the most important exporter center since economic reform. That results in an astonishing rise of population in the area. That today count more than 50 million people.\comment{source ?} If during the first year of the opening-up reforms the barycenter of the region was Guangzhou - the provincial capital, over the last decade PRD has become increasing polycentric.
 Taking PRD as the unit of our model we try to reproduce migrants residential patterns taking into account the full range of migrants’ socio-economical status and their evolution. 
 
 
@@ -68,7 +62,7 @@ Taking PRD as the unit of our model we try to reproduce migrants residential pat
 \paragraph{Migrant Workers in PRD}
 
 
-Even though migrants workers are generally considered and treated as a uniform category, my previous research showed how considering their economical, cultural and human capital migrants workers are a very diversified social category. Especially 3 dimension are fundamental to understand migrant workers:
+Even though migrants workers are generally considered and treated as a uniform category, previous research~\cite{losavio2016analyser}, based on qualitative interviews and sociological observation, showed how considering their economical, cultural and human capital migrants workers are a very diversified social category. Especially 3 dimension are fundamental to understand migrant workers:
 \begin{itemize}
 \item Professional Dimension : industry, construction, private sector, services (will change not only their economical situation but which influence  migrants’ trajectory and the staying duration in the city and their residential choice.
 \item Residential Dimension : We could recognize two under-categories, with different socio-economic situation: (i) Temporary - migrants working in the construction sector, who are really mobile, changing city or province according to the labour demand;  seasonal migrants workers, most of the time are peasants working as farmer and cultivating their land who come to the urban area to sell their product at the city price but without paying the running costs temporary migrants’ trajectory are more difficult to detect since they move in a discretional way ; (ii) Permanent :  Who are living in the city for more than 6 months and are renting a room or apartment depending on their: Economic situation (revenues), Social network, Proximity to the work place
@@ -78,7 +72,7 @@ Even though migrants workers are generally considered and treated as a uniform c
 
 All these sub-categories have different mobility patterns, that we try to simulate in our model.
 
-Considering this diversity and translating it in qualitative stylized facts that correspond to precise patterns of synthetic data, this model aims at establishing a new perspective for understanding China’s urban and regional mobility employing a more qualitative approach, specifying the mechanisms through which Party-State shape the parameters of migrants’ choices.
+Considering this diversity and translating it in qualitative stylized facts that correspond to precise patterns of synthetic data, this model aims at establishing a new perspective for understanding China’s urban and regional mobility employing a more qualitative approach, specifying the mechanisms through which Party-State shape the parameters of migrants’ choices. \comment{(CL) The points-based hukou system represents one of these mechanisms. It would be great to add it into the model.}[Yes indeed]
 
 
 
@@ -96,15 +90,15 @@ Considering this diversity and translating it in qualitative stylized facts that
 
 Existing works in rural-urban migration modeling in China are mainly econometric studies, relying on census or on survey data. \cite{zhang2013measuring} estimate discrete choice models to study the trade-off between migration distance and earning difference. \cite{fan2005modeling} shows that gravity-based models can explain well inter-provincial migratory patterns, implying an underlying strong dominant aggregation processes. The positive association between wage gap and migration rates was obtained from time-series analysis in~\cite{zhang2003rural}.
 
-Intra-urban residential dynamics : empirical study in \cite{wu2006migrant} 
+Intra-urban residential dynamics : empirical study in \cite{wu2006migrant} \comment{Why did you add this sentence here?}[unfinished biblio listing\ldots]
 
 \paragraph{Towards an agent-based modeling approach}
 
 To the best of our knowledge, there was no attempt in the literature before to focus on China's migration issues from an agent-based perspective. The case of Mexico was tackled by~\cite{de2007netlogo}, but in the particular case of a border-town, and underlying processes are furthermore fundamentally different.
 
-\cite{xie2007simulating} : agent-based model to simulate the emergence of Urban Villages. \cite{silveira2006agent} : Ising model of rural-urban migration. \cite{fernandez2005characterizing} : study of population characteristics to establish the relevance of a future ABM.
+\cite{xie2007simulating} : agent-based model to simulate the emergence of Urban Villages. \cite{silveira2006agent} : Ising model of rural-urban migration. \cite{fernandez2005characterizing} : study of population characteristics to establish the relevance of a future ABM. \comment{I think later we should comment a bit more the litterature you cite here!}[yes of course]
 
-The idea of applying complexity paradigms to rural-urban migration is far from new, as~\cite{mabogunje1970systems} already theorized it in the frame of General System Theory, that for some is viewed as a precursor of complexity theories.
+The idea of applying complexity paradigms to rural-urban migration is far from new, as~\cite{mabogunje1970systems} already theorized it in the frame of General System Theory, that for some is viewed as a precursor of complexity theories. \comment{Was there a particular study? If is we can be more precise at least on the country where this kind of pattern has been studied}[it is a fully theoretical paper (although the empirical inspirations seem to be from Nigeria). the citation was more to justify our theoretical and methodological background, we'll have to think if it is really appropriate]
 
 Following a logic of \emph{Pattern-oriented modeling}~\cite{grimm2005pattern}, combined with recent advances in multi-modeling~\cite{cottineau2016back}, one can use agent-based models as powerful tools to test qualitative hypothesis, with a reasonable need for empirical data through toy-models or hybrid models.
 
@@ -115,11 +109,11 @@ Following a logic of \emph{Pattern-oriented modeling}~\cite{grimm2005pattern}, c
 
 \subsection{Rationale}
 
-We choose to focus on particular processes and stylized facts to include in the agent-based models, in order to test some hypothesis formulated after qualitative research done in~\cite{losavio2016analyser}. More precisely, a recent shift in socio-economic structure of migrating population was observed, including a rise of middle-income migrants and a relativisation of the role of \emph{Hukou} in migration dynamics. The core of the model is thus centered on the exploration of the impact of a varying population economic structure for migrants on system dynamics, and the influence of government migration policies.
+We choose to focus on particular processes and stylized facts to include in the agent-based models \comment{modif.}, in order to test some hypothesis formulated after qualitative research done in~\cite{losavio2016analyser}. More precisely, a recent shift in socio-economic structure of migrating population was observed, including a rise of middle-income migrants and a relativisation of the role of \emph{Hukou} in migration dynamics. The core of the model is thus centered on the exploration of the impact of a varying population economic structure for migrants on system dynamics, and the influence of government migration policies.
 
-\paragraph{Scale} As shown by~\cite{chan2012migration}, migration dynamics feature since last three decades (since the Deng Xiaoping economic reforms) a high asymmetry from central regions to coastal economically dynamic province. At a macroscopic scale, explanatory variables are relatively well understood and gravity-based geographical models have a reasonable explanatory power~\cite{fan2005modeling}. However, at a regional scale, migration dynamics are also highly present and present more complex patterns. The scale of the model is therefore a regional scale, in the spirit of a \emph{Mega-city Region} \cite{hall2006polycentric}, in which urban dynamics are highly complex. A relevant case study to apply the model will be the Pearl River Delta Region in Guangdong.
+\paragraph{Scale} As shown by~\cite{chan2012migration}, since last three decades (since the Deng Xiaoping economic reforms) migration dynamics features reveal a high asymmetry from central regions to coastal economically dynamic province. At a macroscopic scale, explanatory variables are relatively well understood and gravity-based geographical models have a reasonable explanatory power~\cite{fan2005modeling}. However, at a regional scale, migration dynamics are also highly present and present more complex patterns. The scale of the model is therefore a regional scale, in the spirit of a \emph{Mega-city Region} \cite{hall2006polycentric}, in which urban dynamics are highly complex. A relevant case study to apply the model will be the Pearl River Delta Region in Guangdong.
 
-\paragraph{Ontology} At a mesoscopic scale, i.e. for cities within the MCR, growth can be reasonably assumed independent from migrants movements : they follow larger economic urban processes. Conditionally to such population and economic context, migration dynamics occur at the microscopic scale. We postulate a simple utility-maximization process.
+\paragraph{Ontology} At a mesoscopic scale, i.e. for cities within the MCR, growth can be reasonably assumed as independent from migrants movements : they follow larger economic urban processes. Conditionally to such population and economic context, migration dynamics occur at the microscopic scale. We postulate a simple utility-maximization process.
 
 
 %%%%%%%%%%%%%%%
@@ -136,7 +130,7 @@ We choose to focus on particular processes and stylized facts to include in the 
 
 \paragraph{Setup}
 
-The world consists in a lattice of $1 \leq i \leq N$ cells, characterized by their population $P_i(t)$ and an economic structure $E_i^{(c)}(t)$ which consists in abstract variables representing potential number of jobs stratified by socio-economic classes $c$. The associated effective number of workers is denoted by $W_i^{(c)}(t)$. For the sake of simplicity, we assume a discrete number of classes. At initial time, the variables are initialized either following a synthetic data generation process (see below), or from real geographical data (abstracted and simplified to fit our context). Cells are grouped into $1\leq k\leq K$ administrative cities that corresponding to the various centers of the MCR, on which aggregated population $\tilde{P}_k(t)$ and corresponding economic variables ($\tilde{E}_k^{c}(t)$) can be computed.
+The world \comment{Why do you talk about the “world” ? Do you mean the world of our model?}[yes it is a term for the space of the model] consists in a lattice of $1 \leq i \leq N$ cells, characterized by their population $P_i(t)$ and an economic structure $E_i^{(c)}(t)$ which consists in abstract variables representing potential number of jobs stratified by socio-economic classes $c$. The associated effective number of workers is denoted by $W_i^{(c)}(t)$. For the sake of simplicity, we assume a discrete number of classes. At initial time, the variables are initialized either following a synthetic data generation process (see below), or from real geographical data (abstracted and simplified to fit our context). Cells are grouped into $1\leq k\leq K$ administrative cities that corresponding to the various centers of the MCR, on which aggregated population $\tilde{P}_k(t)$ and corresponding economic variables ($\tilde{E}_k^{c}(t)$) can be computed.
 
 \paragraph{Agents}
 
@@ -146,7 +140,7 @@ An agent is a household of migrants, whose residence and job are located in cell
 \Delta U_{i,j}^{(c)}(t) = \frac{Z_j^{(c)}- Z_i^{(c)}}{Z_0} + \frac{C_i^{(c)}- C_j^{(c)}}{C_0} - u_i^{(c)} - h_j^{(c)}
 \]
 
-where $Z_i^{(c)}$ is generalized accessibility given by $Z_i^{(c)} = P_i \cdot \sum_k \left[E_k^{(c)}-W_k^{(c)}\right]\cdot \exp{\left(\frac{-d_{ij}}{d_0}\right)}$, with $d_{ij}$ effective travel distance (in public transportation ; \comment{point to be clarified : for higher classes, car may be an option}) and $d_0$ commuting characteristic distance ; $C_i^{(c)}$ is the cost of life which is a function of cell and city variables, that will be taken as $C_i^{(c)} \propto P_i^{\alpha_0}\cdot  \tilde{P}_i^{\alpha_1}\cdot$ ; $u_i^{(c)}$ a baseline aversion to move and $h_j^{(c)}$ an exogenous variable corresponding to regulation policies ; $Z_0$ and $C_0$ dimensioning parameters.
+where $Z_i^{(c)}$ is generalized accessibility given by $Z_i^{(c)} = P_i \cdot \sum_k \left[E_k^{(c)}-W_k^{(c)}\right]\cdot \exp{\left(\frac{-d_{ij}}{d_0}\right)}$, with $d_{ij}$ effective travel distance \footnote{as the model does not focus on the role of transportation, we take euclidian distance, and $d_0$ captures typical commuting distance in both public transportation or car. A more complex model could include an explicit transportation network and modal choice depending on socio-economic category.} and $d_0$ commuting characteristic distance ; $C_i^{(c)}$ is the cost of life which is a function of cell and city variables, that will be taken as $C_i^{(c)} \propto P_i^{\alpha_0}\cdot  \tilde{P}_i^{\alpha_1}\cdot$ ; $u_i^{(c)}$ a baseline aversion to move and $h_j^{(c)}$ an exogenous variable corresponding to regulation policies ; $Z_0$ and $C_0$ dimensioning parameters.
 
 \paragraph{Temporal Evolution}
 
@@ -155,9 +149,9 @@ At each time step, the system evolves sequentially according to the following ru
 \begin{enumerate}
 \item Cities mesoscopic variables $\tilde{P}_k(t)$ and $\tilde{E}_k^{c}(t)$ are deterministically updated. Population follows the very simple assumption of the expectancy of a Gibrat's law, i.e. $\tilde{P}_k(t)= g_k \cdot \tilde{P}_k(t-1)$. Economy follows a scaling law of population: $\tilde{E}_k^{(c)}(t) = E_k^{(c,0)}\cdot \left(\frac{\tilde{P}_k(t)}{P_0}\right)^{\gamma_k^{(c)}}$.
 
-\item Patches variables are updated conditionally to the new aggregated values. For population, we adapt the aggregation-diffusion process detailed in~\cite{raimbault2016calibration}: a density ceil is introduced and diffusion is replaced by spatial noise. More precisely, let $\Delta \tilde{P}_k(t) = \tilde{P}_k(t) - \tilde{P}_k(t-1)$.
+\item Patches variables are updated conditionally to the new aggregated values. For population, we adapt the aggregation-diffusion process detailed in~\cite{raimbault2016calibration}: a density ceil is introduced and diffusion is replaced by spatial noise. More precisely, let $\Delta \tilde{P}_k(t) = \tilde{P}_k(t) - \tilde{P}_k(t-1)$. \comment{less clear for me}[this part is unfinished indeed]
 
-\item A number of new migrants, proportional to Gibrat growth rate, enter the region. They lean on social network %(关系，guanxi) 
+\item A number $M$ of new migrants, enters the region. They lean on social network (关系，guanxi) \comment{(CL) ADD EXPLICATIVE NOTE}
 to first settle in the city and agglomerate following a preferential attachment by place of origin.
 \item Migration occur following a discrete choice dynamics : the probability to move to cell $j$ is given by
 
@@ -176,9 +170,10 @@ Residential movement is drawn randomly according to these probabilities, and job
 \item Migrants update their wealth and eventually economic category, according to an abstract ``quality of place'' that we associate to per-capita GDP which follows a scaling law of population
 
 %population / max-population * [city-population] of owning-city / economic-p0
+% note : tunable function : test its role !
 
 \[
-w = w\cdot \left( 1 + \frac{P_i}{\max P_j} \right)
+w = w\cdot \left( 1 + g_{w} \frac{P_i}{\max P_j} \cdot \frac{\tilde{P}_k}{\max \tilde{P}_l} \right)
 \]
 
 \end{enumerate}
@@ -186,16 +181,24 @@ w = w\cdot \left( 1 + \frac{P_i}{\max P_j} \right)
 
 \paragraph{Indicators}
 
+The outcome of the model has many dimensions, and is measured through the following indicators :
+
 \begin{itemize}
 \item Total migrants wealth gain
 \item Total migrants social mobility
-\item \todo{segregation ?}
+\item Cumulated utility difference in migrations \comment{(CL) What does that mean ?}[when someone migrates, it corresponds to a given utility gain $\Delta U$ : this indicator is $\sum \Delta U$ on all realized migrations.]
+\item Inequalities are captured by the final ratio between socio-economic categories
 \end{itemize}
 
 
 \paragraph{Synthetic Data Generation}
 
-A synthetic mega-city region is generated following simple stylized facts for systems of cities
+A synthetic mega-city region is generated following simple stylized facts for systems of cities. A polycentric structure, with each center having an exponential density decay
+
+
+\paragraph{Parameters}
+
+We summarise main parameters in table \comment{which table ?}[not there yet...].
 
 
 
@@ -210,38 +213,25 @@ A synthetic mega-city region is generated following simple stylized facts for sy
 Next steps :
 \begin{itemize}
 \item Full exploration on synthetic data : model behavior
-\item Stylization and scenarization of real DPR configuration, model behavior on real and hybrid configurations
+\item Stylization and scenarization of real PRD configuration, model behavior on real and hybrid configurations
 \item Targeted experience plans (e.g. : role of economic diversity, influence of state regulation)
 \item Iterative further construction/multi-modeling (e.g. generations)
 \end{itemize}
 Expected Results :
 \begin{itemize}
 \item Impact of processes linked to migrants diversities on emergent dynamics
-\item Explore or unveil state strategies (through regulations or companies control)
+\item Explore or unveil state strategies (through regulations or companies control \comment{why companies control ?}[I had in mind a possible action on company locations ?])
 \end{itemize}
 }
 
 
 
-<<<<<<< HEAD
-
 %%%%%%%%%%%%%%%%%%%%
-\subsection{Model Validation}
-=======
->>>>>>> 56e54e7cbc1f36ec2d9f5303bb260c6aae7c3df0
-
-%%%%%%%%%%%%%%%%%%%%
-\subsection{Model Validation and Exploration}
+\subsection{Model Validation and Baseline Exploration}
 
 \paragraph{Internal validation} 
 
 statistical consistence : cf Fig.~\ref{fig:statistical-valid} ; system trajectories ; path-dependency.
-
-
-\paragraph{External validation}
-
-We first establish the behavior of the model on the simplest baseline situation, to which will be compared more complex parameter configurations. The baseline assumes no city growth ($g_k=1$)
-
 
 %%%%%%%%%%%%%%%%
 \begin{figure}
@@ -255,6 +245,21 @@ We first establish the behavior of the model on the simplest baseline situation,
 
 
 
+
+\paragraph{External validation : baseline behavior}
+
+We first establish the behavior of the model on the simplest baseline situation, to which will be compared more complex parameter configurations. The baseline assumes no city growth ($g_k=1$), no external migration ($M=0$), no income growth ($g_{w}$), $u_i$ is fixed at a constant value $U_0$ and we have only one economic category. Fig.~\ref{fig:baseline-indics} show indicator values across the parameter space.
+
+We extract the following stylized facts from model behavior :
+\begin{itemize}
+\item As expected, we observe a phase transition in number of migrations for increasing $\beta$ ; the transition points increases when $u_0$ decreases, until the model follows a change in qualitative behavior (bifurcation ?) : increasing $\beta$ first produces a peak in migrations before they fall down again. The increase above 1 migration per migrant and per time step is possible by the disappearance of some of them due to a saturation of jobs. \textit{When migrants have a high propensity to move, the spatial repartition of jobs becomes suboptimal in intermediate regimes of stochasticity, corresponding to a regime where congestion dominates.} \comment{fact to be compared with the real config, maybe it is due to the spatial structure ; try to trickle also job number parameters, meta-parameter of synthetic system shape.}
+\item The previous observation is consistent with the behavior of the average distance to job (this plot is quite noisy as it depends on spatial configuration, stabilizing it would thus need supplementary repetitions, as the exploration for sensitivity of meta-parameters) : it always decreases with $\beta$, but individual move repulsion changes the shape. Low values give a linear decrease of job distance with $\beta$, whereas high values produce a saturating curve that becomes constant. \textit{The congestion regime corresponds to a linear decrease of job distance with randomness, meaning that social determinism creates spatial inequalities.}
+\item Not sensitive to $\gamma$ : the sensitivity to ratio cost/accessibility is very low \comment{(CL) to job or to city ?}[(JR) jobs, we work with generalized accessibility, see below], what may be due to the dependence of dynamics to outliers of utility distributions : its central shape changes a lot with it but not extreme values. \textit{Changing the relative importance of accessibility does not affect much the aggregated dynamics : an increased gain in mobility produced by policies for examples will have no effect on migrations patterns.} \todo{plot the patch distrib of utilities ? (in netlogo) $\rightarrow$ some examples }
+\item Temporal Dynamics : Fig.~\ref{fig:migr-diff}. The dependence of dynamics to parameter is much richer ; we observe a transition from a maximum, to a min, and then a max again. In configurations averse to move, time has a positive feedback on migrations ; intermediate situations show a negative feedback (progressive saturation in time) ; to switch again to a positive feedback in most mobile situations. \textit{Configurations with an intermediate value of move aversion (in which real configurations fall) yield a negative feedback effect to time, witnessing a progressive saturation. In a ``U-shape'' manner, very mobile or very fixed configurations yield positive feedback of time.} \comment{(JR) note : this directs to the exploration of not constant but proba distrib for $u_i$ ; or function of something ? no it is an externality !}
+\end{itemize}
+
+
+
 %%%%%%%%%%%%%%%%
 \begin{figure}
 \centering
@@ -263,7 +268,7 @@ We first establish the behavior of the model on the simplest baseline situation,
 \includegraphics[width=0.48\textwidth]{figures/baseline_indicjobDistance0}
 \includegraphics[width=0.48\textwidth]{figures/baseline_indicutilitiesDecOrigin0_5}
 \caption{Model behavior, averaged over 50 runs, for a baseline configuration.}
-\label{fig:statistical-valid}
+\label{fig:baseline-indics}
 \end{figure}
 %%%%%%%%%%%%%%%%
 
@@ -271,27 +276,29 @@ We first establish the behavior of the model on the simplest baseline situation,
 %%%%%%%%%%%%%%%%
 \begin{figure}
 \centering
-\includegraphics[width=\textwidth,height=0.3\textheight]{figures/migr-diff}
-\caption{}
+\includegraphics[width=\textwidth,height=0.3\textheight]{figures/migr-diff-final}
+\caption{Difference in number of migrations between initial and final state of the model (relatively robust to final time).}
 \label{fig:migr-diff}
 \end{figure}
 %%%%%%%%%%%%%%%%
 
 
 
-
-
-%%%%%%%%%%%%%%%%
-\subsection{Stylized Facts}
-
-
-<<<<<<< HEAD
 %%%%%%%%%%%%%%%%%%%%
 \subsection{Stylized Facts}
 
-
-
 \paragraph{Role of economic categories}
+
+\begin{itemize}
+\item \textit{Adding categorisation does not change the qualitative behavior of the model. The lower category seems more vulnerable to spatial inequalities created by social determinism.}
+\end{itemize}
+
+\paragraph{Role of income growth}
+
+
+\paragraph{Role of accessibility decay}
+
+
 
 
 
@@ -302,16 +309,24 @@ We first establish the behavior of the model on the simplest baseline situation,
 
 
 
+\subsection{Summary of Stylized facts}
+
+\begin{itemize}
+\item When migrants have a high propensity to move, the spatial repartition of jobs becomes suboptimal in intermediate regimes of stochasticity \comment{(CL) What does that mean ?}[We use a ``Random Utility'' specification for migrants' decisions, that includes a parameter $\beta$ that represents a ``level of randomness'' (or stochasticity) : when it goes to 0, migrations are totally random and without any sense, when it goes to infinity, migrants follow deterministically the best choice between staying and going to the best migration patch (depending on the sign of $\Delta U$). For intermediate values of $\beta$, we observe this congestion phenomenon.], corresponding to a regime where congestion dominates.
+\item The congestion regime corresponds to a linear decrease of job distance with randomness, meaning that social determinism creates spatial inequalities. \comment{(CL) Closeness to job  = more congestion}[yes but there is no direct causality between the two, both are outcome of model processes.]
+\item Changing the relative importance of accessibility \comment{(CL) ACCESSIBILITY to what? Do you mean ACCESSIBILITY TO JOB?}[(JR) Accessibility is a generic notion to capture patterns of accessibility to urban functions and amenities ; in our case we use generalized Hansen accessibility, which can be understood in a simplified way number of jobs available to the population within a spatial range] does not affect much the aggregated dynamics: an increased gain in mobility produced by policies for examples will have no effect on migrations patterns. \comment{(CL) Which kind of Public policies?}[(JR) I had in mind individual transportation subsidies for example]
+\item Configurations with an intermediate value of move aversion \comment{(CL) What does that mean?}[It corresponds to parameters in which people are not totally fixed neither totally mobile] (in which real configurations fall) yield a negative feedback effect to time, witnessing a progressive saturation. In a ``U-shape'' manner, very mobile or very fixed configurations yield positive feedback of time.
+\item Adding categorisation does not change the qualitative behavior of the model. \comment{Do you mean that categorization (based on professional qualifications, education, and economic situation) does not influence the migration behavior? I think that for example the points-based hukou system favoring “talents” – people with more qualifications, with stable job and economic situation etc. – can have a relevant influence on migration behavior.}[It changes the migration behavior for individuals, but not the global qualitative picture of the previous stylized facts. I have to think more on this and I totally agree on your second point : an interesting thing to try when testing the hukou policies in the model is to check if we have the same phenomenon, and then to compare the effectiveness of policies at the individual level (impact on migrants trajectories) to the global level (behavior of the model).] The lower category seems more vulnerable to spatial inequalities created by social determinism.
+\end{itemize}
+
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%
-\subsection{Real Configuration}
-=======
->>>>>>> 56e54e7cbc1f36ec2d9f5303bb260c6aae7c3df0
+\subsection{Application : Real Configuration}
 
 
-%%%%%%%%%%%%%%%%
-\subsection{Application}
 
 \paragraph{Stylized Pearl River Delta configuration}
 
@@ -326,6 +341,7 @@ The model is parametrized on a simplified configuration, with the sufficient inf
 \item what is the impact of various spatial distribution of $h_j^{(c)}$, i.e. different government policies ? \comment{(Juste) Sur ce point le mieux serait de tester les politiques que tu as pu mettre en évidence, de manière scénarisée ?}
 \item Comparison with and without Hong-Kong and Macao \comment{(Juste) I'm not sure this point is a good idea, as interactions processes are quite different (e.g. daily commuting, different migration rules, etc.) and it would become a gaz factory to include them in the model.}
 \end{itemize}
+\comment{(CL) qui a fait ces commentaires ?}[(JR) Moi]
 
 
 

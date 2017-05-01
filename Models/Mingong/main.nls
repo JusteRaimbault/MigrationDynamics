@@ -22,7 +22,7 @@ to go
   update-utilities
   
   ; display/reporters
-  update-display
+  if headless? != 0 [update-display]
   
   tick
   

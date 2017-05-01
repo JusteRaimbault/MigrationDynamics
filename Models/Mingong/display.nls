@@ -55,6 +55,11 @@ to color-patches
   
   if count patches with [sea? = true] > 0 [ask patches with [sea? = true] [set pcolor blue]]
   
+  if display-type = "liveable" [
+    ask patches [set pcolor black] ask patches with [liveable? = true] [set pcolor yellow] 
+  ]
+  
+  
 end
 
 
@@ -99,12 +104,13 @@ end
 
 to plot-utilities-origin
   set-current-plot "utilities-origin" set-current-plot-pen "utils" set-plot-pen-mode 2
-  let qs seq 0 0.99 0.01 let vals utilities-quantiles-origin 0 qs
-  set-plot-x-range min vals max vals
-  let i 0 foreach vals [
-    plotxy ? item i qs
-    set i i + 1 
-  ]
+  let qs seq 0 0.99 0.01
+  let vals0 utilities-quantiles-origin 0 qs true let vals1 utilities-quantiles-origin 1 qs true
+  set-plot-x-range min list min vals0 min vals1 max list max vals0 max vals1
+  set-plot-pen-color 35
+  let i 0 foreach vals0 [plotxy ? item i qs set i i + 1 ]
+  set-plot-pen-color ((140 / #-economic-categories) + 35)
+  set i 0 foreach vals1 [plotxy ? item i qs set i i + 1 ]
 end  
 
 

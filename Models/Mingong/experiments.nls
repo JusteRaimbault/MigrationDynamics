@@ -5,7 +5,7 @@
 
 ;;
 ;  parameters to be explored
-to setup-experiment [costacc-ratio wealthdistrib-sigma acc-decay mov-aversion gib-rate migr-share beta-dc inc-growth num-categories life-cost-md final-time]
+to setup-experiment [costacc-ratio wealthdistrib-sigma acc-decay mov-aversion gib-rate migr-share beta-dc inc-growth num-categories life-cost-md final-time setup-type-int]
   
   set cost-access-ratio costacc-ratio  ; 6e6 
   set lognormal-wealth-logsigma wealthdistrib-sigma; 0.3
@@ -16,8 +16,12 @@ to setup-experiment [costacc-ratio wealthdistrib-sigma acc-decay mov-aversion gi
   set beta-discrete-choice beta-dc;1
   set income-growth inc-growth ; \in [0,1]
   set #-economic-categories num-categories
+  
   if life-cost-md = 0 [set life-cost-mode "city"] if life-cost-md = 1 [set life-cost-mode "population"] if life-cost-md = 2 [set life-cost-mode "city-and-population"]
+  
   set total-time-steps final-time;10 20
+  
+  if setup-type-int = 0 [set setup-type "synthetic"] if setup-type-int = 1 [set setup-type "gis"]
   
   set headless? true
   
@@ -38,8 +42,6 @@ end
 
 
 to setup-headless-globals
-  set setup-type "synthetic" ; or "gis"
-  
   set #-cities 4
   set max-pop 5e6
   set rank-size-exp 0.85

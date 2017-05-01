@@ -206,6 +206,8 @@ patches-own [
   
   sea?
   
+  liveable?
+  
 ]
 
 
@@ -452,8 +454,8 @@ CHOOSER
 611
 display-type
 display-type
-"population" "potential-jobs" "available-jobs" "accessibility" "life-cost" "utility"
-1
+"population" "potential-jobs" "available-jobs" "accessibility" "life-cost" "utility" "liveable"
+6
 
 BUTTON
 153

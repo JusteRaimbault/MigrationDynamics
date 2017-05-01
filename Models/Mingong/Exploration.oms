@@ -5,13 +5,13 @@ import Model._
 
 //costAccessRatio,wealthSigma,accDecay,moveAversion
 val exploration = ExplorationTask(
-  (((costAccessRatio in Seq(1e6,5e6))//Seq(1e5,5e5,1e6,5e6,1e7,5e7))
+  (((costAccessRatio in Seq(1e6,1e6,1e7))
   //x(wealthSigma in (0.1 to 1.1 by 0.5))
   //x(accDecay in (1.0 to 11.0 by 5.0))
-  x (moveAversion in (0.0 to 4.0 by 1.0))
+  x (moveAversion in (0.0 to 4.0 by 0.5))
   //x(migrationShare in (0.0 to 1e-4 by 5e-5))x
-  x(betaDC in (4.3 to 7.1 by 0.2))
-  //x (numCategories in (1 to 2 by 1)) 
+  x(betaDC in (0.1 to 10.1 by 0.2))
+  //x (numCategories in (1 to 2 by 1))
   ) withIndex id )
   /*(LHS(
     1,
@@ -22,18 +22,20 @@ val exploration = ExplorationTask(
     //migrationShare in Range(0.0,1e-4),
     betaDC in Range(0.0,5.0)
   ) withIndex id )*/
-  x (replication in UniformDistribution[Int]() take 50)
-  x (gibratRate is 1.0) x (incomeGrowth is 0.0) 
+  x (gibratRate is 1.0)
+  x (incomeGrowth is 0.0)
   x (migrationShare is 0.0)
-  x (accDecay is 5.0) 
+  x (accDecay is 5.0)
   x (wealthSigma is 0.3)
-  x (numCategories is 1) 
+  x (numCategories is 1)
+  x (finalTime is 20)
   x (lifeCostMode is 1)
+  x (setupMode is 1)
+  x (replication in UniformDistribution[Int]() take 100)
 )
 
 //val purpose = "test"
-//val purpose = "lhs"
-val purpose = "grid_baselineext_local"
+val purpose = "grid_baseline_real_grid"
 
 
 val eval = exploration -< model
@@ -42,9 +44,8 @@ val indics_hook = AppendToCSVFileHook(workDirectory / "exploration" / ((new Simp
   arraysOnSingleRow := true
 )
 
-val local = LocalEnvironment(50)
-//val grid = EGIEnvironment("vo.complex-systems.eu")
-//val grid = EGIEnvironment("vo.complex-systems.eu",openMOLEMemory = 4000 megabytes)
+//val local = LocalEnvironment(50)
+val grid = EGIEnvironment("vo.complex-systems.eu",openMOLEMemory = 4000 megabytes)
 
-exploration -< (model on local hook indics_hook)
-//exploration -< (model on grid by 50 hook indics_hook)
+//exploration -< (model on local hook indics_hook)
+exploration -< (model on grid by 20 hook indics_hook)

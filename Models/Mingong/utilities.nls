@@ -124,6 +124,8 @@ to-report patch-probabilities [cat]
   ;let patch-utils map [? / (item cat utility-norm)] matrix:get-row (item cat utilities) number
   let patch-utils matrix:get-row (item cat utilities) number
   let patch-nn-probas map [exp (beta-discrete-choice * ?)] patch-utils
-  let stot sum patch-nn-probas
-  report (list map [? / (1 + stot)] patch-nn-probas patch-utils)
+  ; put 0 probas to unliveable patches (sea)
+  ask patches with [liveable? = false] [set patch-nn-probas replace-item number patch-nn-probas 0]
+  let stot sum patch-nn-probas let res map [? / (1 + stot)] patch-nn-probas
+  report (list res patch-utils)
 end

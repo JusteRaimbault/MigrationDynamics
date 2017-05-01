@@ -5,9 +5,9 @@ library(reshape2)
 
 setwd(paste0(Sys.getenv('CS_HOME'),'/MigrationDynamics/Results/Exploration'))
 
-#res1 <- as.tbl(read.csv('20170418_gridbaseline/data/2017_04_18_13_48_52_grid_baseline_grid.csv',stringsAsFactors = FALSE,header=F,skip = 1))
+res <- as.tbl(read.csv('20170418_gridbaseline/data/2017_04_18_13_48_52_grid_baseline_grid.csv',stringsAsFactors = FALSE,header=F,skip = 1))
 #res <- as.tbl(read.csv('20170419_gridbaselinetwocat/data/2017_04_19_10_33_53_grid_baselinetwocat_grid.csv',stringsAsFactors = FALSE,header=F,skip = 1))
-res <- as.tbl(read.csv('20170420_gridincgrowth/data/2017_04_20_17_49_41_grid_incgrowth_grid.csv',stringsAsFactors = FALSE,header=F,skip = 1))
+#res <- as.tbl(read.csv('20170420_gridincgrowth/data/2017_04_20_17_49_41_grid_incgrowth_grid.csv',stringsAsFactors = FALSE,header=F,skip = 1))
 
 
 finalTime = as.numeric(res[1,12])
