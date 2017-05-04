@@ -14,13 +14,13 @@ val exploration = ExplorationTask(
   //x (numCategories in (1 to 2 by 1))
   ) withIndex id )
   /*(LHS(
-    1,
+    2,
     costAccessRatio in Range(1e6,1e7),
-    wealthSigma in Range(0.0,1.0),
-    accDecay in Range(1.0,20.0),
+    //wealthSigma in Range(0.0,1.0),
+    //accDecay in Range(1.0,20.0),
     moveAversion in Range(0.0,5.0),
     //migrationShare in Range(0.0,1e-4),
-    betaDC in Range(0.0,5.0)
+    betaDC in Range(0.0,10.0)
   ) withIndex id )*/
   x (gibratRate is 1.0)
   x (incomeGrowth is 0.0)
@@ -31,11 +31,14 @@ val exploration = ExplorationTask(
   x (finalTime is 20)
   x (lifeCostMode is 1)
   x (setupMode is 1)
+  x (policyType is 1)
+  x (policyCityNum is 2)
+  x (policyValue is 0.5)
   x (replication in UniformDistribution[Int]() take 100)
 )
 
 //val purpose = "test"
-val purpose = "grid_baseline_real_grid"
+val purpose = "grid_policies_grid"
 
 
 val eval = exploration -< model
@@ -44,7 +47,7 @@ val indics_hook = AppendToCSVFileHook(workDirectory / "exploration" / ((new Simp
   arraysOnSingleRow := true
 )
 
-//val local = LocalEnvironment(50)
+//val local = LocalEnvironment(2)
 val grid = EGIEnvironment("vo.complex-systems.eu",openMOLEMemory = 4000 megabytes)
 
 //exploration -< (model on local hook indics_hook)

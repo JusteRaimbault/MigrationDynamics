@@ -74,6 +74,12 @@ globals [
   job-searching-radius
   
   ;;;;;;;
+  ;; Policies
+  ;random-incentive-cities-number
+  ;random-incentive-value
+  
+  
+  ;;;;;;;
   ;; Migration
   #-migrations
   prop-migrations
@@ -104,8 +110,8 @@ globals [
   ; list of utility matrices
   utilities
   
-  ; matrix of government utility control
-  policy-matrix
+  ; matrix of government utility control, one per category
+  policy-matrices
   
   ;; patches list/mat
   
@@ -448,20 +454,20 @@ count migrants
 11
 
 CHOOSER
-9
-566
-147
-611
+8
+581
+146
+626
 display-type
 display-type
 "population" "potential-jobs" "available-jobs" "accessibility" "life-cost" "utility" "liveable"
-6
+3
 
 BUTTON
-153
-573
-227
-606
+152
+588
+226
+621
 update
 update-display
 NIL
@@ -684,9 +690,9 @@ NIL
 1
 
 BUTTON
-95
+92
 301
-158
+155
 334
 NIL
 go
@@ -761,14 +767,14 @@ PENS
 "pen-2" 1.0 0 -13791810 true "" "if #-migrations > 0 and #-economic-categories > 1 [plot item 1 migrations-cat * prop-migrations / #-migrations]"
 
 CHOOSER
-239
+238
 183
-331
+330
 228
 policy
 policy
-"no-policy" "random"
-0
+"no-policy" "random-city-incentive" "highestcat-city-incentive" "random"
+2
 
 PLOT
 918
@@ -822,10 +828,10 @@ PENS
 "hist" 1.0 0 -16777216 true "" ""
 
 SLIDER
-9
-614
-160
-647
+8
+629
+159
+662
 display-acc-category
 display-acc-category
 0
@@ -878,9 +884,9 @@ SLIDER
 income-growth
 income-growth
 0
-1
-0
-0.05
+0.3
+0.02
+0.01
 1
 NIL
 HORIZONTAL
@@ -945,6 +951,46 @@ false
 "" "plot-utilities-origin"
 PENS
 "utils" 1.0 0 -16777216 true "" ""
+
+SLIDER
+3
+505
+181
+538
+random-incentive-value
+random-incentive-value
+0
+4
+0.8
+0.1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+181
+505
+386
+538
+random-incentive-cities-number
+random-incentive-cities-number
+0
+5
+4
+1
+1
+NIL
+HORIZONTAL
+
+CHOOSER
+8
+664
+143
+709
+migrant-color
+migrant-color
+"economic-category" "social-category"
+0
 
 @#$#@#$#@
 ## WHAT IS IT?

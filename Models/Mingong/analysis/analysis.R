@@ -5,9 +5,10 @@ library(reshape2)
 
 setwd(paste0(Sys.getenv('CS_HOME'),'/MigrationDynamics/Results/Exploration'))
 
-res <- as.tbl(read.csv('20170418_gridbaseline/data/2017_04_18_13_48_52_grid_baseline_grid.csv',stringsAsFactors = FALSE,header=F,skip = 1))
+#res <- as.tbl(read.csv('20170418_gridbaseline/data/2017_04_18_13_48_52_grid_baseline_grid.csv',stringsAsFactors = FALSE,header=F,skip = 1))
 #res <- as.tbl(read.csv('20170419_gridbaselinetwocat/data/2017_04_19_10_33_53_grid_baselinetwocat_grid.csv',stringsAsFactors = FALSE,header=F,skip = 1))
 #res <- as.tbl(read.csv('20170420_gridincgrowth/data/2017_04_20_17_49_41_grid_incgrowth_grid.csv',stringsAsFactors = FALSE,header=F,skip = 1))
+res <- as.tbl(read.csv('20170428_gridwealthsigma/data/2017_04_28_09_44_57_grid_wealthsigma_grid.csv',stringsAsFactors = FALSE,header=F,skip = 1))
 
 
 finalTime = as.numeric(res[1,12])
@@ -20,9 +21,7 @@ names(res)<-c(
   "slopeEco0","slopeEco1","slopePop","slopeRsqEco0","slopeRsqEco1","slopeRsqPop",
   paste0("utilitiesDecOrigin0_",1:9),paste0("utilitiesDecOrigin1_",1:9),"wealth","wealthGain","wealthSigma")
 
-#names(res1)<-names(res)
-
-params=c("betaDC","costAccessRatio","moveAversion","incomeGrowth")#,"wealthSigma","accDecay")
+params=c("betaDC","costAccessRatio","moveAversion","wealthSigma")#,"incomeGrowth","accDecay")
 #indics = c("indivMigrations","deltaU0","migration0","migration1","deltaU1","jobDistance1",
 #           "jobDistance0","utilitiesDecOrigin0_5","utilitiesDecOrigin0_1","utilitiesDecOrigin0_9")
 #indics = c("indivMigrations","deltaU0","migration0","jobDistance0","utilitiesDecOrigin0_5",
@@ -32,7 +31,7 @@ indics = c("indivMigrations","deltaU0","migration0","migration1","deltaU1","jobD
            "wealthGain","wealth","segregCatShare")
 
 
-resdir = paste0(Sys.getenv('CS_HOME'),'/MigrationDynamics/Results/Exploration/20170420_gridincgrowth/')
+resdir = paste0(Sys.getenv('CS_HOME'),'/MigrationDynamics/Results/Exploration/20170428_gridwealthsigma/')
 dir.create(resdir)
 
 # histograms
@@ -67,8 +66,8 @@ sres = res %>% group_by(id)%>% summarise(
 for(indic in indics){
   g=ggplot(sres,aes_string(x="betaDC",y=indic,color="moveAversion",group="moveAversion"))
   #g+geom_line()+facet_wrap(~costAccessRatio,scales="free")
-  g+geom_line()+facet_grid(costAccessRatio~incomeGrowth,scales="free")
-  ggsave(paste0(resdir,'varyingincgrowth_indic',indic,'.pdf'),width=30,height = 20,units='cm')
+  g+geom_line()+facet_grid(costAccessRatio~wealthSigma,scales="free")
+  ggsave(paste0(resdir,'varyingwealthsigma_indic',indic,'.pdf'),width=30,height = 20,units='cm')
 }
 
 
@@ -107,18 +106,18 @@ g+geom_point()+geom_line()+facet_grid(moveAversion~costAccessRatio,scales="free"
 ##
 
 # final - initial
-sres = res %>% group_by(betaDC,moveAversion,costAccessRatio,incomeGrowth) %>% summarise(diff = mean(migrationTS_20+migrationTS_19+migrationTS_18-migrationTS_3-migrationTS_2-migrationTS_1))
+sres = res %>% group_by(betaDC,moveAversion,costAccessRatio,wealthSigma) %>% summarise(diff = mean(migrationTS_20+migrationTS_19+migrationTS_18-migrationTS_3-migrationTS_2-migrationTS_1))
 g=ggplot(sres,aes(x=betaDC,y=diff,color=moveAversion,group=moveAversion))
 #g+geom_line()+facet_wrap(~costAccessRatio)+ylab("Migrations (t=20) - Migrations (t=1)")
-g+geom_line()+facet_grid(costAccessRatio~incomeGrowth)+ylab("Migrations (t=20) - Migrations (t=1)")
+g+geom_line()+facet_grid(costAccessRatio~wealthSigma)+ylab("Migrations (t=20) - Migrations (t=1)")
 ggsave(paste0(resdir,'migr-diff-final.pdf'),width=30,height=20,units='cm')
 
 
 # final - middle
-sres = res %>% group_by(betaDC,moveAversion,costAccessRatio,incomeGrowth) %>% summarise(diff = mean(migrationTS_20+migrationTS_19+migrationTS_18-migrationTS_11-migrationTS_10-migrationTS_9))
+sres = res %>% group_by(betaDC,moveAversion,costAccessRatio,wealthSigma) %>% summarise(diff = mean(migrationTS_20+migrationTS_19+migrationTS_18-migrationTS_11-migrationTS_10-migrationTS_9))
 g=ggplot(sres,aes(x=betaDC,y=diff,color=moveAversion,group=moveAversion))
 #g+geom_line()+facet_wrap(~costAccessRatio)+ylab("Migrations (t=20) - Migrations (t=10)")
-g+geom_line()+facet_grid(costAccessRatio~incomeGrowth)+ylab("Migrations (t=20) - Migrations (t=10)")
+g+geom_line()+facet_grid(costAccessRatio~wealthSigma)+ylab("Migrations (t=20) - Migrations (t=10)")
 ggsave(paste0(resdir,'migr-diff-final-middle.pdf'),width=30,height=20,units='cm')
 
 

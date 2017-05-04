@@ -11,6 +11,9 @@ val numCategories = Val[Int]
 val lifeCostMode = Val[Int]
 val finalTime = Val[Int]
 val setupMode = Val[Int]
+val policyType = Val[Int]
+val policyCityNum = Val[Int]
+val policyValue = Val[Double]
 
 // indicators
 //principal
@@ -48,13 +51,13 @@ val distEco1 = Val[Double]
 val id = Val[Int]
 val replication = Val[Int]
 
-// ssetup-experiment [costacc-ratio wealthdistrib-sigma acc-decay mov-aversion gib-rate migr-share beta-dc inc-growth num-categories life-cost-md final-time setup-type-int]
-val cmds = Seq("setup-experiment ${costAccessRatio} ${wealthSigma} ${accDecay} ${moveAversion} ${gibratRate} ${migrationShare} ${betaDC} ${incomeGrowth} ${numCategories} ${lifeCostMode} ${finalTime} ${setupMode}","go-experiment")
+// ssetup-experiment [costacc-ratio wealthdistrib-sigma acc-decay mov-aversion gib-rate migr-share beta-dc inc-growth num-categories life-cost-md final-time setup-type-int policy-type policy-city-num policy-val]
+val cmds = Seq("setup-experiment ${costAccessRatio} ${wealthSigma} ${accDecay} ${moveAversion} ${gibratRate} ${migrationShare} ${betaDC} ${incomeGrowth} ${numCategories} ${lifeCostMode} ${finalTime} ${setupMode} ${policyType} ${policyCityNum} ${policyValue}","go-experiment")
 
 val model =
 NetLogo5Task.workspace(workDirectory,"HEADLESS_Mingong.nlogo",cmds) set(
-    inputs += (costAccessRatio,wealthSigma,accDecay,moveAversion,gibratRate,migrationShare,betaDC,incomeGrowth,numCategories,lifeCostMode,finalTime,setupMode,id),
-    outputs += (costAccessRatio,wealthSigma,accDecay,moveAversion,gibratRate,migrationShare,betaDC,incomeGrowth,numCategories,lifeCostMode,finalTime,setupMode,id),
+    inputs += (costAccessRatio,wealthSigma,accDecay,moveAversion,gibratRate,migrationShare,betaDC,incomeGrowth,numCategories,lifeCostMode,finalTime,setupMode,policyType,policyCityNum,policyValue,id),
+    outputs += (costAccessRatio,wealthSigma,accDecay,moveAversion,gibratRate,migrationShare,betaDC,incomeGrowth,numCategories,lifeCostMode,finalTime,setupMode,policyType,policyCityNum,policyValue,id),
     netLogoOutputs += ("total-wealth", wealth),
     netLogoOutputs += ("get-total-wealth-gain", wealthGain),
     netLogoOutputs += ("migration-0", migration0),
@@ -65,8 +68,8 @@ NetLogo5Task.workspace(workDirectory,"HEADLESS_Mingong.nlogo",cmds) set(
     netLogoOutputs += ("job-distance-1", jobDistance1),
     netLogoOutputs += ("mean-individual-migrations", indivMigrations),
     netLogoOutputs += ("segreg-cat-shares", segregCatShare),
-    netLogoOutputs += ("utilities-quantiles-origin 0 [0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9]", utilitiesDecOrigin0),
-    netLogoOutputs += ("utilities-quantiles-origin 1 [0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9]", utilitiesDecOrigin1),
+    netLogoOutputs += ("utilities-quantiles-origin 0 [0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9] true", utilitiesDecOrigin0),
+    netLogoOutputs += ("utilities-quantiles-origin 1 [0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9] true", utilitiesDecOrigin1),
     netLogoOutputs += ("get-migrations-ts", migrationTS),
     netLogoOutputs += ("moran-population", moranPop),
     netLogoOutputs += ("entropy-population", entropyPop),

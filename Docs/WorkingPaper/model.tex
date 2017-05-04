@@ -24,7 +24,7 @@ UMR CNRS 8504 Géographie-cités
 
 \begin{abstract}
 Over the last three decades, rural-to-urban migrant-workers have been a driving force for China's economy, raising attention on associated socio-economical issues. However, the importance of their economic diversity and social mobility has been poorly considered in the analysis of urban development strategy.
-We use an agent-based model to simulate residential dynamics of migrants in Pearl River Delta (PRD) mega city region, taking into account the full range of migrants’ socio-economical status and their evolution. Mega-city regions have become a new scale of Chinese State regulation \comment{source ?}, and PRD represent the most prosperous and dynamic one in term of migration waves, standing as an ideal unit of analysis.
+We use an agent-based model to simulate residential dynamics of migrants in Pearl River Delta (PRD) mega city region, taking into account the full range of migrants’ socio-economical status and their evolution. Mega-city regions have become a new scale of Chinese State regulation \comment[CL]{source ?}[(JR) oui oui][(CL)non non], and PRD represent the most prosperous and dynamic one in term of migration waves, standing as an ideal unit of analysis.
 Our model unveils emergent patterns of dynamics, from micro behavior rules of discrete mobility choices. These choices are conditional to urban and economic environment, which evolution is controlled by meso-scale independent dynamics.
 The two scales are coupled through the dependence of discrete choice utilities to generalized accessibility that combines patch-level urban and economic context with a feedback of the dynamics themselves. This multi-scale aspect is crucial to distinguish endogenous form exogenous effects in regional migration patterns.
 We perform simulations to internally validate the model on synthetic data, by assessing statistical consistence and establishing phase diagrams across the parameter space.
@@ -151,7 +151,7 @@ At each time step, the system evolves sequentially according to the following ru
 
 \item Patches variables are updated conditionally to the new aggregated values. For population, we adapt the aggregation-diffusion process detailed in~\cite{raimbault2016calibration}: a density ceil is introduced and diffusion is replaced by spatial noise. More precisely, let $\Delta \tilde{P}_k(t) = \tilde{P}_k(t) - \tilde{P}_k(t-1)$. \comment{less clear for me}[this part is unfinished indeed]
 
-\item A number $M$ of new migrants, enters the region. They lean on social network (关系，guanxi) \comment{(CL) ADD EXPLICATIVE NOTE}
+\item A number $M$ of new migrants, enters the region. They lean on social network %(关系，guanxi) \comment{(CL) ADD EXPLICATIVE NOTE}
 to first settle in the city and agglomerate following a preferential attachment by place of origin.
 \item Migration occur following a discrete choice dynamics : the probability to move to cell $j$ is given by
 
@@ -333,15 +333,22 @@ We extract the following stylized facts from model behavior :
 The model is parametrized on a simplified configuration, with the sufficient information at the relevant scale: even if population data for example can be used with a very high resolution, it makes no sense regarding model ontology to include too precise GIS data as the city growth mechanisms are approximated processes. An correspondence between population and employment data is furthermore desirable, the former being available only at the scale of cities.
 
 
+\paragraph{Comparing regulation policies}
+
+
+
 \paragraph{Experience Plan}
 
 \textit{concrete qualitative questions that can be asked to the model :}
 \begin{itemize}
 \item what is the impact of varying wealth distribution shape and width on system dynamics/migrant trajectories ?
-\item what is the impact of various spatial distribution of $h_j^{(c)}$, i.e. different government policies ? \comment{(Juste) Sur ce point le mieux serait de tester les politiques que tu as pu mettre en évidence, de manière scénarisée ?}
-\item Comparison with and without Hong-Kong and Macao \comment{(Juste) I'm not sure this point is a good idea, as interactions processes are quite different (e.g. daily commuting, different migration rules, etc.) and it would become a gaz factory to include them in the model.}
+\item what is the impact of various spatial distribution of $h_j^{(c)}$, i.e. different government policies ? \comment[JR]{Sur ce point le mieux serait de tester les politiques que tu as pu mettre en évidence, de manière scénarisée ?}
+\item Comparison with and without Hong-Kong and Macao \comment[JR]{I'm not sure this point is a good idea, as interactions processes are quite different (e.g. daily commuting, different migration rules, etc.) and it would become a gaz factory to include them in the model.}
 \end{itemize}
 \comment{(CL) qui a fait ces commentaires ?}[(JR) Moi]
+
+
+
 
 
 

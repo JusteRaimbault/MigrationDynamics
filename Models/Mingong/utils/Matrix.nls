@@ -38,6 +38,22 @@ to matrix:set-submatrix [m r c submat]
   ]
 end
 
+;;
+; idem, given row and column list
+to matrix:set-submatrix-indices [m row-list col-list submat]
+  let dims matrix:dimensions submat
+  if first dims != length row-list or last dims != length col-list [error (word "Error in setting submat : wrong indices dimensions : rowlist has " length row-list " ; col-list has " length col-list " ; submat " dims)]
+  let i 0
+  repeat length matrix:get-column submat 0 [
+    let j 0
+    repeat length matrix:get-row submat 0 [
+      matrix:set m (item i row-list) (item j col-list) (matrix:get submat i j)
+      set j j + 1
+    ]
+    set i i + 1
+  ]
+end
+
 
 
 ;;

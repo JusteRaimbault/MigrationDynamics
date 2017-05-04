@@ -41,8 +41,8 @@ to new-migrant
   set wealth migrant-initial-wealth
   set economic-category migrant-economic-category
   
-  
-  set color (social-category * 140 / #-social-categories) + 10
+  if migrant-color = "social-category" [set color (social-category * 140 / #-social-categories) + 35]
+  if migrant-color = "economic-category" [set color (economic-category * 140 / #-economic-categories) + 35]
   
   set job-patch nobody
   find-job

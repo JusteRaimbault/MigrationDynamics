@@ -103,7 +103,7 @@ to update-utilities-mat
     ;set cat-utility-mat matrix:times (matrix:plus cat-utility-mat (- min map min matrix:to-column-list cat-utility-mat)) (1 / (max map max matrix:to-column-list cat-utility-mat - min map min matrix:to-column-list cat-utility-mat))
     set cat-utility-mat matrix:times cat-utility-mat (1 / (max map max matrix:to-column-list (matrix:map abs cat-utility-mat)))
     
-    set cat-utility-mat (matrix:plus cat-utility-mat policy-matrix (- move-aversion))
+    set cat-utility-mat (matrix:plus cat-utility-mat (item cat policy-matrices) (- move-aversion))
     
     ;if item cat utility-norm = 0 [set utility-norm replace-item cat utility-norm (max map max matrix:to-column-list cat-utility-mat - min map min matrix:to-column-list cat-utility-mat)]
     

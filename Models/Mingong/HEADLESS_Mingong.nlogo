@@ -92,7 +92,7 @@ globals [
   utilities
   
   ; matrix of government utility control
-  policy-matrix
+  policy-matrices
   
   ;; patches list/mat
   
@@ -199,6 +199,11 @@ globals [
   prop-migrations
   
   display-acc-category
+  migrant-color
+  
+  random-incentive-cities-number
+  random-incentive-value
+  
 ]
 
 

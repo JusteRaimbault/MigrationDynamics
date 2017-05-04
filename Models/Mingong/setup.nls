@@ -84,6 +84,11 @@ to setup-globals
   
   set utility-norm (list 0 0)
   
+  ;;;
+  ;; policies
+  ;set random-incentive-cities-number 3
+  ;set random-incentive-value 2
+  
   ;;;;;
   ;; indicators
   set prop-migrations-ts []
@@ -203,6 +208,7 @@ to setup-gis-cities
             set city-potential-jobs current-employment
             set name current-name new-city
             setxy first current-location last current-location
+            set label name set size 1
           ]
        ] 
     ]
@@ -381,10 +387,52 @@ end
 to setup-policy
   
  if policy = "no-policy" [
-   set policy-matrix matrix:make-constant count patches count patches 0
+   set policy-matrices []
+   repeat #-economic-categories [
+     set policy-matrices lput matrix:make-constant count patches count patches 0 policy-matrices
+   ]
  ]
  
+ ;;
+ ; constant incentive in random cities
+ if policy = "random-city-incentive" [
+   set policy-matrices []
+   repeat #-economic-categories [
+     let current-policy-matrix matrix:make-constant count patches count patches 0
+     ask n-of random-incentive-cities-number cities [
+       let current-numbers [number] of area-patches
+       ; j->i for j \notin current-numbers = random-incentive-value
+       let submat matrix:make-constant count patches length current-numbers random-incentive-value
+       let zero matrix:make-constant length current-numbers length current-numbers 0
+       matrix:set-submatrix-indices submat current-numbers seq 0 (length current-numbers - 1) 1 zero
+       matrix:set-submatrix-indices current-policy-matrix (seq 0 (count patches - 1) 1) (current-numbers) submat
+       ;show matrix:sum policy-matrix
+     ]
+     set policy-matrices lput current-policy-matrix policy-matrices
+   ]
+ ]
  
+ ;;
+ ; category dependant incentives
+ ;  -> based on point system, only for cat 1
+ if policy = "highestcat-city-incentive" [
+   set policy-matrices []
+   repeat #-economic-categories - 1 [
+     set policy-matrices lput matrix:make-constant count patches count patches 0 policy-matrices
+   ]
+   let current-policy-matrix matrix:make-constant count patches count patches 0
+   ask n-of random-incentive-cities-number cities [
+     let current-numbers [number] of area-patches
+     ; j->i for j \notin current-numbers = random-incentive-value
+     let submat matrix:make-constant count patches length current-numbers random-incentive-value
+     let zero matrix:make-constant length current-numbers length current-numbers 0
+     matrix:set-submatrix-indices submat current-numbers seq 0 (length current-numbers - 1) 1 zero
+     matrix:set-submatrix-indices current-policy-matrix (seq 0 (count patches - 1) 1) (current-numbers) submat
+     ;show matrix:sum policy-matrix
+   ]
+   set policy-matrices lput current-policy-matrix policy-matrices
+   
+ ]
  
  
  

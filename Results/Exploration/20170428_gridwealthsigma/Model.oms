@@ -1,0 +1,85 @@
+// variables
+val costAccessRatio = Val[Double]
+val wealthSigma = Val[Double]
+val accDecay = Val[Double]
+val moveAversion = Val[Double]
+val gibratRate = Val[Double]
+val migrationShare = Val[Double]
+val betaDC = Val[Double]
+val incomeGrowth = Val[Double]
+val numCategories = Val[Int]
+val lifeCostMode = Val[Int]
+val finalTime = Val[Int]
+
+// indicators
+//principal
+val wealth = Val[Double]
+val wealthGain = Val[Double]
+val migration0 = Val[Double]
+val migration1 = Val[Double]
+val deltaU0 = Val[Double]
+val deltaU1 = Val[Double]
+val jobDistance0 = Val[Double]
+val jobDistance1 = Val[Double]
+val indivMigrations = Val[Double]
+val segregCatShare = Val[Double]
+val utilitiesDecOrigin0 = Val[Array[Double]]
+val utilitiesDecOrigin1 = Val[Array[Double]]
+val migrationTS = Val[Array[Double]]
+
+// morpho
+val moranPop = Val[Double]
+val entropyPop = Val[Double]
+val slopePop = Val[Double]
+val slopeRsqPop = Val[Double]
+val distPop = Val[Double]
+val moranEco0 = Val[Double]
+val entropyEco0 = Val[Double]
+val slopeEco0 = Val[Double]
+val slopeRsqEco0 = Val[Double]
+val distEco0 = Val[Double]
+val moranEco1 = Val[Double]
+val entropyEco1 = Val[Double]
+val slopeEco1 = Val[Double]
+val slopeRsqEco1 = Val[Double]
+val distEco1 = Val[Double]
+
+val id = Val[Int]
+val replication = Val[Int]
+
+// setup-experiment [costacc-ratio wealthdistrib-sigma acc-decay mov-aversion gib-rate migr-share beta-dc inc-growth num-categories life-cost-md]
+val cmds = Seq("setup-experiment ${costAccessRatio} ${wealthSigma} ${accDecay} ${moveAversion} ${gibratRate} ${migrationShare} ${betaDC} ${incomeGrowth} ${numCategories} ${lifeCostMode} ${finalTime}","go-experiment")
+
+val model =
+NetLogo5Task.workspace(workDirectory,"HEADLESS_Mingong.nlogo",cmds) set(
+    inputs += (costAccessRatio,wealthSigma,accDecay,moveAversion,gibratRate,migrationShare,betaDC,incomeGrowth,numCategories,lifeCostMode,finalTime,id),
+    outputs += (costAccessRatio,wealthSigma,accDecay,moveAversion,gibratRate,migrationShare,betaDC,incomeGrowth,numCategories,lifeCostMode,finalTime,id),
+    netLogoOutputs += ("total-wealth", wealth),
+    netLogoOutputs += ("get-total-wealth-gain", wealthGain),
+    netLogoOutputs += ("migration-0", migration0),
+    netLogoOutputs += ("migration-1", migration1),
+    netLogoOutputs += ("delta-u-0", deltaU0),
+    netLogoOutputs += ("delta-u-1", deltaU1),
+    netLogoOutputs += ("job-distance-0", jobDistance0),
+    netLogoOutputs += ("job-distance-1", jobDistance1),
+    netLogoOutputs += ("mean-individual-migrations", indivMigrations),
+    netLogoOutputs += ("segreg-cat-shares", segregCatShare),
+    netLogoOutputs += ("utilities-quantiles-origin 0 [0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9]", utilitiesDecOrigin0),
+    netLogoOutputs += ("utilities-quantiles-origin 1 [0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9]", utilitiesDecOrigin1),
+    netLogoOutputs += ("get-migrations-ts", migrationTS),
+    netLogoOutputs += ("moran-population", moranPop),
+    netLogoOutputs += ("entropy-population", entropyPop),
+    netLogoOutputs += ("slope-population", slopePop),
+    netLogoOutputs += ("slope-rsquared-population", slopeRsqPop),
+    netLogoOutputs += ("mean-distance-population", distPop),
+    netLogoOutputs += ("moran-eco 0", moranEco0),
+    netLogoOutputs += ("entropy-eco 0", entropyEco0),
+    netLogoOutputs += ("slope-eco 0", slopeEco0),
+    netLogoOutputs += ("slope-rsquared-eco 0", slopeRsqEco0),
+    netLogoOutputs += ("mean-distance-eco 0", distEco0),
+    netLogoOutputs += ("moran-eco 1", moranEco1),
+    netLogoOutputs += ("entropy-eco 1", entropyEco1),
+    netLogoOutputs += ("slope-eco 1", slopeEco1),
+    netLogoOutputs += ("slope-rsquared-eco 1", slopeRsqEco1),
+    netLogoOutputs += ("mean-distance-eco 1", distEco1)
+)
