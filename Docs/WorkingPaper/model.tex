@@ -54,7 +54,8 @@ Mega-city regions (MCRs) are integrated sets of cities and their surrounding sub
 
 \paragraph{Pearl River Delta}
 
-Since the gradual decentralization of the state power which occurred in the beginning of  1990 Mega-city regions have become a new scale of Chinese State regulation, and in particular the pearl River Delta, represent the most prosperous and dynamic one in term of migration waves.\comment{check source} That’s why we choose PRD as our unit of study. Since the Open Door Policy was implemented in 1978 the PRD launch a process of rapid economic and social transformation, becoming a global manufacturing region attracting an increasing number of migrant-workers from all over China. In fact, PRD was designed as an open economic zone in 1984, and was granted many ‘one step ahead’ policies to attract foreign capital, becoming the most important exporter center since economic reform. That results in an astonishing rise of population in the area. That today count more than 50 million people.\comment{source ?} If during the first year of the opening-up reforms the barycenter of the region was Guangzhou - the provincial capital, over the last decade PRD has become increasing polycentric.
+Since the gradual decentralization of the state power which occurred in the beginning of  1990 Mega-city regions have become a new scale of Chinese State regulation, and in particular the pearl River Delta, represent the most prosperous and dynamic one in term of migration waves.\comment[CL]{check source} \comment[JR]{I found this paper \cite{xu2008governing} on governance of MCR in China, with PRD as case study ; maybe a good backup for the previous fact ? There is also this paper by Fulong Wu~\cite{wu2003post} studying how Shangai as an ``entrepreunarial city'' (to be distinguished from entrepreunarial activities in the city, in the sense that the first corresponds to structural spatial actions to raise competitiveness) is an initiative and strategy of the ``Post-Socialist State''.}
+That’s why we choose PRD as our unit of study. Since the Open Door Policy was implemented in 1978 the PRD launched a process of rapid economic and social transformation, becoming a global manufacturing region attracting an increasing number of migrant-workers from all over China. In fact, PRD was designed as an open economic zone in 1984, and was granted many ‘one step ahead’ policies to attract foreign capital, becoming the most important exporter center since economic reform. That results in an astonishing rise of population in the area. That today count more than 50 million people.\comment{source ?} If during the first year of the opening-up reforms the barycenter of the region was Guangzhou - the provincial capital, over the last decade PRD has become increasing polycentric.
 Taking PRD as the unit of our model we try to reproduce migrants residential patterns taking into account the full range of migrants’ socio-economical status and their evolution. 
 
 
@@ -65,14 +66,14 @@ Taking PRD as the unit of our model we try to reproduce migrants residential pat
 Even though migrants workers are generally considered and treated as a uniform category, previous research~\cite{losavio2016analyser}, based on qualitative interviews and sociological observation, showed how considering their economical, cultural and human capital migrants workers are a very diversified social category. Especially 3 dimension are fundamental to understand migrant workers:
 \begin{itemize}
 \item Professional Dimension : industry, construction, private sector, services (will change not only their economical situation but which influence  migrants’ trajectory and the staying duration in the city and their residential choice.
-\item Residential Dimension : We could recognize two under-categories, with different socio-economic situation: (i) Temporary - migrants working in the construction sector, who are really mobile, changing city or province according to the labour demand;  seasonal migrants workers, most of the time are peasants working as farmer and cultivating their land who come to the urban area to sell their product at the city price but without paying the running costs temporary migrants’ trajectory are more difficult to detect since they move in a discretional way ; (ii) Permanent :  Who are living in the city for more than 6 months and are renting a room or apartment depending on their: Economic situation (revenues), Social network, Proximity to the work place
-\item Generational Dimension
+\item Residential Dimension : We could recognize two subcategories, with different socio-economic situations: (i) Temporary - migrants working in the construction sector, who are really mobile, changing city or province according to the labour demand;  seasonal migrants workers, most of the time are peasants working as farmer and cultivating their land who come to the urban area to sell their product at the city price but without paying the running costs temporary migrants’ trajectory are more difficult to detect since they move in a discretional way ; (ii) Permanent :  Who are living in the city for more than 6 months and are renting a room or apartment depending on their: Economic situation (revenues), Social network, Proximity to the work place
+\item Generational Dimension. \textit{this dimension is not taken into account in the model for now, as simulated dynamics correspond to rather short time scales, between 10 and 20 years.}
 \end{itemize}
 
 
 All these sub-categories have different mobility patterns, that we try to simulate in our model.
 
-Considering this diversity and translating it in qualitative stylized facts that correspond to precise patterns of synthetic data, this model aims at establishing a new perspective for understanding China’s urban and regional mobility employing a more qualitative approach, specifying the mechanisms through which Party-State shape the parameters of migrants’ choices. \comment{(CL) The points-based hukou system represents one of these mechanisms. It would be great to add it into the model.}[Yes indeed]
+Considering this diversity and translating it in qualitative stylized facts that correspond to precise patterns of synthetic data, this model aims at establishing a new perspective for understanding China’s urban and regional mobility employing a more qualitative approach, specifying the mechanisms through which Party-State shape the parameters of migrants’ choices. \comment[CL]{The points-based hukou system represents one of these mechanisms. It would be great to add it into the model.}[(JR) Yes indeed, I'm looking into that.]
 
 
 
@@ -81,6 +82,10 @@ Considering this diversity and translating it in qualitative stylized facts that
 %%%%%%%%%%%%%%%%%%%%
 \subsection{Modeling Migrations}
 
+% agent-based model in Urban Studies : http://journals.sagepub.com/doi/pdf/10.1177/0042098009346326
+% http://en.cnki.com.cn/Article_en/CJFDTotal-CSFY200909013.htm
+% http://www.tandfonline.com/doi/full/10.1111/j.1467-8306.2007.00559.x?scroll=top&needAccess=true : CA model of Desakota (rurban expansion)
+
 \paragraph{Modeling Rural-urban migrations}
 
 \cite{todaro1969model} classical equilibrium model
@@ -88,9 +93,7 @@ Considering this diversity and translating it in qualitative stylized facts that
 
 \paragraph{Modeling Rural-urban migrations in China}
 
-Existing works in rural-urban migration modeling in China are mainly econometric studies, relying on census or on survey data. \cite{zhang2013measuring} estimate discrete choice models to study the trade-off between migration distance and earning difference. \cite{fan2005modeling} shows that gravity-based models can explain well inter-provincial migratory patterns, implying an underlying strong dominant aggregation processes. The positive association between wage gap and migration rates was obtained from time-series analysis in~\cite{zhang2003rural}.
-
-Intra-urban residential dynamics : empirical study in \cite{wu2006migrant} \comment{Why did you add this sentence here?}[unfinished biblio listing\ldots]
+Existing works in rural-urban migration modeling in China are mainly econometric studies, relying on census or on survey data. \cite{zhang2013measuring} estimate discrete choice models to study the trade-off between migration distance and earning difference. \cite{fan2005modeling} shows that gravity-based models can explain well inter-provincial migratory patterns, implying an underlying strong dominant aggregation processes. The positive association between wage gap and migration rates was obtained from time-series analysis in~\cite{zhang2003rural}. An empirical study of intra-urban migrants residential dynamics is done by~\cite{wu2006migrant}.
 
 \paragraph{Towards an agent-based modeling approach}
 
@@ -137,10 +140,10 @@ The world \comment{Why do you talk about the “world” ? Do you mean the world
 An agent is a household of migrants, whose residence and job are located in cells (that can be different). Socio-economic structure of the population is captured by the distribution of wealth $g(w)$, which are then stratified into categories. At a given time, the utility difference between not moving and moving to cell $j$ from cell $i$, for a category $c$ is given by
 
 \[
-\Delta U_{i,j}^{(c)}(t) = \frac{Z_j^{(c)}- Z_i^{(c)}}{Z_0} + \frac{C_i^{(c)}- C_j^{(c)}}{C_0} - u_i^{(c)} - h_j^{(c)}
+\Delta U_{i,j}^{(c)}(t) = \frac{Z_j^{(c)}- Z_i^{(c)}}{Z_0} + \gamma \cdot \frac{C_i^{(c)}- C_j^{(c)}}{C_0} - u_i^{(c)} - h_j^{(c)}
 \]
 
-where $Z_i^{(c)}$ is generalized accessibility given by $Z_i^{(c)} = P_i \cdot \sum_k \left[E_k^{(c)}-W_k^{(c)}\right]\cdot \exp{\left(\frac{-d_{ij}}{d_0}\right)}$, with $d_{ij}$ effective travel distance \footnote{as the model does not focus on the role of transportation, we take euclidian distance, and $d_0$ captures typical commuting distance in both public transportation or car. A more complex model could include an explicit transportation network and modal choice depending on socio-economic category.} and $d_0$ commuting characteristic distance ; $C_i^{(c)}$ is the cost of life which is a function of cell and city variables, that will be taken as $C_i^{(c)} \propto P_i^{\alpha_0}\cdot  \tilde{P}_i^{\alpha_1}\cdot$ ; $u_i^{(c)}$ a baseline aversion to move and $h_j^{(c)}$ an exogenous variable corresponding to regulation policies ; $Z_0$ and $C_0$ dimensioning parameters.
+where $Z_i^{(c)}$ is generalized accessibility given by $Z_i^{(c)} = P_i \cdot \sum_k \left[E_k^{(c)}-W_k^{(c)}\right]\cdot \exp{\left(\frac{-d_{ij}}{d_0}\right)}$, with $d_{ij}$ effective travel distance \footnote{as the model does not focus on the role of transportation, we take euclidian distance, and $d_0$ captures typical commuting distance in both public transportation or car. A more complex model could include an explicit transportation network and modal choice depending on socio-economic category.} and $d_0$ commuting characteristic distance ; the parameter $\gamma$ is the ratio giving the relative importance of life cost compared to accessibility in the migration decisions ; $C_i^{(c)}$ is the cost of life which is a function of cell and city variables, that will be taken as $C_i^{(c)} \propto P_i^{\alpha_0}\cdot  \tilde{P}_i^{\alpha_1}\cdot$ ; $u_i^{(c)}$ a baseline aversion to move and $h_j^{(c)}$ an exogenous variable corresponding to regulation policies ; $Z_0$ and $C_0$ dimensioning parameters.
 
 \paragraph{Temporal Evolution}
 
@@ -186,19 +189,35 @@ The outcome of the model has many dimensions, and is measured through the follow
 \begin{itemize}
 \item Total migrants wealth gain
 \item Total migrants social mobility
-\item Cumulated utility difference in migrations \comment{(CL) What does that mean ?}[when someone migrates, it corresponds to a given utility gain $\Delta U$ : this indicator is $\sum \Delta U$ on all realized migrations.]
+\item Cumulated utility difference in migrations: when someone migrates, it corresponds to a given utility gain $\Delta U$ : this indicator is $\sum \Delta U^{(c)}$ on all realized migrations for each category.
 \item Inequalities are captured by the final ratio between socio-economic categories
 \end{itemize}
 
 
 \paragraph{Synthetic Data Generation}
 
-A synthetic mega-city region is generated following simple stylized facts for systems of cities. A polycentric structure, with each center having an exponential density decay
+A synthetic mega-city region is generated following simple stylized facts for systems of cities. A polycentric structure, each center having an exponential density decay, is created with random coordinates for centers. Population of centers follow a rank-size law of slope 1.2.
 
 
 \paragraph{Parameters}
 
-We summarise main parameters in table \comment{which table ?}[not there yet...].
+We summarise main parameters in table~\ref{tab:parameters}.
+
+\begin{table}
+\caption{Summary of main parameters\label{tab:parameters}}
+\centering
+\begin{tabular}{ |c|c|c|c| } 
+\hline
+Parameter & Name & Values & Process  \\\hline
+$\gamma$ & Cost/Accessibility ratio & $\log\gamma \in \left[5;8\right]$ & Mobility \\ 
+$u_0$ & Move aversion & $u_0\in$ & Risk aversion \\ 
+$\beta$ & Discrete Choices & $\beta\in$ & Determinism \\ 
+$g_w$ & Income Growth & & Wealth Increase  \\
+$d_0$ & Accessibility Decay & $d_0\in$ & Accessibility \\ 
+$\sigma$ & Wealth dispersion & $\sigma\in \left[0.1;1.0\right]$ & Economic Inequalities \\ 
+\hline
+\end{tabular}
+\end{table}
 
 
 
@@ -304,21 +323,7 @@ We extract the following stylized facts from model behavior :
 
 \paragraph{Sensitivity to Urban Form}
 
-\comment{auxiliary question ?}
-
-
-
-
-\subsection{Summary of Stylized facts}
-
-\begin{itemize}
-\item When migrants have a high propensity to move, the spatial repartition of jobs becomes suboptimal in intermediate regimes of stochasticity \comment{(CL) What does that mean ?}[We use a ``Random Utility'' specification for migrants' decisions, that includes a parameter $\beta$ that represents a ``level of randomness'' (or stochasticity) : when it goes to 0, migrations are totally random and without any sense, when it goes to infinity, migrants follow deterministically the best choice between staying and going to the best migration patch (depending on the sign of $\Delta U$). For intermediate values of $\beta$, we observe this congestion phenomenon.], corresponding to a regime where congestion dominates.
-\item The congestion regime corresponds to a linear decrease of job distance with randomness, meaning that social determinism creates spatial inequalities. \comment{(CL) Closeness to job  = more congestion}[yes but there is no direct causality between the two, both are outcome of model processes.]
-\item Changing the relative importance of accessibility \comment{(CL) ACCESSIBILITY to what? Do you mean ACCESSIBILITY TO JOB?}[(JR) Accessibility is a generic notion to capture patterns of accessibility to urban functions and amenities ; in our case we use generalized Hansen accessibility, which can be understood in a simplified way number of jobs available to the population within a spatial range] does not affect much the aggregated dynamics: an increased gain in mobility produced by policies for examples will have no effect on migrations patterns. \comment{(CL) Which kind of Public policies?}[(JR) I had in mind individual transportation subsidies for example]
-\item Configurations with an intermediate value of move aversion \comment{(CL) What does that mean?}[It corresponds to parameters in which people are not totally fixed neither totally mobile] (in which real configurations fall) yield a negative feedback effect to time, witnessing a progressive saturation. In a ``U-shape'' manner, very mobile or very fixed configurations yield positive feedback of time.
-\item Adding categorisation does not change the qualitative behavior of the model. \comment{Do you mean that categorization (based on professional qualifications, education, and economic situation) does not influence the migration behavior? I think that for example the points-based hukou system favoring “talents” – people with more qualifications, with stable job and economic situation etc. – can have a relevant influence on migration behavior.}[It changes the migration behavior for individuals, but not the global qualitative picture of the previous stylized facts. I have to think more on this and I totally agree on your second point : an interesting thing to try when testing the hukou policies in the model is to check if we have the same phenomenon, and then to compare the effectiveness of policies at the individual level (impact on migrants trajectories) to the global level (behavior of the model).] The lower category seems more vulnerable to spatial inequalities created by social determinism.
-\end{itemize}
-
+\comment[JR]{This sensitivity to meta-parameters may be an auxiliary question, but potentially interesting for planning/decision makers.}
 
 
 
@@ -335,18 +340,58 @@ The model is parametrized on a simplified configuration, with the sufficient inf
 
 \paragraph{Comparing regulation policies}
 
+Governments at different levels (national directives, regional policies, and municipal implementation \comment[JR]{check that}) try to regulate migration patterns. A point-based mechanism, a sort of ``social score'', has been tested for regulating urban Hukou. We stylize such policies by emphasizing their spatial aspect : across municipalities, there exist different incentives or dissuasions to migrate for some categories of migrants.
 
 
 \paragraph{Experience Plan}
 
-\textit{concrete qualitative questions that can be asked to the model :}
+Concrete qualitative questions that can be asked to the model are for example:
+
 \begin{itemize}
 \item what is the impact of varying wealth distribution shape and width on system dynamics/migrant trajectories ?
-\item what is the impact of various spatial distribution of $h_j^{(c)}$, i.e. different government policies ? \comment[JR]{Sur ce point le mieux serait de tester les politiques que tu as pu mettre en évidence, de manière scénarisée ?}
-\item Comparison with and without Hong-Kong and Macao \comment[JR]{I'm not sure this point is a good idea, as interactions processes are quite different (e.g. daily commuting, different migration rules, etc.) and it would become a gaz factory to include them in the model.}
+\item what is the impact of various spatial distribution of $h_j^{(c)}$, i.e. different government policies ? We stylize existing policies that qualitative studies have unveiled.
+\item Comparison with and without Hong-Kong and Macao \comment[JR]{I'm not sure this point is a good idea, as interactions processes are quite different (e.g. daily commuting, different migration rules, etc.) and it would become a gaz factory to include them in the model, like coupling three different models : one for mainland China, one for HK and Macao, and one for the cross-border flows.}
 \end{itemize}
-\comment{(CL) qui a fait ces commentaires ?}[(JR) Moi]
 
+
+
+
+%%%%%%%%%%%%%%%%%%%%
+\subsection{Summary of Stylized facts}
+
+From the baseline behavior we learn that :
+
+\begin{itemize}
+\item When migrants have a high propensity to move, the spatial repartition of jobs becomes suboptimal in intermediate regimes of stochasticity, corresponding to a regime where congestion dominates. More precisely, we use a ``Random Utility'' specification for migrants' decisions, that includes a parameter $\beta$ that represents a ``level of randomness'' (or stochasticity) : when it goes to 0, migrations are totally random and without any sense, when it goes to infinity, migrants follow deterministically the best choice between staying and going to the best migration patch (depending on the sign of $\Delta U$). For intermediate values of $\beta$, we observe this congestion phenomenon.
+\item The congestion regime corresponds to a linear decrease of job distance with randomness, meaning that social determinism creates spatial inequalities. It means that proximity to job is correlated with more congestion, but there is no direct causality between the two, both are outcome of model processes.
+\item Changing the relative importance of accessibility does not affect much the aggregated dynamics: an increased gain in mobility produced by policies such as individual transportation subsidies will have no effect on migrations patterns. Accessibility is a generic notion to capture patterns of accessibility to urban functions and amenities ; in our case we use generalized Hansen accessibility, which can be understood in a simplified way number of jobs available to the population within a spatial range.
+\item Configurations with an intermediate value of move aversion \comment{(CL) What does that mean?}[It corresponds to parameters in which people are not totally fixed neither totally mobile] (in which real configurations fall) yield a negative feedback effect to time, witnessing a progressive saturation. In a ``U-shape'' manner, very mobile or very fixed configurations yield positive feedback of time.
+\end{itemize}
+
+Comparing baseline configurations with one and two economic categories :
+
+\begin{itemize}
+\item Adding categorisation does not change the qualitative behavior of the model. It does not mean that categorization (based on professional qualifications, education, and economic situation) does not influence the migration behavior. In practice for example the points-based hukou system favoring “talents” – people with more qualifications, with stable job and economic situation etc. – can have a significant influence on migration behavior. It changes the migration behavior for individuals, but not the global qualitative picture of the previous stylized facts. %I have to think more on this and I totally agree on your second point : an interesting thing to try when testing the Hukou policies in the model is to check if we have the same phenomenon, and then to compare the effectiveness of policies at the individual level (impact on migrants trajectories) to the global level (behavior of the model).
+The lower category seems more vulnerable to spatial inequalities created by social determinism.
+\end{itemize}
+
+Concerning the influence of economic parameters, namely income inequality and income growth, we find that :
+
+\begin{itemize}
+\item 
+\end{itemize}
+
+The introduction of real world data slightly changes conclusions :
+
+\begin{itemize}
+\item 
+\end{itemize}
+
+Finally, we compare stylized policies :
+
+\begin{itemize}
+\item 
+\end{itemize}
 
 
 

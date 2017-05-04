@@ -333,7 +333,7 @@ to setup-gis-economy
   
   foreach gis:feature-list-of economic-dataset [
      let current-employment-cat0 0 if member? "PRMRY_S" properties [set current-employment-cat0 gis:property-value ? "PRMRY_S"]
-     let current-employment-cat1 1 if member? "TERTIRY" properties [set current-employment-cat1 gis:property-value ? "TERTIRY"]
+     let current-employment-cat1 0 if member? "TERTIRY" properties [set current-employment-cat1 gis:property-value ? "TERTIRY"]
      
      ;let loc gis:location-of gis:centroid-of ? ;show loc ask patch first loc last loc [set pcolor yellow]
      
