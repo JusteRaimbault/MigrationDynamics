@@ -135,6 +135,8 @@ We choose to focus on particular processes and stylized facts to include in the 
 
 The world \comment{Why do you talk about the “world” ? Do you mean the world of our model?}[yes it is a term for the space of the model] consists in a lattice of $1 \leq i \leq N$ cells, characterized by their population $P_i(t)$ and an economic structure $E_i^{(c)}(t)$ which consists in abstract variables representing potential number of jobs stratified by socio-economic classes $c$. The associated effective number of workers is denoted by $W_i^{(c)}(t)$. For the sake of simplicity, we assume a discrete number of classes. At initial time, the variables are initialized either following a synthetic data generation process (see below), or from real geographical data (abstracted and simplified to fit our context). Cells are grouped into $1\leq k\leq K$ administrative cities that corresponding to the various centers of the MCR, on which aggregated population $\tilde{P}_k(t)$ and corresponding economic variables ($\tilde{E}_k^{c}(t)$) can be computed.
 
+\newpage
+
 \paragraph{Agents}
 
 An agent is a household of migrants, whose residence and job are located in cells (that can be different). Socio-economic structure of the population is captured by the distribution of wealth $g(w)$, which are then stratified into categories. At a given time, the utility difference between not moving and moving to cell $j$ from cell $i$, for a category $c$ is given by
@@ -162,10 +164,10 @@ to first settle in the city and agglomerate following a preferential attachment 
 \Pb{i\rightarrow j | c} = \frac{\exp{\left(\beta\cdot U_j^{(c)}\right)}}{\sum_k \exp{\left(\beta\cdot U_k^{(c)}\right)}+\exp{\left(U_{stay,i}^{(c)}\right)}}
 \]
 
-what simplifies into a reduced form, with $\beta' = \frac{\beta}{Z_0}$, $\gamma = \frac{Z_0}{C_0}$ and $\tilde{u},\tilde{h}$ accordingly rescaled variables, using the above utility expression :
+what simplifies into a reduced form, with $\beta' = \frac{\beta}{Z_0}$, $\gamma' = \frac{\gamma}{Z_0C_0}$ and $\tilde{u},\tilde{h}$ accordingly rescaled variables, using the above utility expression :
 
 \[
-\Pb{i\rightarrow j | c} = \frac{\exp{\left(\beta'\cdot \left[\Delta Z_{i,j}^{(c)} - \Delta C_{i,j}^{(c)} - \tilde{u}_i^{(c)} - \tilde{h}_j^{(c)} \right] \right)}}{1 + \sum_k {\exp{\left(\beta'\cdot \left[\Delta Z_{i,k}^{(c)} - \Delta C_{i,k}^{(c)} - \tilde{h}_k^{(c)} \right] \right)} - N\cdot \tilde{u}_i^{(c)}}}
+\Pb{i\rightarrow j | c} = \frac{\exp{\left(\beta'\cdot \left[\Delta Z_{i,j}^{(c)} - \gamma' \cdot \Delta C_{i,j}^{(c)} - \tilde{u}_i^{(c)} - \tilde{h}_j^{(c)} \right] \right)}}{1 + \sum_k {\exp{\left(\beta'\cdot \left[\Delta Z_{i,k}^{(c)} - \gamma' \cdot \Delta C_{i,k}^{(c)} - \tilde{u}_i^{(c)} - \tilde{h}_k^{(c)} \right] \right)}}}
 \]
 
 Residential movement is drawn randomly according to these probabilities, and jobs are chosen around new residence following an exponentially decreasing probability.
@@ -205,15 +207,16 @@ We summarise main parameters in table~\ref{tab:parameters}.
 
 \begin{table}
 \caption{Summary of main parameters\label{tab:parameters}}
+\bigskip
 \centering
 \begin{tabular}{ |c|c|c|c| } 
 \hline
 Parameter & Name & Values & Process  \\\hline
 $\gamma$ & Cost/Accessibility ratio & $\log\gamma \in \left[5;8\right]$ & Mobility \\ 
-$u_0$ & Move aversion & $u_0\in$ & Risk aversion \\ 
-$\beta$ & Discrete Choices & $\beta\in$ & Determinism \\ 
-$g_w$ & Income Growth & & Wealth Increase  \\
-$d_0$ & Accessibility Decay & $d_0\in$ & Accessibility \\ 
+$u_0$ & Move aversion & $u_0\in\left[0;5\right]$ & Risk aversion \\ 
+$\beta$ & Discrete Choices & $\beta\in \left]0;+\infty\right[$ & Determinism \\ 
+$g_w$ & Income Growth & $g_w \in \left[0;1\right]$ & Wealth Increase  \\
+$d_0$ & Accessibility Decay & $d_0\in \left]0;+\infty\right[$ & Accessibility \\ 
 $\sigma$ & Wealth dispersion & $\sigma\in \left[0.1;1.0\right]$ & Economic Inequalities \\ 
 \hline
 \end{tabular}
